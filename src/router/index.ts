@@ -25,11 +25,6 @@ const router = createRouter({
       component: () => import('../views/RegistrationView.vue')
     },
     {
-      path: '/practice',
-      name: 'practice',
-      component: () => import('../views/PracticeView.vue')
-    },
-    {
       path: '/schedule',
       name: 'schedule',
       component: () => import('../views/ScheduleView.vue')
