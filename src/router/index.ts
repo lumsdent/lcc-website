@@ -10,6 +10,11 @@ const router = createRouter({
       component: HomeView
     },
     {
+      path: '/match',
+      name: 'match',
+      component: () => import('../views/MatchFormView.vue')
+    },
+    {
       path: '/draft',
       name: 'draft',
       component: () => import('../views/DraftView.vue')
