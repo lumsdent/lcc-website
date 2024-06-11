@@ -3,18 +3,21 @@
 @tailwind components;
 @tailwind utilities;
 
-
 #app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 a,
 .blue {
   text-decoration: none;
-  color: hsla(202, 90%, 54%, 1);
+  color: var(--lcc-logo-blue);
   transition: 0.4s;
   padding: 3px;
 }
@@ -22,18 +25,5 @@ a,
 @media (hover: hover) {
   a:hover {
     background-color: hsla(202, 90%, 54%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
   }
 }

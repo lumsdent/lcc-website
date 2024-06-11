@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <div class="greetings">
-    <h1 class="blue">{{ msg }}</h1>
+    <h1 class="text-logo-blue">{{ msg }}</h1>
     <h3>
       LCC Season 2 is live on
       <a href="https://www.twitch.tv/jagshockey" target="_blank" rel="noopener">Twitch</a>

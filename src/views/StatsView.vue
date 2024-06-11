@@ -63,6 +63,46 @@ export default {
           >
             KDA
           </th>
+          <th
+            class="text-logo-blue border-b-logo-blue border-b px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+          >
+            Damage
+          </th>
+          <th
+            class="text-logo-blue border-b-logo-blue border-b px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+          >
+            DPM
+          </th>
+          <th
+            class="text-logo-blue border-b-logo-blue border-b px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+          >
+            Total CS
+          </th>
+          <th
+            class="text-logo-blue border-b-logo-blue border-b px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+          >
+            CSM
+          </th>
+          <th
+            class="text-logo-blue border-b-logo-blue border-b px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+          >
+            Total CSD@14
+          </th>
+          <th
+            class="text-logo-blue border-b-logo-blue border-b px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+          >
+            Avg CSD@14
+          </th>
+          <th
+            class="text-logo-blue border-b-logo-blue border-b px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+          >
+            First Bloods
+          </th>
+          <th
+            class="text-logo-blue border-b-logo-blue border-b px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+          >
+            Solo Bolos
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -78,6 +118,14 @@ export default {
           <td class="whitespace-nowrap px-6 py-4">{{ player.deaths }}</td>
           <td class="whitespace-nowrap px-6 py-4">{{ player.assists }}</td>
           <td class="whitespace-nowrap px-6 py-4">{{ player.kda }}</td>
+          <td class="whitespace-nowrap px-6 py-4">{{ player.dmg }}</td>
+          <td class="whitespace-nowrap px-6 py-4">{{ player.dpm }}</td>
+          <td class="whitespace-nowrap px-6 py-4">{{ player.cs }}</td>
+          <td class="whitespace-nowrap px-6 py-4">{{ player.csm }}</td>
+          <td class="whitespace-nowrap px-6 py-4">{{ player.totalCsd14 }}</td>
+          <td class="whitespace-nowrap px-6 py-4">{{ player.avgCsd14 }}</td>
+          <td class="whitespace-nowrap px-6 py-4">{{ player.first_blood }}</td>
+          <td class="whitespace-nowrap px-6 py-4">{{ player.solo_kills }}</td>
         </tr>
       </tbody>
     </table>
