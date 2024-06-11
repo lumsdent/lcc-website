@@ -208,85 +208,154 @@
         ></textarea>
       </div>
 
-      <input type="submit" value="Submit" />
+      <input
+        type="submit"
+        value="Continue to Post Match Evaluation"
+        class="bg-logo-blue text-logo-white hover:bg-logo-blue-5 mt-4 cursor-pointer rounded px-4 py-2 font-bold"
+      />
     </form>
     <form v-else @submit.prevent="handleSubmit">
-      <p>Complete this form following your match</p>
-      <label class="blue" for="result">Match Result</label><br />
-      <input type="radio" id="win" name="result" value="win" v-model="postMatch.result" />
-      <label for="win">Win</label><br />
-      <input type="radio" id="loss" name="result" value="loss" v-model="postMatch.result" />
-      <label for="loss">Loss</label><br />
-      <label class="blue" for="lesson">What did you learn?</label><br />
-      <textarea id="lesson" v-model="postMatch.lesson" name="lesson"></textarea><br />
+      <h2 class="text-l mb-4 text-center font-semibold">Complete this form following your match</h2>
+      <div class="flex flex-col gap-2">
+        <span class="dark:text-logo-blue mb-2 block text-sm font-medium text-gray-900"
+          >Match Result:</span
+        >
+        <div>
+          <input
+            type="radio"
+            id="won"
+            name="result"
+            value="won"
+            class="peer hidden"
+            v-model="postMatch.result"
+          />
+          <label
+            for="won"
+            class="inline-flex w-full cursor-pointer items-center justify-between rounded-lg border border-gray-200 bg-white p-3 text-gray-500 hover:bg-gray-100 hover:text-gray-600 peer-checked:border-blue-600 peer-checked:text-blue-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:peer-checked:text-blue-500"
+            >Won</label
+          >
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="loss"
+            name="result"
+            value="loss"
+            class="peer hidden"
+            v-model="postMatch.result"
+          />
+          <label
+            for="loss"
+            class="inline-flex w-full cursor-pointer items-center justify-between rounded-lg border border-gray-200 bg-white p-3 text-gray-500 hover:bg-gray-100 hover:text-gray-600 peer-checked:border-blue-600 peer-checked:text-blue-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:peer-checked:text-blue-500"
+            >Loss</label
+          >
+        </div>
+      </div>
 
-      <label class="blue" for="focus">Focus Rating</label><br />
-      <label for="focus1">1</label>
-      <input type="radio" id="focus1" name="focus1" value="1" v-model="postMatch.focus" />
-      <label for="focus2">2</label>
-      <input type="radio" id="focus2" name="focus2" value="2" v-model="postMatch.focus" />
-      <label for="focus3">3</label>
-      <input type="radio" id="focus3" name="focus3" value="3" v-model="postMatch.focus" />
-      <label for="focus4">4</label>
-      <input type="radio" id="focus4" name="focus4" value="4" v-model="postMatch.focus" />
-      <label for="focus5">5</label>
-      <input type="radio" id="focus5" name="focus5" value="5" v-model="postMatch.focus" />
-      <br />
-      <label class="blue" for="performance">Performance Rating</label><br />
-      <label for="performance1">1</label>
+      <div>
+        <label class="dark:text-logo-blue mb-2 block text-sm font-medium text-gray-900" for="lesson"
+          >What did you learn?</label
+        >
+        <textarea
+          id="lesson"
+          name="lesson"
+          class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          v-model="postMatch.lesson"
+        ></textarea>
+      </div>
+
+      <div class="relative mb-6">
+        <label
+          for="focus-range"
+          class="dark:text-logo-blue mb-2 block text-sm font-medium text-gray-900"
+          >Focus Rating</label
+        >
+        <input
+          id="focus-range"
+          type="range"
+          min="1"
+          max="5"
+          value="1"
+          step="1"
+          class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
+          v-model="postMatch.focus"
+        />
+        <span class="absolute -bottom-6 start-0 text-sm text-gray-500 dark:text-gray-400">1</span>
+        <span
+          class="absolute -bottom-6 start-1/4 -translate-x-1/2 text-sm text-gray-500 dark:text-gray-400"
+          >2</span
+        >
+        <span
+          class="absolute -bottom-6 start-1/2 -translate-x-1/2 text-sm text-gray-500 dark:text-gray-400"
+          >3</span
+        >
+        <span class="absolute -bottom-6 end-1/4 text-sm text-gray-500 dark:text-gray-400">4</span>
+        <span class="absolute -bottom-6 end-0 text-sm text-gray-500 dark:text-gray-400">5</span>
+      </div>
+
+      <div class="relative mb-6">
+        <label
+          for="performance-range"
+          class="dark:text-logo-blue mb-2 block text-sm font-medium text-gray-900"
+          >Performance Rating</label
+        >
+        <input
+          id="performance-range"
+          type="range"
+          min="1"
+          max="5"
+          value="1"
+          step="1"
+          class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
+          v-model="postMatch.performance"
+        />
+        <span class="absolute -bottom-6 start-0 text-sm text-gray-500 dark:text-gray-400">1</span>
+        <span
+          class="absolute -bottom-6 start-1/4 -translate-x-1/2 text-sm text-gray-500 dark:text-gray-400"
+          >2</span
+        >
+        <span
+          class="absolute -bottom-6 start-1/2 -translate-x-1/2 text-sm text-gray-500 dark:text-gray-400"
+          >3</span
+        >
+        <span class="absolute -bottom-6 end-1/4 text-sm text-gray-500 dark:text-gray-400">4</span>
+        <span class="absolute -bottom-6 end-0 text-sm text-gray-500 dark:text-gray-400">5</span>
+      </div>
+
+      <div class="relative mb-6">
+        <label
+          for="mental-range"
+          class="dark:text-logo-blue mb-2 block text-sm font-medium text-gray-900"
+          >Mental Rating</label
+        >
+        <input
+          id="mental-range"
+          type="range"
+          min="1"
+          max="5"
+          value="1"
+          step="1"
+          class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
+          v-model="postMatch.mental"
+        />
+        <span class="absolute -bottom-6 start-0 text-sm text-gray-500 dark:text-gray-400">1</span>
+        <span
+          class="absolute -bottom-6 start-1/4 -translate-x-1/2 text-sm text-gray-500 dark:text-gray-400"
+          >2</span
+        >
+        <span
+          class="absolute -bottom-6 start-1/2 -translate-x-1/2 text-sm text-gray-500 dark:text-gray-400"
+          >3</span
+        >
+        <span class="absolute -bottom-6 end-1/4 text-sm text-gray-500 dark:text-gray-400">4</span>
+        <span class="absolute -bottom-6 end-0 text-sm text-gray-500 dark:text-gray-400">5</span>
+      </div>
+
       <input
-        type="radio"
-        id="performance1"
-        name="performance1"
-        value="1"
-        v-model="postMatch.performance"
+        type="submit"
+        value="Submit Practice Evaluation"
+        class="bg-logo-blue text-logo-white hover:bg-logo-blue-5 mt-4 cursor-pointer rounded px-4 py-2 font-bold"
       />
-      <label for="performance2">2</label>
-      <input
-        type="radio"
-        id="performance2"
-        name="performance2"
-        value="2"
-        v-model="postMatch.performance"
-      />
-      <label for="performance3">3</label>
-      <input
-        type="radio"
-        id="performance3"
-        name="performance3"
-        value="3"
-        v-model="postMatch.performance"
-      />
-      <label for="performance4">4</label>
-      <input
-        type="radio"
-        id="performance4"
-        name="performance4"
-        value="4"
-        v-model="postMatch.performance"
-      />
-      <label for="performance5">5</label>
-      <input
-        type="radio"
-        id="performance5"
-        name="performance5"
-        value="5"
-        v-model="postMatch.performance"
-      />
-      <br />
-      <label class="blue" for="mental">Mental Rating</label><br />
-      <label for="mental1">1</label>
-      <input type="radio" id="mental1" name="mental1" value="1" v-model="postMatch.mental" />
-      <label for="mental2">2</label>
-      <input type="radio" id="mental2" name="mental2" value="2" v-model="postMatch.mental" />
-      <label for="mental3">3</label>
-      <input type="radio" id="mental3" name="mental3" value="3" v-model="postMatch.mental" />
-      <label for="mental4">4</label>
-      <input type="radio" id="mental4" name="mental4" value="4" v-model="postMatch.mental" />
-      <label for="mental5">5</label>
-      <input type="radio" id="mental5" name="mental5" value="5" v-model="postMatch.mental" />
-      <br />
-      <input type="submit" value="Submit" />
     </form>
   </main>
 </template>
