@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import AppHeader from './components/AppHeader.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <header class="flex max-h-screen place-items-center leading-6">
+    <img alt="LCC logo" class="mr-8" src="@/assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
-      <HelloWorld msg="Welcome to LCC!" />
+    <div class="flex flex-wrap place-items-start">
+      <AppHeader msg="Welcome to LCC!" />
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/match">Match Input</RouterLink>
-        <RouterLink to="/registration">Registration</RouterLink>
-        <RouterLink to="/draft">Draft</RouterLink>
-        <RouterLink to="/practice">Practice</RouterLink>
-        <RouterLink to="/stats">Stats</RouterLink>
-        <RouterLink to="/schedule">Schedule</RouterLink>
-        <RouterLink to="/contact">Contact Us</RouterLink>
+      <nav class="-ml-4 mt-4 py-4 text-left text-base">
+        <RouterLink class="inline-block border-l px-4 first-of-type:border-0" to="/">Home</RouterLink>
+        <RouterLink class="inline-block border-l px-4" to="/match">Match Input</RouterLink>
+        <RouterLink class="inline-block border-l px-4" to="/registration">Registration</RouterLink>
+        <RouterLink class="inline-block border-l px-4" to="/draft">Draft</RouterLink>
+        <RouterLink class="inline-block border-l px-4" to="/practice">Practice</RouterLink>
+        <RouterLink class="inline-block border-l px-4" to="/stats">Stats</RouterLink>
+        <RouterLink class="inline-block border-l px-4" to="/schedule">Schedule</RouterLink>
+        <RouterLink class="inline-block border-l px-4" to="/contact">Contact Us</RouterLink>
       </nav>
     </div>
   </header>
@@ -27,22 +27,7 @@ import HelloWorld from './components/HelloWorld.vue'
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
 
 nav a.router-link-exact-active {
   color: var(--color-text);
@@ -58,34 +43,7 @@ nav a {
   border-left: 1px solid var(--color-border);
 }
 
-nav a:first-of-type {
+/* nav a:first-of-type {
   border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
+} */
 </style>
