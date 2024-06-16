@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import AppHeader from './components/AppHeader.vue'
+import StyledRouterLink from './components/StyledRouterLink.vue'
 </script>
 
 <template>
@@ -11,54 +12,14 @@ import AppHeader from './components/AppHeader.vue'
       <AppHeader msg="Welcome to LCC!" />
 
       <nav class="-ml-4 mt-4 py-4 text-left text-base">
-        <RouterLink
-          class="inline-block border-l px-4 first-of-type:border-0"
-          activeClass="hover:bg-transparent text-text-dark"
-          to="/"
-          >Home</RouterLink
-        >
-        <RouterLink
-          class="inline-block border-l px-4"
-          activeClass="hover:bg-transparent text-text-dark"
-          to="/match"
-          >Match Input</RouterLink
-        >
-        <RouterLink
-          class="inline-block border-l px-4"
-          activeClass="hover:bg-transparent text-text-dark"
-          to="/registration"
-          >Registration</RouterLink
-        >
-        <RouterLink
-          class="inline-block border-l px-4"
-          activeClass="hover:bg-transparent text-text-dark"
-          to="/draft"
-          >Draft</RouterLink
-        >
-        <RouterLink
-          class="inline-block border-l px-4"
-          activeClass="hover:bg-transparent text-text-dark"
-          to="/practice"
-          >Practice</RouterLink
-        >
-        <RouterLink
-          class="inline-block border-l px-4"
-          activeClass="hover:bg-transparent text-text-dark"
-          to="/stats"
-          >Stats</RouterLink
-        >
-        <RouterLink
-          class="inline-block border-l px-4"
-          activeClass="hover:bg-transparent text-text-dark"
-          to="/schedule"
-          >Schedule</RouterLink
-        >
-        <RouterLink
-          class="inline-block border-l px-4"
-          activeClass="hover:bg-transparent text-text-dark"
-          to="/contact"
-          >Contact Us</RouterLink
-        >
+        <StyledRouterLink title="Home" link="/" />
+        <StyledRouterLink title="Match Input" link="/match" />
+        <StyledRouterLink title="Registration" link="/registration" />
+        <StyledRouterLink title="Draft" link="/draft" />
+        <StyledRouterLink title="Practice" link="/practice" />
+        <StyledRouterLink title="Stats" link="/stats" />
+        <StyledRouterLink title="Schedule" link="/schedule" />
+        <StyledRouterLink title="Contact Us" link="/contact" />
       </nav>
     </div>
   </header>
