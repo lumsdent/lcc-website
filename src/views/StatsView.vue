@@ -11,9 +11,9 @@ export default {
   },
   methods: {
     async fetchData() {
-      console.log(process.env.ROOT_API)
+      console.log(import.meta.env.ROOT_API)
       await axios
-        .get(process.env.ROOT_API + '/player_stats')
+        .get(import.meta.env.ROOT_API + '/player_stats')
         .then((response) => {
           this.players = response.data
         })
