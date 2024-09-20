@@ -12,7 +12,7 @@ export default {
   methods: {
     async fetchData() {
       await axios
-        .get('http://127.0.0.1:5000/player_stats')
+        .get('(process.env.ROOT_API)/player_stats')
         .then((response) => {
           this.players = response.data
         })
