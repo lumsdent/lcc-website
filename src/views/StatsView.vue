@@ -13,7 +13,7 @@ export default {
     async fetchData() {
       console.log(import.meta.env.ROOT_API)
       await axios
-        .get(import.meta.env.ROOT_API + '/player_stats')
+        .get('https://lcc-api.vercel.app/player_stats')
         .then((response) => {
           this.players = response.data
         })
