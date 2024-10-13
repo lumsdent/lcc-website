@@ -15,6 +15,9 @@ import StyledRouterLink from './components/StyledRouterLink.vue'
         <StyledRouterLink title="Home" link="/" />
         <StyledRouterLink title="Match Input" link="/match" />
         <StyledRouterLink title="Registration" link="/registration" />
+        <StyledRouterLink title="Teams" link="/teams" />
+        <StyledRouterLink title="Players" link="/players" />
+
         <StyledRouterLink title="Draft" link="/draft" />
         <StyledRouterLink title="Practice" link="/practice" />
         <StyledRouterLink title="Stats" link="/stats" />

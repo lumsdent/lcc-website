@@ -43,6 +43,22 @@ const router = createRouter({
       path: '/practice',
       name: 'practice',
       component: () => import('../views/PracticeView.vue')
+    },
+    {
+      path: '/players/:puuid',
+      name: 'PlayersView',
+      component: import('../views/PlayerView.vue'),
+      props: true
+    },
+    {
+      path: '/teams',
+      name: 'teams',
+      component: () => import('../views/TeamsView.vue')
+    },
+    {
+      path: '/players',
+      name: 'players',
+      component: () => import('../views/PlayersView.vue')
     }
   ]
 })

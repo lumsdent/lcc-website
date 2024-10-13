@@ -11,9 +11,8 @@ export default {
   },
   methods: {
     async fetchData() {
-      console.log(import.meta.env.ROOT_API)
       await axios
-        .get('https://lcc-api.vercel.app/player_stats')
+        .get(import.meta.env.VITE_API_URL + '/player_stats')
         .then((response) => {
           this.players = response.data
         })
