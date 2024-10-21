@@ -46,7 +46,7 @@
   </main>
 </template>
 
-<script setup lang="ts">
+<script>
 import { ref } from 'vue'
 import axios from 'axios'
 

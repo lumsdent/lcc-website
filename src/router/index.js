@@ -65,7 +65,14 @@ const router = createRouter({
       name: 'players',
       component: () => import('../views/PlayersView.vue')
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  }
 })
 
 export default router

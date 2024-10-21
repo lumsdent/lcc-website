@@ -1,8 +1,17 @@
-<script setup lang="ts">
-defineProps<{
-  title: string
-  link: string
-}>()
+<script>
+export default {
+  name: 'StyledRouterLink',
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    link: {
+      type: String,
+      required: true
+    }
+  }
+}
 </script>
 
 <template>
