@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('../views/MatchFormView.vue')
     },
     {
+      path: '/match/:matchId',
+      name: 'matchDetail',
+      component: () => import('../views/MatchDetail.vue'),
+    },
+    {
       path: '/draft',
       name: 'draft',
       component: () => import('../views/DraftView.vue')
@@ -43,8 +48,31 @@ const router = createRouter({
       path: '/practice',
       name: 'practice',
       component: () => import('../views/PracticeView.vue')
+    },
+    {
+      path: '/players/:puuid',
+      name: 'PlayersView',
+      component: () => import('../views/PlayerView.vue'),
+      props: true
+    },
+    {
+      path: '/teams',
+      name: 'teams',
+      component: () => import('../views/TeamsView.vue')
+    },
+    {
+      path: '/players',
+      name: 'players',
+      component: () => import('../views/PlayersView.vue')
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  }
 })
 
 export default router
