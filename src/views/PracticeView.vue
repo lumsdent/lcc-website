@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-4">
-    <div class="w-1/4 items-center justify-center">
+    <div class="w-1/4 min-w-96 items-end justify-center flex">
       <div>
         <div v-if="myChampionSplash" class="mt-4">
           <img :src="myChampionSplash" :alt="`Splash image of ${preMatch.myChampion}`" class="w-full rounded-lg" />
@@ -10,7 +10,7 @@
     </div>
 
 
-    <main class="w-1/2 mx-auto max-w-md p-4">
+    <main class="w-1/2 min-w-96 mx-auto max-w-md p-4">
       <h1 class="text-logo-blue mb-4 text-center text-xl font-semibold">Practice</h1>
       <ResponseBox v-if="responseMessage" :message="responseMessage" :isSuccess="isSuccess" />
       <form v-if="!preMatchFormSubmitted" @submit.prevent="submitPrematchForm" class="flex flex-col gap-4">
@@ -203,10 +203,10 @@
         </div>
 
         <input type="submit" value="Submit Practice Evaluation"
-          class="bg-logo-blue text-logo-white hover:bg-logo-blue-5 mt-4 cursor-pointer rounded px-4 py-2 font-bold" />
+          class="bg-logo-blue text-logo-white hover:bg-logo-blue-5 mt-4 cursor-pointer rounded px-4 py-2 font-bold min-w-96" />
       </form>
     </main>
-    <div class="w-1/4 items-center justify-center border">
+    <div class="w-1/4 min-w-96 items-end justify-center flex">
       <div v-if="opponentChampionSplash" class="mt-4">
         <img :src="opponentChampionSplash" :alt="`Splash image of ${preMatch.opponentChampion}`"
           class="w-full rounded-lg" />

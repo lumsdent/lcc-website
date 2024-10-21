@@ -16,7 +16,7 @@ const router = createRouter({
     },
     {
       path: '/match/:matchId',
-      name: 'match',
+      name: 'matchDetail',
       component: () => import('../views/MatchDetail.vue'),
     },
     {
@@ -52,7 +52,7 @@ const router = createRouter({
     {
       path: '/players/:puuid',
       name: 'PlayersView',
-      component: import('../views/PlayerView.vue'),
+      component: () => import('../views/PlayerView.vue'),
       props: true
     },
     {

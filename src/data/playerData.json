@@ -1,14 +1,21 @@
 {
   "data": {
     "_id": { "$oid": "66ef3ce4b35c8269fae088be" },
-    "puuid": "c2xoTJ33QjBVjNX4U2IzxcvMwd9keVQE0M0AcoJfh9l_82XMZSo07zyjg87RmWV-KjnlXqMzqcFm-A",
-    "userName": "TopDiff",
-    "userTag": "NA",
-    "summonerLevel": 30,
-    "email": "topdiff@gmail.com",
-    "bio": "I'm a top laner who loves to play tanks and bruisers.",
-    "profileIconId": 505,
+    "profile": {
+      "puuid": "c2xoTJ33QjBVjNX4U2IzxcvMwd9keVQE0M0AcoJfh9l_82XMZSo07zyjg87RmWV-KjnlXqMzqcFm-A",
+      "name": "TopDiff",
+      "tag": "NA",
+      "level": 30,
+      "email": "topdiff@gmail.com",
+      "bio": "I'm a top laner who loves to play tanks and bruisers.",
+      "icon": 505,
+      "images": {
+        "icon": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/profileicon/505.png",
+        "banner": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/TahmKench_0.jpg"
+      }
+    },
     "teams": [{ "1": "LCC_Champs" }, { "2": "LCC_Chumps" }],
+    "seasons":["2", "3"],
     "matches": [
       {
         "matchId": "45679284863",
@@ -228,49 +235,701 @@
     ],
     "primaryRole": "Top",
     "secondaryRole": "Jungle",
-    "champ_stats": [
-      {
-        "champion": "Aatrox",
-        "games_played": "10",
-        "kills": "45",
-        "deaths": "42",
-        "assists": "63"
-      },
-      {
-        "champion": "Darius",
-        "games_played": "5",
-        "kills": "23",
-        "deaths": "12",
-        "assists": "34"
-      },
-      {
-        "champion": "Garen",
-        "games_played": "7",
-        "kills": "23",
-        "deaths": "12",
-        "assists": "34"
-      },
-      {
-        "champion": "Tahm Kench",
-        "games_played": "3",
-        "kills": "23",
-        "deaths": "12",
-        "assists": "34"
-      },
-      {
-        "champion": "Mordekaiser",
-        "games_played": "1",
-        "kills": "23",
-        "deaths": "12",
-        "assists": "34"
-      }
-    ],
+    "championStats": {
+      "allTime": [
+        {
+          "champion": {
+            "id": 223,
+            "name": "Aatrox",
+            "image": {
+              "full": "Aatrox.png",
+              "loading": "Aatrox.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Aatrox.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Darius",
+            "image": {
+              "full": "Darius.png",
+              "loading": "Darius.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Darius.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Garen",
+            "image": {
+              "full": "Garen.png",
+              "loading": "Garen.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Garen.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "TahmKench",
+            "image": {
+              "full": "TahmKench.png",
+              "loading": "TahmKench.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/TahmKench.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Mordekaiser",
+            "image": {
+              "full": "Mordekaiser.png",
+              "loading": "Mordekaiser.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Mordekaiser.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Aatrox",
+            "image": {
+              "full": "Aatrox.png",
+              "loading": "Aatrox.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Aatrox.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Darius",
+            "image": {
+              "full": "Darius.png",
+              "loading": "Darius.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Darius.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Garen",
+            "image": {
+              "full": "Garen.png",
+              "loading": "Garen.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Garen.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "TahmKench",
+            "image": {
+              "full": "TahmKench.png",
+              "loading": "TahmKench.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/TahmKench.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Mordekaiser",
+            "image": {
+              "full": "Mordekaiser.png",
+              "loading": "Mordekaiser.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Mordekaiser.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Aatrox",
+            "image": {
+              "full": "Aatrox.png",
+              "loading": "Aatrox.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Aatrox.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Darius",
+            "image": {
+              "full": "Darius.png",
+              "loading": "Darius.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Darius.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Garen",
+            "image": {
+              "full": "Garen.png",
+              "loading": "Garen.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Garen.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "TahmKench",
+            "image": {
+              "full": "TahmKench.png",
+              "loading": "TahmKench.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/TahmKench.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Mordekaiser",
+            "image": {
+              "full": "Mordekaiser.png",
+              "loading": "Mordekaiser.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Mordekaiser.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        }
+      ],
+      "2":[
+        {
+          "champion": {
+            "id": 223,
+            "name": "Aatrox",
+            "image": {
+              "full": "Aatrox.png",
+              "loading": "Aatrox.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Aatrox.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Darius",
+            "image": {
+              "full": "Darius.png",
+              "loading": "Darius.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Darius.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Garen",
+            "image": {
+              "full": "Garen.png",
+              "loading": "Garen.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Garen.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        }
+      ],
+      "3":[
+        {
+          "champion": {
+            "id": 223,
+            "name": "Aatrox",
+            "image": {
+              "full": "Aatrox.png",
+              "loading": "Aatrox.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Aatrox.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        },
+        {
+          "champion": {
+            "id": 223,
+            "name": "Darius",
+            "image": {
+              "full": "Darius.png",
+              "loading": "Darius.jpg",
+              "square": "https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Darius.png"
+            },
+            "title": "the River King",
+            "level": 15,
+            "experience": 14069
+          },
+          "gamesPlayed": "10",
+          "wins": 5,
+          "losses": 5,
+          "kills": "45",
+          "deaths": "42",
+          "assists": "63",
+          "killParticipation": "0.75",
+          "kda": "2.45",
+          "goldEarned": "10347",
+          "goldPerMinute": "351.47007584514756",
+          "totalDamageDealtToChampions": "123456",
+          "damagePerMinute": "637.0295947770143",
+          "cs": "322",
+          "csm": "8.5",
+          "cs14": "108",
+          "visionScore": "43",
+          "visionScorePerMinute": "1.9092156280807766"
+        }
+      ]
+    },
+    "aggregateStats": {
+      "allTime" : {
+      "gamesPlayed": "10",
+      "wins": 5,
+      "losses": 5,
+      "kills": "45",
+      "deaths": "42",
+      "assists": "63",
+      "killParticipation": "0.75",
+      "kda": "2.45",
+      "goldEarned": "10347",
+      "goldPerMinute": "351.47007584514756",
+      "totalDamageDealtToChampions": "123456",
+      "damagePerMinute": "637.0295947770143",
+      "cs": "322",
+      "csm": "8.5",
+      "cs14": "108",
+      "visionScore": "43",
+      "visionScorePerMinute": "1.9092156280807766",
+      "minutesPlayed": "306",
+      "firstBloods": "3",
+      "soloKills": "2"
 
-    "aggregate_stats": {
-      "games_played": "15",
-      "kills": "68",
-      "deaths": "54",
-      "assists": "97"
-    }
+    },
+    "2":{
+      "gamesPlayed": "7",
+      "wins": 5,
+      "losses": 5,
+      "kills": "45",
+      "deaths": "42",
+      "assists": "63",
+      "killParticipation": "0.75",
+      "kda": "2.45",
+      "goldEarned": "10347",
+      "goldPerMinute": "351.47007584514756",
+      "totalDamageDealtToChampions": "123456",
+      "damagePerMinute": "637.0295947770143",
+      "cs": "322",
+      "csm": "8.5",
+      "cs14": "108",
+      "visionScore": "43",
+      "visionScorePerMinute": "1.9092156280807766",
+      "minutesPlayed": "306",
+      "firstBloods": "3",
+      "soloKills": "2"
+    },
+    "3":{
+      "gamesPlayed": "3",
+      "wins": 5,
+      "losses": 5,
+      "kills": "45",
+      "deaths": "42",
+      "assists": "63",
+      "killParticipation": "0.75",
+      "kda": "2.45",
+      "goldEarned": "10347",
+      "goldPerMinute": "351.47007584514756",
+      "totalDamageDealtToChampions": "123456",
+      "damagePerMinute": "637.0295947770143",
+      "cs": "322",
+      "csm": "8.5",
+      "cs14": "108",
+      "visionScore": "43",
+      "visionScorePerMinute": "1.9092156280807766",
+      "minutesPlayed": "306",
+      "firstBloods": "3",
+      "soloKills": "2"
+    }}
   }
 }

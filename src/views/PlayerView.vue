@@ -1,27 +1,154 @@
 <template>
+    <!-- PLAYER CARD -->
     <div class="grid grid-cols-1 xl:grid-cols-5 gap-8">
-        <div class="flex justify-center xl:col-span-1">
-            <div class="border border-gray-300 max-w-sm rounded-lg p-4 text-center max-h-fit mt-16 justify-center">
-                <img :src="player.profilePicture" alt="Profile Picture" class="w-full h-auto rounded-full" />
-                <h2 class="mt-4 mb-2 text-xl">{{ player.playerName }}</h2>
-                <p class="text-gray-600">{{ player.summonerLevel }}</p>
-                <h3 class="mt-4 mb-2 text-l">Current Team</h3>
-                <p class="mt-4">{{ player.teamName }}</p>
-                <div class="flex justify-center mt-4 space-x-2">
-                    <img v-for="champ in player.favoriteChampions" v-bind:key="champ.champion"
-                        :src="`https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/${champ.champion}.png`"
-                        :alt="`Champion icon: ${champ.champion}`" class="w-12 h-12 rounded-full" />
-                </div>
-                <p class="mt-4">{{ player.bio }}</p>
-                <a :href="`https://www.op.gg/summoners/na/${player.playerName}-${player.tagline}`" target="_blank"
-                    rel="noopener noreferrer" class="block mt-4 text-blue-500 ">OP.GG</a>
-            </div>
+        <div class="flex justify-center xl:col-span-1 mt-16">
+            <PlayerCard :player="player" />
         </div>
 
-        <div class="xl:col-span-4 mt-8 overflow-x-auto">
+        <!-- CHAMPION STATS -->
+        <div v-if="player" class="xl:col-span-4 mt-8 overflow-x-auto">
+            <div>
+                <h3 class="text-xl mb-4">Champion Stats</h3>
+                <button v-for="season in player.seasons" :key="season" @click="selectedSeason = season"
+                    class="border border-gray-300 rounded-lg px-4 mx-2">{{ season }}</button>
+                <button @click="selectedSeason = 'allTime'" class="border border-gray-300 rounded-lg px-2 mx-2">All
+                    Time</button>
+            </div>
+
+            <div class="">
+                <table class="">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-2 border-b">Champ</th>
+                            <th class="py-2 px-2 border-b">Games</th>
+                            <th class="py-2 px-2 border-b">Win</th>
+                            <th class="py-2 px-2 border-b">Loss</th>
+                            <th class="py-2 px-2 border-b">Win Rate</th>
+                            <th class="min-w-28 py-2 px-2 border-b"><span>KDA</span><span class="text-logo-red">
+                                    (KP%)</span> </th>
+                            <th class="min-w-20 py-2 px-2 border-b">Gold</th>
+                            <th class="min-w-20 py-2 px-2 border-b"><span>CS</span><span class="text-logo-red">
+                                    (@14)</span> </th>
+                            <th class="min-w-20 py-2 px-2 border-b">Vision</th>
+                            <th class="min-w-20 py-2 px-2 border-b">Damage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- TODO: Highlight highest stat values -->
+                        <tr class="text-center align-middle" v-for="champion in player.championStats[selectedSeason]"
+                            v-bind:key="champion.champion.name">
+                            <td class="py-2 px-2 border-b">
+                                <div class="flex justify-center items-center">
+                                    <img class="rounded-full w-10 h-10" :src="champion.champion.image.square" />
+                                </div>
+                            </td>
+                            <td class="py-2 px-2 border-b ">
+                                <div class="">
+                                    <span>{{ champion.gamesPlayed }}</span><br />
+                                </div>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span class="">{{ champion.wins }}</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span class="">{{ champion.losses }}</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <div class="flex justify-center items-center">
+                                    <span>{{ champion.wins/champion.gamesPlayed *100 }}%</span>
+                                </div>
+                            </td>
+                            <td class="py-2 px-2 border-b ">
+                                <span>{{ champion.kills }}/{{ champion.deaths }}/{{ champion.assists }}</span>
+                                <span class="text-logo-red"> ({{ Math.round(champion.killParticipation * 100)
+                                    }}%)</span><br />
+                                <span class="text-xs text-logo-blue">{{ champion.kda }} KDA</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span>{{ champion.goldEarned }}</span><br />
+                                <span class="text-logo-blue text-xs"> {{ Math.round(champion.goldPerMinute)
+                                    }} GPM</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span>{{ champion.cs }}</span><span class="text-logo-red text-xs"> ({{ champion.cs14
+                                    }})</span><br />
+                                <span class="text-logo-blue text-xs"> {{ champion.csm }} CSM</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span>{{ champion.visionScore }}</span><br />
+                                <span class="text-logo-blue text-xs"> {{ Math.round(champion.visionScorePerMinute)
+                                    }}
+                                    VsPM</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span>{{ champion.totalDamageDealtToChampions }}</span><br />
+                                <span class="text-logo-blue text-xs"> {{ Math.round(champion.damagePerMinute) }}
+                                    DPM</span>
+                            </td>
+
+                        </tr>
+                        <tr class="text-center align-middle">
+                            <td class="py-2 px-2 border-b">
+                                <div class="flex justify-center items-center">
+                                    <span>Overall</span>
+                                </div>
+                            </td>
+                            <td class="py-2 px-2 border-b ">
+                                <div class="">
+                                    <span>{{ player.aggregateStats[selectedSeason].gamesPlayed }}</span><br />
+                                </div>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span class="">{{ player.aggregateStats[selectedSeason].wins }}</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span class="">{{ player.aggregateStats[selectedSeason].losses }}</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <div class="flex justify-center items-center">
+                                    <span>{{ Math.round(player.aggregateStats[selectedSeason].wins / player.aggregateStats[selectedSeason].gamesPlayed * 100) }}%</span>
+                                </div>
+                            </td>
+                            <td class="py-2 px-2 border-b ">
+                                <span>{{ player.aggregateStats[selectedSeason].kills }}/{{ player.aggregateStats[selectedSeason].deaths }}/{{ player.aggregateStats[selectedSeason].assists }}</span>
+                                <span class="text-logo-red"> ({{ Math.round(player.aggregateStats[selectedSeason].killParticipation * 100)
+                                    }}%)</span><br />
+                                <span class="text-xs text-logo-blue">{{ player.aggregateStats[selectedSeason].kda }} KDA</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span>{{ player.aggregateStats[selectedSeason].goldEarned }}</span><br />
+                                <span class="text-logo-blue text-xs"> {{ Math.round(player.aggregateStats[selectedSeason].goldPerMinute)
+                                    }} GPM</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span>{{ player.aggregateStats[selectedSeason].cs }}</span><span class="text-logo-red text-xs"> ({{ player.aggregateStats[selectedSeason].cs14
+                                    }})</span><br />
+                                <span class="text-logo-blue text-xs"> {{ player.aggregateStats[selectedSeason].csm }} CSM</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span>{{ player.aggregateStats[selectedSeason].visionScore }}</span><br />
+                                <span class="text-logo-blue text-xs"> {{ Math.round(player.aggregateStats[selectedSeason].visionScorePerMinute)
+                                    }}
+                                    VsPM</span>
+                            </td>
+                            <td class="py-2 px-2 border-b">
+                                <span>{{ player.aggregateStats[selectedSeason].totalDamageDealtToChampions }}</span><br />
+                                <span class="text-logo-blue text-xs"> {{ Math.round(player.aggregateStats[selectedSeason].damagePerMinute) }}
+                                    DPM</span>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- MATCH DETAILS -->
+        <div class="xl:col-span-5 mt-8 overflow-x-auto">
             <h2 class="text-xl mb-4">Match Details</h2>
             <div class="">
-                <table class="border border-gray-300">
+                <table class="">
                     <thead>
                         <tr class="">
                             <th class="min-w-24 py-2 px-2 border-b">Team</th>
@@ -34,12 +161,10 @@
                             <th class="min-w-60 py-2 px-2 border-b">Build</th>
                             <th class="min-w-32 py-2 px-2 border-b">Spells</th>
                             <th class="py-2 px-2 border-b">VOD</th>
-
                         </tr>
                     </thead>
                     <tbody class="">
-                        <tr v-for="match in player.matchDetails" :key="match.matchId"
-                            class="text-center align-middle cursor-pointer
+                        <tr v-for="match in matchDetails" :key="match.matchId" class="text-center align-middle cursor-pointer
                             hover:bg-indigo" @click="goToMatchDetail(match.matchId)">
                             <td class="py-2 px-2 border-b"><span class="inline-block align-middle text-center"><img
                                         class="max-w-16 h-8 " :src="`${match.team.image}`" :title="`${match.team.name}`"
@@ -96,10 +221,10 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import playerData from '../data/playerData.json'
+import PlayerCard from '@/components/PlayerCard.vue';
 export default {
     name: 'PlayerView',
     props: {
@@ -108,20 +233,14 @@ export default {
             required: true
         }
     },
+    components: {
+        PlayerCard
+    },
     setup(props) {
-        const player = ref({
-            playerName: 'Player Name',
-            tagline: 'Tagline',
-            teamName: 'Team Name',
-            bio: '',
-            profilePicture: '',
-            summonerLevel: 0,
-            matches: [],
-            favoriteChampions: [],
-            matchDetails: []
-        })
-        const profilePictureUrl = ref('')
+        const player = ref(null)
+        const matchDetails = ref([])
         const router = useRouter()
+        const selectedSeason = ref('allTime')
 
         const goToMatchDetail = (matchId) => {
             router.push(`/match/${matchId}`)
@@ -133,17 +252,6 @@ export default {
                 const response = playerData
 
                 console.log(response.data)
-                const { profileIconId, summonerLevel, userName, matches, teams, tagLine, bio } = response.data
-                console.log(profileIconId, summonerLevel, teams)
-                profilePictureUrl.value = `https://ddragon.leagueoflegends.com/cdn/14.19.1/img/profileicon/${profileIconId}.png`
-                player.value.profilePicture = profilePictureUrl.value
-                player.value.summonerLevel = summonerLevel
-                player.value.playerName = userName
-                player.value.tagline = tagLine
-                player.value.bio = bio
-                player.value.teamName = Object.values(teams[teams.length - 1])[0]
-                player.value.matches = matches
-                player.value.favoriteChampions = response.data.champ_stats.sort((a, b) => b.games_played - a.games_played).slice(0, 3);
 
                 const testMatchList = []
                 testMatchList.push(response.data.matches[0])
@@ -158,8 +266,9 @@ export default {
                 testMatchList.push(response.data.matches[0])
                 testMatchList.push(response.data.matches[0])
                 testMatchList.push(response.data.matches[0])
-                player.value.matchDetails = testMatchList
-
+                matchDetails.value = testMatchList
+                player.value = response.data
+                console.log(player.value)
             } catch (error) {
                 console.error('Error fetching player data:', error)
             }
@@ -167,8 +276,9 @@ export default {
 
         return {
             player,
-            profilePictureUrl,
-            goToMatchDetail
+            matchDetails,
+            goToMatchDetail,
+            selectedSeason
         }
     }
 }
