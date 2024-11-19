@@ -6,15 +6,19 @@
         <h2 class="mt-4 mb-2 text-xl">{{ player.profile.name }}</h2>
         <p class="text-gray-600">{{ player.profile.level }}</p>
         <h3 class="mt-4 mb-2 text-l">Current Team</h3>
-        <p class="mt-4">{{ Object.values(player.teams[player.teams.length - 1])[0] }}</p>
+        <div v-if="player.teams">
+            <p class="mt-4">{{ Object.values(player.teams[player.teams.length - 1])[0].name }}</p>
+        </div>
+        <div v-else>
+            <p class="mt-4">New Player</p>
+        </div>
         <div class="flex justify-center mt-4 space-x-2">
-            <img v-for="champ in favoriteChampions" :key="champ.champion.name"
-                :src="champ.champion.image.square"
-                :alt="`Champion icon: ${champ.champion.name}`" class="w-12 h-12 rounded-full" />
+            <img v-for="champ in favoriteChampions" :key="champ.name" :src="champ.image.square"
+                :alt="`Champion icon: ${champ.name}`" class="w-12 h-12 rounded-full" />
         </div>
         <p class="mt-4">{{ player.profile.bio }}</p>
         <a :href="`https://www.op.gg/summoners/na/${player.profile.name}-${player.profile.tag}`" target="_blank"
-            rel="noopener noreferrer" class="block mt-4 text-blue-500 ">OP.GG</a>
+            rel="noopener noreferrer" class="block mt-4 text-blue-500" @click.stop>OP.GG</a>
     </div>
 </template>
 
@@ -29,8 +33,14 @@ export default {
     },  
     computed: {
         favoriteChampions() {
-            const champs = this.player.championStats["allTime"]
-            return champs.sort((a, b) => b.gamesPlayed - a.gamesPlayed).slice(0, 3);
+            if(this.player.championStats) {
+                const champs = this.player.championStats["allTime"]
+                return champs.sort((a, b) => b.gamesPlayed - a.gamesPlayed).slice(0, 3);
+            }else {
+                
+                return this.player.champion_mastery
+            }
+            
         }
     }
 

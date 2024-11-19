@@ -18,10 +18,10 @@
           }}</router-link>
         <ul class="ml-4">
           <div >
-            <li v-for="player in sortedPlayers(team.rosters[selectedSeason])" :key="player.player.puuid"
+            <li v-for="player in sortedPlayers(team.rosters[selectedSeason])" :key="player.profile.puuid"
               class="text-gray-700">
-              <span>{{ player.role }}: <router-link :to="`/players/${player.player.puuid}`">{{
-                  player.player.userName}}</router-link></span>
+              <span>{{ player.role }}: <router-link :to="`/players/${player.puuid}`">{{
+                  player.profile.name}}</router-link></span>
             </li>
           </div>
         </ul>
@@ -70,8 +70,8 @@
                   </select>
                   <select v-model="newPlayer"
                     class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <option v-for="player in availablePlayers" :key="player.puuid" :value="player">{{
-                      player.userName }}</option>
+                    <option v-for="player in availablePlayers" :key="player.profile.puuid" :value="player.profile.name">{{
+                      player.profile.name }}</option>
                   </select>
                 </div>
               </div>
@@ -168,6 +168,7 @@ export default {
     const fetchPlayers = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/players`)
+        console.log(response.data)
         availablePlayers.value = response.data
       } catch (error) {
         console.error(error)

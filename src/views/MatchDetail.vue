@@ -7,7 +7,7 @@
         <div class="flex space-x-4 flex-col xl:flex-row">
             <div v-for="(team, i) in match.info.teams" v-bind:key="i">
                 <h2 class="text-center text-xl font-bold">{{ team.name }}</h2>
-                <h3 class="text-center text-lg font-semibold">{{ team.gameOutcome }}</h3>
+                <h3 class="text-center text-lg font-semibold">{{ team.gameOutcome == true ? "VICTORY" : "DEFEAT" }}</h3>
                 <h3 class="text-center text-lg font-semibold">{{ team.score }}</h3>
                 <div class="flex justify-around min-w-full " :class="i % 2 === 0 ? 'reverse-table' : ''">
                     <div class="flex space-x-3" :class="i % 2 === 0 ? 'xl:flex-row-reverse' : 'xl:flex-row'">
@@ -73,6 +73,7 @@
                                                             stroke-linecap="round" />
                                                     </svg>
                                                 </div>
+                                                <div v-else class="h-6"></div>
                                                 <div v-if="player.firstBlood === true" class="">
                                                     <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
                                                         xmlns="http://www.w3.org/2000/svg">
@@ -84,6 +85,7 @@
                                                             stroke-linecap="round" />
                                                     </svg>
                                                 </div>
+                                                <div v-else class="h-6"></div>
                                             </div>
                                         </div>
                                     </td>
@@ -106,13 +108,13 @@
                                     </td>
                                     <td class="py-2 px-2 border-b ">
                                         <span>{{ player.kills }}/{{ player.deaths }}/{{ player.assists }}</span>
-                                        <span class="text-logo-red"> ({{ Math.round(player.killParticipation * 100)
+                                        <span class="text-logo-red"> ({{player.killParticipation
                                             }}%)</span><br />
                                         <span class="text-xs text-logo-blue">{{ player.kda }} KDA</span>
                                     </td>
                                     <td class="py-2 px-2 border-b">
                                         <span>{{ player.goldEarned }}</span><br />
-                                        <span class="text-logo-blue text-xs"> {{ Math.round(player.goldPerMinute)
+                                        <span class="text-logo-blue text-xs"> {{ Math.round(player.gpm)
                                             }} GPM</span>
                                     </td>
                                     <td class="py-2 px-2 border-b">
@@ -122,13 +124,13 @@
                                     </td>
                                     <td class="py-2 px-2 border-b">
                                         <span>{{ player.visionScore }}</span><br />
-                                        <span class="text-logo-blue text-xs"> {{ Math.round(player.visionScorePerMinute)
+                                        <span class="text-logo-blue text-xs"> {{ Math.round(player.vspm)
                                             }}
                                             VsPM</span>
                                     </td>
                                     <td class="py-2 px-2 border-b">
-                                        <span>{{ player.totalDamageDealtToChampions }}</span><br />
-                                        <span class="text-logo-blue text-xs"> {{ Math.round(player.damagePerMinute) }}
+                                        <span>{{ player.dmg }}</span><br />
+                                        <span class="text-logo-blue text-xs"> {{ Math.round(player.dpm) }}
                                             DPM</span>
                                     </td>
                                     <td class="py-2 px-2 border-b">
@@ -215,6 +217,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ChampionIcon from '@/components/ChampionIcon.vue';
 import matchData from '../data/matchData.json'
+import mockMatchData from '../data/mockMatchData.json'
 
 export default {
     name: 'MatchDetail',
@@ -228,18 +231,18 @@ export default {
 
         onMounted(() => {
             // Fetch match details using matchId
-            console.log(matchData)
-            const minutes =  Math.floor(matchData.data.info.gameDuration/60)
-            const seconds = matchData.data.info.gameDuration % 60
-            matchData.data.info.gameDuration = `${minutes}:${seconds}`
+            console.log(mockMatchData)
+            const minutes = Math.floor(mockMatchData.data.info.gameDuration/60)
+            const seconds = mockMatchData.data.info.gameDuration % 60
+            mockMatchData.data.info.gameDuration = `${minutes}:${seconds}`
 
-            matchData.data.info.teams.forEach(team => {
+            mockMatchData.data.info.teams.forEach(team => {
                 team.bans.sort((a, b) =>
                     a.pickTurn - b.pickTurn
                 )
 
             })
-            match.value = matchData.data
+            match.value = mockMatchData.data
         })
 
         return {
