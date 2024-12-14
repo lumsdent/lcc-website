@@ -216,6 +216,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ChampionIcon from '@/components/ChampionIcon.vue';
+import axios from 'axios'
 import matchData from '../data/matchData.json'
 import mockMatchData from '../data/mockMatchData.json'
 
@@ -229,20 +230,21 @@ export default {
         const matchId = ref(route.params.matchId)
         const match = ref(null)
 
-        onMounted(() => {
+        onMounted(async () => {
             // Fetch match details using matchId
-            console.log(mockMatchData)
-            const minutes = Math.floor(mockMatchData.data.info.gameDuration/60)
-            const seconds = mockMatchData.data.info.gameDuration % 60
-            mockMatchData.data.info.gameDuration = `${minutes}:${seconds}`
+            const response = await axios.get(import.meta.env.VITE_API_URL + `/matches/${matchId.value}`)
+            console.log(response)
+            const minutes = Math.floor(response.data.info.gameDuration/60)
+            const seconds = response.data.info.gameDuration % 60
+            response.data.info.gameDuration = `${minutes}:${seconds}`
 
-            mockMatchData.data.info.teams.forEach(team => {
+            response.data.info.teams.forEach(team => {
                 team.bans.sort((a, b) =>
                     a.pickTurn - b.pickTurn
                 )
 
             })
-            match.value = mockMatchData.data
+            match.value = response.data
         })
 
         return {

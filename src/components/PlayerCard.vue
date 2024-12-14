@@ -37,7 +37,6 @@ export default {
                 const champs = this.player.championStats["allTime"]
                 return champs.sort((a, b) => b.gamesPlayed - a.gamesPlayed).slice(0, 3);
             }else {
-                
                 return this.player.champion_mastery
             }
             

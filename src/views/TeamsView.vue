@@ -18,10 +18,10 @@
           }}</router-link>
         <ul class="ml-4">
           <div >
-            <li v-for="player in sortedPlayers(team.rosters[selectedSeason])" :key="player.profile.puuid"
+            <li v-for="player in sortedPlayers(team.rosters[selectedSeason])" :key="player.player.puuid"
               class="text-gray-700">
-              <span>{{ player.role }}: <router-link :to="`/players/${player.puuid}`">{{
-                  player.profile.name}}</router-link></span>
+              <span>{{ player.role }}: <router-link :to="`/players/${player.player.puuid}`">{{
+                  player.player.name}}</router-link></span>
             </li>
           </div>
         </ul>
@@ -48,7 +48,7 @@
       </button>
     </div>
     <p v-if="isError" class="text-red-500">{{ responseMessage }}</p>
-    <!-- Modal -->
+    <!-- Add Player Modal -->
     <div v-if="isModalOpen" class="fixed z-10 inset-0 overflow-y-auto">
       <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -70,7 +70,7 @@
                   </select>
                   <select v-model="newPlayer"
                     class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <option v-for="player in availablePlayers" :key="player.profile.puuid" :value="player.profile.name">{{
+                    <option v-for="player in availablePlayers" :key="player.profile.puuid" :value="player.profile">{{
                       player.profile.name }}</option>
                   </select>
                 </div>
@@ -227,10 +227,11 @@ export default {
 
 
     const addRoleAndPlayer = async () => {
+      console.log(newRole.value, newPlayer.value)
       try {
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/roster/${currentTeamId.value}/${selectedSeason.value}/add`, {
           role: newRole.value,
-          player: {"puuid": newPlayer.value.puuid, "userName": newPlayer.value.userName}
+          player: {"puuid": newPlayer.value.puuid, "name": newPlayer.value.name}
         })
         const updatedTeam = response.data.updatedTeam
         const teamIndex = teams.value.findIndex(t => t.team_name === updatedTeam.team_name)

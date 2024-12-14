@@ -20,17 +20,17 @@ export default {
       <AppHeader message="Welcome to LCC!" />
 
       <nav class="-ml-4 mt-4 py-4 text-left text-base">
-        <StyledRouterLink title="Home" link="/" />
+        
+        <StyledRouterLink title="Schedule" link="/schedule" />
         <StyledRouterLink title="Match Input" link="/match" />
         <StyledRouterLink title="Registration" link="/registration" />
         <StyledRouterLink title="Teams" link="/teams" />
         <StyledRouterLink title="Players" link="/players" />
-
-        <StyledRouterLink title="Draft" link="/draft" />
-        <StyledRouterLink title="Practice" link="/practice" />
         <StyledRouterLink title="Stats" link="/stats" />
-        <StyledRouterLink title="Schedule" link="/schedule" />
-        <StyledRouterLink title="Contact Us" link="/contact" />
+
+        <!-- <StyledRouterLink title="Draft" link="/draft" /> -->
+        <!-- <StyledRouterLink title="Practice" link="/practice" /> -->
+        <!-- <StyledRouterLink title="Contact Us" link="/contact" /> -->
       </nav>
     </div>
   </header>

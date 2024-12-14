@@ -6,7 +6,7 @@
         </div>
 
         <!-- CHAMPION STATS -->
-        <div v-if="player" class="xl:col-span-4 mt-8 overflow-x-auto">
+        <div v-if="player?.championStats" class="xl:col-span-4 mt-8 overflow-x-auto">
             <div>
                 <h3 class="text-xl mb-4">Champion Stats</h3>
                 <button v-for="season in player.seasons" :key="season" @click="selectedSeason = season"
@@ -145,7 +145,7 @@
         </div>
 
         <!-- MATCH DETAILS -->
-        <div class="xl:col-span-5 mt-8 overflow-x-auto">
+        <div v-if="matchDetails" class="xl:col-span-5 mt-8 overflow-x-auto">
             <h2 class="text-xl mb-4">Match Details</h2>
             <div class="">
                 <table class="">
@@ -170,8 +170,8 @@
                                         class="max-w-16 h-8 " :src="`${match.team.image}`" :title="`${match.team.name}`"
                                         :alt="`${match.team.name}`" /></span></td>
                             <td class="py-2 px-2 border-b"><span class="inline-block align-middle text-center"><img
-                                        class="max-w-16 h-8 align-middle" :src="`${match.vs.team.image}`"
-                                        :title="`${match.vs.team.name}`" :alt="`${match.vs.team.name}`" /></span></td>
+                                        class="max-w-16 h-8 align-middle" :src="`${match.vs.teamImage}`"
+                                        :title="`${match.vs.teamName}`" :alt="`${match.vs.teamName}`" /></span></td>
                             <td class="py-2 px-2 border-b">{{ match.team.side }}</td>
                             <td class="py-2 px-2 border-b">{{ match.win ? 'Win' : 'Loss' }}</td>
                             <td class="py-2 px-2 border-b">{{ new Date(match.gameStartTimestamp).toLocaleDateString() }}
@@ -183,8 +183,8 @@
                                 </span>
                                 <span class="inline-block align-middle text-center">VS</span>
                                 <span class="inline-block align-middle">
-                                    <img class="w-8 h-8" :src="`${match.vs.champion.image.square}`"
-                                        :title="`${match.vs.champion.name}`" :alt="`${match.vs.champion.name}`" />
+                                    <img class="w-8 h-8" :src="`${match.vs.championImage.square}`"
+                                        :title="`${match.vs.championName}`" :alt="`${match.vs.championName}`" />
                                 </span>
                             </td>
                             <td class="py-2 px-2 border-b">{{ match.kills }}/{{ match.deaths }}/{{ match.assists }}</td>
@@ -223,6 +223,7 @@
 <script>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 import playerData from '../data/playerData.json'
 import PlayerCard from '@/components/PlayerCard.vue';
 export default {
@@ -248,25 +249,26 @@ export default {
 
         onMounted(async () => {
             try {
-                // const response = await axios.get(`${import.meta.env.VITE_API_URL}/players/${props.puuid}`)
-                const response = playerData
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/players/${props.puuid}`)
+                // const response = playerData
 
                 console.log(response.data)
 
-                const testMatchList = []
-                testMatchList.push(response.data.matches[0])
-                testMatchList.push(response.data.matches[0])
-                testMatchList.push(response.data.matches[0])
-                testMatchList.push(response.data.matches[0])
-                testMatchList.push(response.data.matches[0])
-                testMatchList.push(response.data.matches[0])
-                testMatchList.push(response.data.matches[0])
-                testMatchList.push(response.data.matches[0])
-                testMatchList.push(response.data.matches[0])
-                testMatchList.push(response.data.matches[0])
-                testMatchList.push(response.data.matches[0])
-                testMatchList.push(response.data.matches[0])
-                matchDetails.value = testMatchList
+                // const testMatchList = []
+                // testMatchList.push(response.data.matches[0])
+                // testMatchList.push(response.data.matches[0])
+                // testMatchList.push(response.data.matches[0])
+                // testMatchList.push(response.data.matches[0])
+                // testMatchList.push(response.data.matches[0])
+                // testMatchList.push(response.data.matches[0])
+                // testMatchList.push(response.data.matches[0])
+                // testMatchList.push(response.data.matches[0])
+                // testMatchList.push(response.data.matches[0])
+                // testMatchList.push(response.data.matches[0])
+                // testMatchList.push(response.data.matches[0])
+                // testMatchList.push(response.data.matches[0])
+                // matchDetails.value = testMatchList
+                matchDetails.value = response.data.match_history
                 player.value = response.data
                 console.log(player.value)
             } catch (error) {
