@@ -8,16 +8,25 @@ export default {
       required: true
     }
   },
-  methods: {
-    async login() {
-      try {
-        const response = await axios.get('http://localhost:5000/auth/discord/login');
-        
-        console.log(response.data);
-      } catch (error) {
-        console.error('Error during login:', error);
-      }
+  data() {
+    return {
+      username: ''
     }
+  },
+  methods: {
+    login() {
+      window.location.href = 'http://localhost:5000/auth/discord/login';
+    },
+    async fetchUser() {
+      const response = await axios.get('http://localhost:5000/me');
+      this.username = response.data.username;
+    },
+    async logout() {
+      window.location.href = 'http://localhost:5000/logout';
+    }
+  },
+  mounted() {
+    this.fetchUser();
   }
 }
 </script>
@@ -32,8 +41,15 @@ export default {
       <a href="https://www.youtube.com/@LCCS2" target="_blank" rel="noopener">Youtube</a>. Thanks
       for watching!
     </h3>
-    <button @click="login" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-      Login with Discord
-    </button>
+    <div v-if="username" class="mt-4 text-xl text-logo-blue">
+      Welcome, {{ username }}!
+      <button @click="logout" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+        Logout
+      </button>
+    </div>
+    <div v-else><button @click="login" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+        Login with Discord
+      </button>
+    </div>
   </div>
 </template>
