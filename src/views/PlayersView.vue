@@ -27,24 +27,24 @@ export default {
 
         onMounted(async () => {
             try {
-                // const response = await axios.get(import.meta.env.VITE_API_URL + "/players")
-                // console.log(response.data)
-                // players.value = response.data
-                const response = playerData
-                const playerArray = []
-                playerArray.push(response.data)
-                playerArray.push(response.data)
-                playerArray.push(response.data)
-                playerArray.push(response.data)
-                playerArray.push(response.data)
-                playerArray.push(response.data)
-                playerArray.push(response.data)
-                playerArray.push(response.data)
-                playerArray.push(response.data)
-                playerArray.push(response.data)
-                playerArray.push(response.data)
+                const response = await axios.get(import.meta.env.VITE_API_URL + "/players")
+                console.log(response.data)
+                players.value = response.data
+                // const response = playerData
+                // const playerArray = []
+                // playerArray.push(response.data)
+                // playerArray.push(response.data)
+                // playerArray.push(response.data)
+                // playerArray.push(response.data)
+                // playerArray.push(response.data)
+                // playerArray.push(response.data)
+                // playerArray.push(response.data)
+                // playerArray.push(response.data)
+                // playerArray.push(response.data)
+                // playerArray.push(response.data)
+                // playerArray.push(response.data)
 
-                players.value = playerArray
+                // players.value = playerArray
             } catch (error) {
                 console.error('Error fetching player data:', error)
             }
