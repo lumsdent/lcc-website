@@ -23,11 +23,18 @@ export default {
       window.location.href = import.meta.env.VITE_API_URL + '/auth/discord/login';
     },
     async fetchUser() {
-      const response = await axios.get(import.meta.env.VITE_API_URL + '/me/');
-      console.log(response.data);
-      this.username = response.data.username;
+      // const response = await axios.get(import.meta.env.VITE_API_URL + '/me/');
+      const username = this.getCookie('username')
+      const id = this.getCookie('id')
+
+      this.username = username;
       const admins = await axios.get(import.meta.env.VITE_API_URL + '/players/admins');
-      this.isAdmin = admins.data.some(admin => admin.discord.id === response.data.id);
+      this.isAdmin = admins.data.some(admin => admin.discord.id === id);
+    },
+    getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
     },
     async logout() {
       window.location.href = import.meta.env.VITE_API_URL + '/logout';
