@@ -26,7 +26,7 @@
           </div>
         </ul>
         <div>
-          <button @click="openModal(team.team_name)"
+          <button v-if="isAdmin" @click="openModal(team.team_name)"
             class="mt-2  bg-blue-500 text-white rounded-full focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd"
@@ -39,7 +39,7 @@
     </ul>
     <!-- Add Team Button -->
     <div class="fixed bottom-4 right-4">
-      <button @click="openAddTeamModal" class="p-4 bg-green-500 text-white rounded-full focus:outline-none">
+      <button @click="openAddTeamModal" v-if="isAdmin" class="p-4 bg-green-500 text-white rounded-full focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd"
             d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
@@ -78,7 +78,7 @@
             </div>
           </div>
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <button @click="addRoleAndPlayer" type="button"
+            <button @click="addRoleAndPlayer"  type="button"
               class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
               Add
             </button>
@@ -150,6 +150,7 @@ export default {
     const newTeamSeason = ref('')
     const newTeamName = ref('')
     const roster = ref([])
+    const isAdmin = ref(false)
 
     const fetchTeams = async () => {
       try {
@@ -208,6 +209,12 @@ export default {
       newTeamName.value = ''
     }
 
+    const fetchUser = async () => {
+      const response = await axios.get('http://localhost:5000/me/');
+      const admins = await axios.get('http://localhost:5000/players/admins');
+      isAdmin.value = admins.data.some(admin => admin.discord.id === response.data.id);
+    }
+
     const addTeam = async () => {
       try {
         const response = await axios.post( `${import.meta.env.VITE_API_URL}/teams/${selectedSeason.value}/add`, {
@@ -249,7 +256,8 @@ export default {
     }
 
     onMounted(() => {
-      fetchTeams()
+      fetchTeams();
+      fetchUser();
     })
 
     return {
@@ -275,7 +283,8 @@ export default {
       openAddTeamModal,
       closeAddTeamModal,
       addTeam,
-      roster
+      roster,
+      isAdmin
     }
   }
 }
