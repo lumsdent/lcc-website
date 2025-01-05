@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'
+import StyledRouterLink from './StyledRouterLink.vue'
 export default {
   name: 'AppHeader',
   props: {
@@ -8,9 +9,13 @@ export default {
       required: true
     }
   },
+  components: {
+    StyledRouterLink
+  },
   data() {
     return {
-      username: ''
+      username: '',
+      isAdmin: false
     }
   },
   methods: {
@@ -18,8 +23,11 @@ export default {
       window.location.href = 'http://localhost:5000/auth/discord/login';
     },
     async fetchUser() {
-      const response = await axios.get('http://localhost:5000/me');
+      const response = await axios.get('http://localhost:5000/me/');
+      console.log(response.data);
       this.username = response.data.username;
+      const admins = await axios.get('http://localhost:5000/players/admins');
+      this.isAdmin = admins.data.some(admin => admin.discord.id === response.data.id);
     },
     async logout() {
       window.location.href = 'http://localhost:5000/logout';
@@ -52,4 +60,17 @@ export default {
       </button>
     </div>
   </div>
+  <nav class="-ml-4 mt-4 py-4 text-left text-base">
+
+    <StyledRouterLink title="Schedule" link="/schedule" />
+    <StyledRouterLink v-if="isAdmin" title="Match Input" link="/match" />
+    <StyledRouterLink title="Registration" link="/registration" />
+    <StyledRouterLink title="Teams" link="/teams" />
+    <StyledRouterLink title="Players" link="/players" />
+    <StyledRouterLink title="Stats" link="/stats" />
+
+    <!-- <StyledRouterLink title="Draft" link="/draft" /> -->
+    <!-- <StyledRouterLink title="Practice" link="/practice" /> -->
+    <!-- <StyledRouterLink title="Contact Us" link="/contact" /> -->
+  </nav>
 </template>

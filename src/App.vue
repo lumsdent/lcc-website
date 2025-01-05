@@ -1,13 +1,13 @@
 <script>
 import { RouterView } from 'vue-router'
 import AppHeader from './components/AppHeader.vue'
-import StyledRouterLink from './components/StyledRouterLink.vue'
+
 export default {
   name: 'App',
   components: {
     AppHeader,
     RouterView,
-    StyledRouterLink
+    
   }
 }
 </script>
@@ -18,22 +18,7 @@ export default {
 
     <div class="flex flex-wrap place-items-start">
       <AppHeader message="Welcome to LCC!" />
-
-      <nav class="-ml-4 mt-4 py-4 text-left text-base">
-        
-        <StyledRouterLink title="Schedule" link="/schedule" />
-        <StyledRouterLink title="Match Input" link="/match" />
-        <StyledRouterLink title="Registration" link="/registration" />
-        <StyledRouterLink title="Teams" link="/teams" />
-        <StyledRouterLink title="Players" link="/players" />
-        <StyledRouterLink title="Stats" link="/stats" />
-
-        <!-- <StyledRouterLink title="Draft" link="/draft" /> -->
-        <!-- <StyledRouterLink title="Practice" link="/practice" /> -->
-        <!-- <StyledRouterLink title="Contact Us" link="/contact" /> -->
-      </nav>
     </div>
   </header>
-
   <RouterView />
 </template>
