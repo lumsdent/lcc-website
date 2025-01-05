@@ -20,17 +20,17 @@ export default {
   },
   methods: {
     login() {
-      window.location.href = 'http://localhost:5000/auth/discord/login';
+      window.location.href = import.meta.env.VITE_API_URL + '/auth/discord/login';
     },
     async fetchUser() {
-      const response = await axios.get('http://localhost:5000/me/');
+      const response = await axios.get(import.meta.env.VITE_API_URL + '/me/');
       console.log(response.data);
       this.username = response.data.username;
-      const admins = await axios.get('http://localhost:5000/players/admins');
+      const admins = await axios.get(import.meta.env.VITE_API_URL + '/players/admins');
       this.isAdmin = admins.data.some(admin => admin.discord.id === response.data.id);
     },
     async logout() {
-      window.location.href = 'http://localhost:5000/logout';
+      window.location.href = import.meta.env.VITE_API_URL + '/logout';
     }
   },
   mounted() {
@@ -67,8 +67,8 @@ export default {
     <StyledRouterLink title="Registration" link="/registration" />
     <StyledRouterLink title="Teams" link="/teams" />
     <StyledRouterLink title="Players" link="/players" />
+    
     <!-- <StyledRouterLink title="Stats" link="/stats" /> -->
-
     <!-- <StyledRouterLink title="Draft" link="/draft" /> -->
     <!-- <StyledRouterLink title="Practice" link="/practice" /> -->
     <!-- <StyledRouterLink title="Contact Us" link="/contact" /> -->

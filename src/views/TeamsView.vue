@@ -210,8 +210,8 @@ export default {
     }
 
     const fetchUser = async () => {
-      const response = await axios.get('http://localhost:5000/me/');
-      const admins = await axios.get('http://localhost:5000/players/admins');
+      const response = await axios.get(import.meta.env.VITE_API_URL + '/me/');
+      const admins = await axios.get(import.meta.env.VITE_API_URL + '/players/admins');
       isAdmin.value = admins.data.some(admin => admin.discord.id === response.data.id);
     }
 
