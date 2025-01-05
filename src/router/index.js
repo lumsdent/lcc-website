@@ -44,11 +44,11 @@ const router = createRouter({
       name: 'stats',
       component: () => import('../views/StatsView.vue')
     },
-    {
-      path: '/practice',
-      name: 'practice',
-      component: () => import('../views/PracticeView.vue')
-    },
+    // {
+    //   path: '/practice',
+    //   name: 'practice',
+    //   component: () => import('../views/PracticeView.vue')
+    // },
     {
       path: '/players/:puuid',
       name: 'PlayersView',
