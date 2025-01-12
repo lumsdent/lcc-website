@@ -26,13 +26,18 @@ export default {
       const response = await axios.get(import.meta.env.VITE_API_URL + '/me/');
       console.log(response.data);
 
-      this.username = response.data.username;
+      this.username = this.getCookie('username');
       const admins = await axios.get(import.meta.env.VITE_API_URL + '/players/admins');
       this.isAdmin = admins.data.some(admin => admin.discord.id === response.data.id);
     },
     async logout() {
       window.location.href = import.meta.env.VITE_API_URL + '/logout';
     }
+  },
+  getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
   },
   mounted() {
     this.fetchUser();
