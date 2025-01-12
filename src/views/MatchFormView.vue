@@ -75,6 +75,7 @@ export default {
     }
 
     const submitMatch = async () => {
+      let response = "Something went wrong"
       try {
         const payload = {
           matchId: matchInput.value,
@@ -82,11 +83,11 @@ export default {
           redTeam: redTeam.value,
           password: password.value
         }
-        await axios.post(import.meta.env.VITE_API_URL + '/matches/add', payload)
-        responseMessage.value = 'Match submitted successfully!'
+        response = await axios.post(import.meta.env.VITE_API_URL + '/matches/add', payload)
+        responseMessage.value = response.data.message
         isError.value = false
       } catch (error) {
-        responseMessage.value = 'Error submitting match.'
+        responseMessage.value = response.data.message
         isError.value = true
         console.error('Error submitting match:', error)
       }
