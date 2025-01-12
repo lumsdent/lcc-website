@@ -65,7 +65,7 @@
 
       <div>
         <label class="dark:text-logo-blue mb-2 block text-sm font-medium text-gray-900" for="availability">Common
-          Availability in EST:</label>
+          Availability in EST (Outside of Thursday Nights for team practice):</label>
         <input type="text" id="availability" name="availability" v-model="player.availability"
           class="dark:text-logo-blue block w-full min-w-0 flex-1 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" />
       </div>
@@ -80,7 +80,8 @@
         <input type="checkbox" id="thursdayAvailability" required
           class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
         <label for="thursdayAvailability" class="ml-2 block text-sm text-gray-900 dark:text-logo-blue">
-          I acknowledge that I can play on Thursdays
+          Committing to the LCC is a 4.5 Month, 19 Week Commitment. I acknowledge that I will be available Thursday
+          nights from 7PM-11PM EST from March 6th to June 26th.
         </label>
       </div>
       <input type="submit" value="Register"
