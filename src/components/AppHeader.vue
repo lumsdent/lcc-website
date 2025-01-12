@@ -55,7 +55,7 @@ export default {
       <a href="https://www.youtube.com/@LCCS2" target="_blank" rel="noopener">Youtube</a>. Thanks
       for watching!
     </h3>
-    <div v-if="username" class="mt-4 text-xl text-logo-blue">
+    <!-- <div v-if="username" class="mt-4 text-xl text-logo-blue">
       Welcome, {{ username }}!
       <button @click="logout" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
         Logout
@@ -64,7 +64,7 @@ export default {
     <div v-else><button @click="login" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
         Login with Discord
       </button>
-    </div>
+    </div> -->
   </div>
   <nav class="-ml-4 mt-4 py-4 text-left text-base">
 
