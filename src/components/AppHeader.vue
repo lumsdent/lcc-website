@@ -34,11 +34,6 @@ export default {
       window.location.href = import.meta.env.VITE_API_URL + '/logout';
     }
   },
-  getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  },
   mounted() {
     this.fetchUser();
   }
@@ -69,7 +64,7 @@ export default {
   <nav class="-ml-4 mt-4 py-4 text-left text-base">
 
     <StyledRouterLink title="Schedule" link="/schedule" />
-    <StyledRouterLink v-if="isAdmin" title="Match Input" link="/match" />
+    <StyledRouterLink title="Match Input" link="/match" />
     <StyledRouterLink title="Registration" link="/registration" />
     <StyledRouterLink title="Teams" link="/teams" />
     <StyledRouterLink title="Players" link="/players" />
