@@ -82,7 +82,7 @@ export default {
           redTeam: redTeam.value,
           password: password.value
         }
-        const response = await axios.post(import.meta.env.VITE_API_URL + '/matches/add', payload)
+        await axios.post(import.meta.env.VITE_API_URL + '/matches/add', payload)
         responseMessage.value = 'Match submitted successfully!'
         isError.value = false
       } catch (error) {
