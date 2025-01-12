@@ -57,6 +57,7 @@ export default {
     const teams = ref([])
     const responseMessage = ref('')
     const isError = ref(false)
+    const password = ref('')
 
     const fetchTeams = async () => {
       try {
@@ -78,7 +79,8 @@ export default {
         const payload = {
           matchId: matchInput.value,
           blueTeam: blueTeam.value,
-          redTeam: redTeam.value
+          redTeam: redTeam.value,
+          password: password.value
         }
         const response = await axios.post(import.meta.env.VITE_API_URL + '/matches/add', payload)
         responseMessage.value = 'Match submitted successfully!'
