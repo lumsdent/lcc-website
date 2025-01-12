@@ -30,7 +30,7 @@
     </label>
     <input
       class="block w-full min-w-0 flex-1 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-logo-blue dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-      type="text" v-model="password" placeholder="Enter password" />
+      type="password" v-model="password" placeholder="Enter password" />
 
     <button @click="submitMatch"
       class="hover:bg-logo-blue-5 mt-4 cursor-pointer rounded bg-logo-blue px-4 py-2 font-bold text-logo-white">
@@ -104,7 +104,8 @@ export default {
       teams,
       responseMessage,
       isError,
-      submitMatch
+      submitMatch,
+      password
     }
   }
 }
