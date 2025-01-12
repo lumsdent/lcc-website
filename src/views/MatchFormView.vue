@@ -56,7 +56,7 @@ export default {
     const redTeam = ref('')
     const teams = ref([])
     const responseMessage = ref('')
-    const isError = ref(false)
+    const isError = ref(true)
     const password = ref('')
 
     const fetchTeams = async () => {
@@ -75,7 +75,7 @@ export default {
     }
 
     const submitMatch = async () => {
-      let response = "Something went wrong"
+      let response = ""
       try {
         const payload = {
           matchId: matchInput.value,
@@ -91,6 +91,7 @@ export default {
         isError.value = true
         console.error('Error submitting match:', error)
       }
+      responseMessage.value = response
     }
 
     onMounted(() => {
