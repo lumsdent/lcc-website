@@ -237,7 +237,8 @@ export default {
       try {
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/roster/${currentTeamId.value}/${selectedSeason.value}/add`, {
           role: newRole.value,
-          player: {"puuid": newPlayer.value.puuid, "name": newPlayer.value.name}
+          player: {"puuid": newPlayer.value.puuid, "name": newPlayer.value.name},
+          team_name: currentTeamId.value
         })
         const updatedTeam = response.data.updatedTeam
         const teamIndex = teams.value.findIndex(t => t.team_name === updatedTeam.team_name)
