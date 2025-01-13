@@ -17,7 +17,7 @@
         <router-link :to="`/roster/${team.team_name}`" class="text-blue-500 hover:underline">{{ team.team_name
           }}</router-link>
         <ul class="ml-4">
-          <div >
+          <div>
             <li v-for="player in sortedPlayers(team.rosters[selectedSeason])" :key="player.player.puuid"
               class="text-gray-700">
               <span>{{ player.role }}: <router-link :to="`/players/${player.player.puuid}`">{{
@@ -26,7 +26,7 @@
           </div>
         </ul>
         <div>
-          <button  @click="openModal(team.team_name)"
+          <button @click="openModal(team.team_name)"
             class="mt-2  bg-blue-500 text-white rounded-full focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd"
@@ -39,7 +39,7 @@
     </ul>
     <!-- Add Team Button -->
     <div class="fixed bottom-4 right-4">
-      <button @click="openAddTeamModal"  class="p-4 bg-green-500 text-white rounded-full focus:outline-none">
+      <button @click="openAddTeamModal" class="p-4 bg-green-500 text-white rounded-full focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd"
             d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
@@ -77,8 +77,14 @@
               </div>
             </div>
           </div>
+          <label class="mt-4 mb-2 block text-sm font-medium text-gray-900 dark:text-logo-blue">
+            Enter Password
+          </label>
+          <input
+            class="block w-full min-w-0 flex-1 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-logo-blue dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            type="password" v-model="password" placeholder="Enter password" />
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <button @click="addRoleAndPlayer"  type="button"
+            <button @click="addRoleAndPlayer" type="button"
               class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
               Add
             </button>
@@ -112,9 +118,15 @@
               </div>
             </div>
           </div>
+          <label class="mt-4 mb-2 block text-sm font-medium text-gray-900 dark:text-logo-blue">
+            Enter Password
+          </label>
+          <input
+            class="block w-full min-w-0 flex-1 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-logo-blue dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            type="password" v-model="password" placeholder="Enter password" />
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button @click="addTeam" type="button"
-              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
               Add
             </button>
             <button @click="closeAddTeamModal" type="button"
@@ -136,7 +148,7 @@ export default {
   name: 'TeamsView',
   setup() {
     const seasons = ref(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'])
-    const selectedSeason = ref('2')
+    const selectedSeason = ref('3')
     const teams = ref([])
     const isError = ref(false)
     const responseMessage = ref('')
@@ -150,6 +162,7 @@ export default {
     const newTeamSeason = ref('')
     const newTeamName = ref('')
     const roster = ref([])
+    const password = ref('')
 
     const fetchTeams = async () => {
       try {
@@ -218,7 +231,8 @@ export default {
       try {
         const response = await axios.post( `${import.meta.env.VITE_API_URL}/teams/${selectedSeason.value}/add`, {
           teamName: newTeamName.value,
-          roster: roster.value
+          roster: roster.value,
+          password: password.value
         })
         teams.value = fetchTeams()
         isError.value = false
@@ -238,7 +252,8 @@ export default {
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/roster/${currentTeamId.value}/${selectedSeason.value}/add`, {
           role: newRole.value,
           player: {"puuid": newPlayer.value.puuid, "name": newPlayer.value.name},
-          team_name: currentTeamId.value
+          team_name: currentTeamId.value,
+          password: password.value
         })
         const updatedTeam = response.data.updatedTeam
         const teamIndex = teams.value.findIndex(t => t.team_name === updatedTeam.team_name)
@@ -283,7 +298,8 @@ export default {
       openAddTeamModal,
       closeAddTeamModal,
       addTeam,
-      roster
+      roster,
+      password
     }
   }
 }
