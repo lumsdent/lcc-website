@@ -86,14 +86,11 @@ export default {
         response = await axios.post(import.meta.env.VITE_API_URL + '/matches/add', payload)
         responseMessage.value = response.data.message
         isError.value = false
-        return
       } catch (error) {
-        responseMessage.value = response.data.message
+        responseMessage.value = error.response.data.message
         isError.value = true
         console.error('Error submitting match:', error)
-        return
       }
-      responseMessage.value = response
     }
 
     onMounted(() => {

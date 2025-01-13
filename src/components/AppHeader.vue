@@ -19,23 +19,23 @@ export default {
     }
   },
   methods: {
-    login() {
-      window.location.href = import.meta.env.VITE_API_URL + '/auth/discord/login';
-    },
-    async fetchUser() {
-      const response = await axios.get(import.meta.env.VITE_API_URL + '/me/');
-      console.log(response.data);
+    // login() {
+    //   window.location.href = import.meta.env.VITE_API_URL + '/auth/discord/login';
+    // },
+    // async fetchUser() {
+    //   const response = await axios.get(import.meta.env.VITE_API_URL + '/me/');
+    //   console.log(response.data);
 
-      this.username = this.getCookie('username');
-      const admins = await axios.get(import.meta.env.VITE_API_URL + '/players/admins');
-      this.isAdmin = admins.data.some(admin => admin.discord.id === response.data.id);
-    },
-    async logout() {
-      window.location.href = import.meta.env.VITE_API_URL + '/logout';
-    }
+    //   this.username = this.getCookie('username');
+    //   const admins = await axios.get(import.meta.env.VITE_API_URL + '/players/admins');
+    //   this.isAdmin = admins.data.some(admin => admin.discord.id === response.data.id);
+    // },
+    // async logout() {
+    //   window.location.href = import.meta.env.VITE_API_URL + '/logout';
+    // }
   },
   mounted() {
-    this.fetchUser();
+    // this.fetchUser();
   }
 }
 </script>
