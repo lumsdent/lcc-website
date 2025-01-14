@@ -1,5 +1,4 @@
 <script>
-import axios from 'axios'
 import StyledRouterLink from './StyledRouterLink.vue'
 export default {
   name: 'AppHeader',
@@ -42,11 +41,13 @@ export default {
 
 <template>
   <div>
-    <h1 class="relative mt-10 text-4xl font-medium text-logo-blue">{{ message }}</h1>
-    <h3 class="text-xl">
-      LCC Season 2 is live on
-      <a href="https://www.twitch.tv/jagshockey" target="_blank" rel="noopener">Twitch</a>
-      and vods are available on
+
+    <div>
+      <h1 class="relative mt-10 text-4xl font-medium text-logo-blue">{{ message }}</h1>
+      <h3 class="text-xl">
+        LCC Season 2 is live on
+        <a href="https://www.twitch.tv/jagshockey" target="_blank" rel="noopener">Twitch</a>
+        and vods are available on
       <a href="https://www.youtube.com/@LCCS2" target="_blank" rel="noopener">Youtube</a>. Thanks
       for watching!
     </h3>
@@ -57,21 +58,21 @@ export default {
       </button>
     </div>
     <div v-else><button @click="login" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-        Login with Discord
-      </button>
-    </div> -->
-  </div>
-  <nav class="-ml-4 mt-4 py-4 text-left text-base">
-
-    <StyledRouterLink title="Schedule" link="/schedule" />
-    <StyledRouterLink title="Match Input" link="/match" />
-    <StyledRouterLink title="Registration" link="/registration" />
-    <StyledRouterLink title="Teams" link="/teams" />
-    <StyledRouterLink title="Players" link="/players" />
-    
-    <!-- <StyledRouterLink title="Stats" link="/stats" /> -->
-    <!-- <StyledRouterLink title="Draft" link="/draft" /> -->
-    <!-- <StyledRouterLink title="Practice" link="/practice" /> -->
-    <!-- <StyledRouterLink title="Contact Us" link="/contact" /> -->
-  </nav>
+      Login with Discord
+    </button>
+  </div> -->
+</div>
+<nav class="-ml-4 mt-4 py-4 text-left text-base">
+  
+  <StyledRouterLink title="Schedule" link="/schedule" />
+  <StyledRouterLink title="Registration" link="/registration" />
+  <StyledRouterLink title="Teams" link="/teams" />
+  <StyledRouterLink title="Players" link="/players" />
+  
+  <!-- <StyledRouterLink title="Stats" link="/stats" /> -->
+  <!-- <StyledRouterLink title="Draft" link="/draft" /> -->
+  <!-- <StyledRouterLink title="Practice" link="/practice" /> -->
+  <!-- <StyledRouterLink title="Contact Us" link="/contact" /> -->
+</nav>
+</div>
 </template>

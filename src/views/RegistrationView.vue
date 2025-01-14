@@ -64,17 +64,31 @@
       </div>
 
       <div>
-        <label class="dark:text-logo-blue mb-2 block text-sm font-medium text-gray-900" for="availability">Common
-          Availability in EST (Outside of Thursday Nights for team practice):</label>
-        <input type="text" id="availability" name="availability" v-model="player.availability"
-          class="dark:text-logo-blue block w-full min-w-0 flex-1 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" />
+        <label class="dark:text-logo-blue mb-2 block text-sm font-medium text-gray-900">Common Availability for Practice:</label>
+        <div class="grid grid-cols-2 gap-4">
+          <div v-for="day in days" :key="day">
+            <label class="block text-sm font-medium text-gray-900 dark:text-logo-blue">{{ day }}</label>
+            <div class="flex items-center">
+              <input type="checkbox" :id="`${day}-morning`" v-model="player.availability[day].morning"
+                class="form-checkbox" />
+              <label :for="`${day}-morning`" class="ml-2 text-sm text-gray-900 dark:text-logo-blue">Morning</label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" :id="`${day}-evening`" v-model="player.availability[day].evening"
+                class="form-checkbox" />
+              <label :for="`${day}-evening`" class="ml-2 text-sm text-gray-900 dark:text-logo-blue">Evening</label>
+            </div>
+          </div>
+        </div>
       </div>
+
 
       <div>
         <label class="dark:text-logo-blue mb-2 block text-sm font-medium text-gray-900" for="reason">Tell us about
           yourself</label>
-        <textarea id="reason" name="reason" v-model="player.bio"
+        <textarea id="reason" name="reason" v-model="player.bio" maxlength="500" required
           class="dark:text-logo-blue block w-full min-w-0 flex-1 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"></textarea>
+        <div class="text-right text-sm text-gray-500 dark:text-gray-400">{{ player.bio.length }}/500</div>
       </div>
       <div class="flex items-center">
         <input type="checkbox" id="thursdayAvailability" required
@@ -114,7 +128,15 @@ export default {
       canSub: false,
       primaryRole: '',
       secondaryRole: '',
-      availability: '',
+      availability: {
+        Monday: { morning: false, evening: false },
+        Tuesday: { morning: false, evening: false },
+        Wednesday: { morning: false, evening: false },
+        Thursday: { morning: false, evening: false },
+        Friday: { morning: false, evening: false },
+        Saturday: { morning: false, evening: false },
+        Sunday: { morning: false, evening: false }
+      }
       
     }
 
@@ -126,7 +148,8 @@ export default {
     const discord_id = ref('')
     const discord_username = ref('')
     const discord_avatar = ref('')
-    
+    const days = ["Monday", "Tuesday", "Wednesday", "Friday", "Saturday", "Sunday"]
+
     const checkAuthentication = async () => {
       try {
         const response = await axios.get(import.meta.env.VITE_API_URL + '/me')
@@ -169,7 +192,8 @@ export default {
       responseMessage,
       isError,
       submitForm,
-      isAuthenticated
+      isAuthenticated,
+      days
     }
   }
 }

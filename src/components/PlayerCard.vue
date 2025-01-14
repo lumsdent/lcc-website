@@ -1,28 +1,88 @@
 <template>
 
-    <div v-if="player"
-        class="border border-gray-300 max-w-sm rounded-lg p-4 text-center max-h-fit justify-center min-w-fit">
-        <img :src="player.profile.images.icon" alt="Profile Picture" class="w-full h-auto rounded-full" />
+    <div v-if="player" class="border border-gray-300 rounded-lg p-4 text-center max-h-fit justify-center min-w-fit">
+        <img :src="`${DDRAGON_URL}${player.profile.images.icon}`" alt="Profile Picture"
+            class="w-full h-auto rounded-full" />
         <h2 class="mt-4 mb-2 text-xl">{{ player.profile.name }}</h2>
         <p class="text-gray-600">{{ player.profile.level }}</p>
-        <h3 class="mt-4 mb-2 text-l">Current Team</h3>
+        <div class="flex justify-center mt-4 space-x-2 min-h-8">
+            <div>
+
+                <TopSvg class="w-8 h-8" v-if="player.profile.primary_role == 'TOP'" />
+                <JungleSvg class="w-8 h-8" v-if="player.profile.primary_role == 'JUNGLE'" />
+                <MiddleSvg class="w-8 h-8" v-if="player.profile.primary_role == 'MID'" />
+                <BotSvg class="w-8 h-8" v-if="player.profile.primary_role == 'ADC'" />
+                <SupportSvg class="w-8 h-8" v-if="player.profile.primary_role == 'SUPPORT'" />
+
+            </div>
+            <div>
+
+                <TopSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'TOP'" />
+                <JungleSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'JUNGLE'" />
+                <MiddleSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'MID'" />
+                <BotSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'ADC'" />
+                <SupportSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'SUPPORT'" />
+
+
+            </div>
+        </div>
+        <!-- <h3 class="mt-4 mb-2 text-l">Current Team</h3>
         <div v-if="player.teams">
             <p class="mt-4">{{ Object.values(player.teams[player.teams.length - 1])[0].name }}</p>
         </div>
         <div v-else>
             <p class="mt-4">New Player</p>
-        </div>
+        </div> -->
+        <h3 class="mt-4 mb-2 text-l">Most Played</h3>
         <div class="flex justify-center mt-4 space-x-2">
-            <img v-for="champ in favoriteChampions" :key="champ.name" :src="champ.image.square"
+            <img v-for="champ in favoriteChampions" :key="champ.name" :src="`${DDRAGON_URL}${champ.image.square}`"
                 :alt="`Champion icon: ${champ.name}`" class="w-12 h-12 rounded-full" />
         </div>
-        <p class="mt-4">{{ player.profile.bio }}</p>
+        <div class="min-h-48 flex items-center justify-center">
+            <p v-if="player.profile.bio" class="mt-4">{{ player.profile.bio }}</p>
+            <p v-else class="mt-4">This player has played before but has not registered for the current season</p>
+        </div>
+        <div v-if="player.profile.availability">
+            
+            <h3 class="mt-4 mb-2 text-l">Availability</h3>
+            <table class="table-auto mx-auto">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th v-for="day in days" :key="day" class="px-2 py-2">{{ day.slice(0,3) }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="px-2 py-2">AM</td>
+                        <td v-for="day in days" :key="`${day}-morning`" class="px-2 py-2">
+                        <div :class="{ 'bg-green-500': player.profile.availability[day].morning, 'bg-gray-200': !player.profile.availability[day].morning }"
+                        class="w-4 h-4 mx-auto rounded"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="px-2 py-2">PM</td>
+                    <td v-for="day in days" :key="`${day}-evening`" class="px-2 py-2">
+                        <div :class="{ 'bg-green-500': player.profile.availability[day].evening, 'bg-gray-200': !player.profile.availability[day].evening }"
+                            class="w-4 h-4 mx-auto rounded"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
         <a :href="`https://www.op.gg/summoners/na/${player.profile.name}-${player.profile.tag}`" target="_blank"
-            rel="noopener noreferrer" class="block mt-4 text-blue-500" @click.stop>OP.GG</a>
+        rel="noopener noreferrer" class="block mt-4 text-blue-500" @click.stop>OP.GG</a>
     </div>
 </template>
 
 <script>
+import { DDRAGON_URL } from '@/config.js';
+import BotSvg from '@/components/lanes/BotSvg.vue'
+import TopSvg from '@/components/lanes/TopSvg.vue'
+import SupportSvg from '@/components/lanes/SupportSvg.vue'
+import MiddleSvg from '@/components/lanes/MiddleSvg.vue'
+import JungleSvg from '@/components/lanes/JungleSvg.vue'
+
 export default {
     name: 'PlayerCard',
     props: {
@@ -30,7 +90,15 @@ export default {
             type: [Object,null],
             required: true
         }
-    },  
+    },
+    components: {
+        BotSvg,
+        TopSvg,
+        SupportSvg,
+        MiddleSvg,
+        JungleSvg
+
+    },
     computed: {
         favoriteChampions() {
             if(this.player.championStats) {
@@ -40,6 +108,14 @@ export default {
                 return this.player.champion_mastery
             }
             
+        },
+        days() {
+            return ["Monday", "Tuesday", "Wednesday", "Friday", "Saturday", "Sunday"];
+        }
+    },
+    data() {
+        return {
+            DDRAGON_URL
         }
     }
 

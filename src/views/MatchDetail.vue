@@ -92,7 +92,7 @@
                                     <td class="py-2 px-2 border-b">
                                         <span v-if="player.summonerSpells" class="flex w-6 h-6">
                                             <img v-for="spell in player.summonerSpells" v-bind:key="spell.name"
-                                                :src="spell.image">
+                                                :src="`${DDRAGON_URL}${spell.image}`">
                                         </span>
                                     </td>
                                     <td class="py-2 px-2 border-b">
@@ -136,7 +136,7 @@
                                     <td class="py-2 px-2 border-b">
                                         <div v-if="player.build" class="grid grid-cols-3 gap-1">
                                             <img class="w-6 h-6" v-for="item in player.build" v-bind:key="item.name"
-                                                :src="item.image">
+                                                :src="getItemImageUrl(item.image)">
                                         </div>
                                     </td>
                                 </tr>
@@ -192,7 +192,7 @@
                             <h3 class=" text-lg font-semibold">Bans</h3>
                         </div>
                         <div class="flex justify-center items-center">
-                            <img v-for="ban in team.bans" :key="ban.pickTurn" :src="ban.image.square"
+                            <img v-for="ban in team.bans" :key="ban.pickTurn" :src="`${DDRAGON_URL}${ban.image.square}`"
                                 class="w-10 h-10 rounded-full m-1 grayscale">
                         </div>
                     </div>
@@ -217,8 +217,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ChampionIcon from '@/components/ChampionIcon.vue';
 import axios from 'axios'
-import matchData from '../data/matchData.json'
-import mockMatchData from '../data/mockMatchData.json'
+import { DDRAGON_URL } from '@/config.js';
 
 export default {
     name: 'MatchDetail',
@@ -227,29 +226,36 @@ export default {
     },
     setup() {
         const route = useRoute()
-        const matchId = ref(route.params.matchId)
+        const matchId = ref(route.params.matchId.replace(/^NA1_/, ''))
         const match = ref(null)
 
         onMounted(async () => {
             // Fetch match details using matchId
             const response = await axios.get(import.meta.env.VITE_API_URL + `/matches/${matchId.value}`)
             console.log(response)
-            const minutes = Math.floor(response.data.info.gameDuration/60)
-            const seconds = response.data.info.gameDuration % 60
-            response.data.info.gameDuration = `${minutes}:${seconds}`
+            const data = response.data.data
+            const minutes = Math.floor(data.info.gameDuration/60)
+            const seconds = data.info.gameDuration % 60
+            data.info.gameDuration = `${minutes}:${seconds}`
 
-            response.data.info.teams.forEach(team => {
+            data.info.teams.forEach(team => {
                 team.bans.sort((a, b) =>
                     a.pickTurn - b.pickTurn
                 )
 
             })
-            match.value = response.data
+            match.value = data
         })
+
+        const getItemImageUrl = (image) => {
+            return image.startsWith('http') ? image : `${DDRAGON_URL}${image}`
+        }
 
         return {
             matchId,
-            match
+            match,
+            DDRAGON_URL,
+            getItemImageUrl
         }
     }
 }

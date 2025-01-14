@@ -1,0 +1,1 @@
+export const DDRAGON_URL = 'https://ddragon.leagueoflegends.com/cdn/15.1.1'

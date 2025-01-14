@@ -75,6 +75,7 @@ export default {
     }
 
     const submitMatch = async () => {
+      responseMessage.value = ""
       let response = ""
       try {
         const payload = {
