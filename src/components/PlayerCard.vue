@@ -45,9 +45,9 @@
             <p v-if="player.profile.bio" class="mt-4 text-gray-400">{{ player.profile.bio }}</p>
             <p v-else class="mt-4 text-gray-400">This player has played before but has not registered for the current season</p>
         </div>
+        <h3 class="mt-4 mb-2 text-lg text-logo-blue">Availability</h3>
         <div v-if="player.profile.availability">
             
-            <h3 class="mt-4 mb-2 text-lg text-logo-blue">Availability</h3>
             <table class="table-auto mx-auto">
                 <thead>
                     <tr>
@@ -72,6 +72,9 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div v-else>
+        <p class="mt-4 text-gray-400 h-28">This player has not set their availability</p>
     </div>
         <a :href="`https://www.op.gg/summoners/na/${player.profile.name}-${player.profile.tag}`" target="_blank"
         rel="noopener noreferrer" class="block mt-4 text-blue-500" @click.stop>OP.GG</a>

@@ -86,6 +86,10 @@
                 </table>
             </div>
         </div>
+        <div v-else class="xl:col-span-3 mt-8 overflow-x-auto">
+            <h2 class="text-xl mb-4">Match Details</h2>
+            <p>No match history available</p>
+        </div>
     </div>
 
 </template>

@@ -6,7 +6,7 @@
                 <span class="ml-2">Show Active Players Only</span>
             </label>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <RouterLink v-for="player in filteredPlayers" :key="player.profile.puuid" :to="`players/${player.profile.puuid}`"
                 class="block">
                 <PlayerCard :player="player" />
