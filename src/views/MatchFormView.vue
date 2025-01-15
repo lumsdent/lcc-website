@@ -59,7 +59,7 @@
 
 <script>
 import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { SEASONS } from '@/config.js'
 
 export default {
@@ -75,9 +75,15 @@ export default {
     const password = ref('')
     const isLoading = ref(false)
 
+    watch(selectedSeason, (newSeason) => {
+      if (newSeason) {
+        fetchTeams(newSeason)
+      }
+    })
+
     const fetchTeams = async () => {
       try {
-        const response = await axios.get(import.meta.env.VITE_API_URL + '/teams/3')
+        const response = await axios.get(import.meta.env.VITE_API_URL + '/teams/' + selectedSeason.value)
         const teamsArr = []
         response.data.forEach(team => {
           teamsArr.push(team.team_name)
@@ -119,9 +125,6 @@ export default {
       }
     }
 
-    onMounted(() => {
-      fetchTeams()
-    })
 
     return {
       matchInput,
