@@ -61,7 +61,7 @@
                             <td class="py-2 px-2 border-b whitespace-nowrap">
                                 <span v-for="item in match.build" :key="item"
                                     class="inline-block text-center align-middle">
-                                    <img class="w-8 h-8 align-middle" :src="`${DDRAGON_URL}${item.image}`"
+                                    <img class="w-8 h-8 align-middle" :src="getItemImageUrl(item.image)"
                                         :title="`${item.name}`" :alt="`${item.name}`" />
                                 </span>
                             </td>
@@ -121,6 +121,10 @@ export default {
             router.push(`/match/${matchId}`)
         }
 
+        const getItemImageUrl = (image) => {
+            return image.startsWith('http') ? image : `${DDRAGON_URL}${image}`
+        }
+
         onMounted(async () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_URL}/players/${props.puuid}`)
@@ -140,7 +144,8 @@ export default {
             matchDetails,
             goToMatchDetail,
             selectedSeason,
-            DDRAGON_URL
+            DDRAGON_URL,
+            getItemImageUrl
         }
     }
 }

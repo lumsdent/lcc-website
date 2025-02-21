@@ -15,6 +15,7 @@
                 <MiddleSvg class="w-8 h-8" v-if="player.profile.primary_role == 'MID'" />
                 <BotSvg class="w-8 h-8" v-if="player.profile.primary_role == 'ADC'" />
                 <SupportSvg class="w-8 h-8" v-if="player.profile.primary_role == 'SUPPORT'" />
+                <FlexSvg class="w-8 h-8" v-if="player.profile.primary_role == 'FLEX'" />
 
             </div>
             <div>
@@ -24,6 +25,7 @@
                 <MiddleSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'MID'" />
                 <BotSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'ADC'" />
                 <SupportSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'SUPPORT'" />
+                <FlexSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'FLEX'" />
 
 
             </div>
@@ -88,6 +90,7 @@ import TopSvg from '@/components/lanes/TopSvg.vue'
 import SupportSvg from '@/components/lanes/SupportSvg.vue'
 import MiddleSvg from '@/components/lanes/MiddleSvg.vue'
 import JungleSvg from '@/components/lanes/JungleSvg.vue'
+import FlexSvg from '@/components/lanes/FlexSvg.vue';
 
 export default {
     name: 'PlayerCard',
@@ -102,7 +105,8 @@ export default {
         TopSvg,
         SupportSvg,
         MiddleSvg,
-        JungleSvg
+        JungleSvg,
+        FlexSvg
 
     },
     computed: {

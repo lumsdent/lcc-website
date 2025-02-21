@@ -1,8 +1,15 @@
 <template>
   <div class="p-4">
-    <!-- Season selector remains the same -->
     <div class="mb-4 flex flex-col items-center">
-      <!-- ...existing season selection code... -->
+      <label class="block text-sm font-medium text-gray-700 mb-2">Select Season:</label>
+      <div class="flex space-x-2">
+        <button v-for="season in seasons" :key="season.id" @click="selectSeason(season.id)" :title="season.name" :class="{
+          'bg-blue-500 text-white': season.id === selectedSeason,
+          'bg-gray-200 text-gray-700': season.id !== selectedSeason
+        }" class="px-4 py-2 rounded-md focus:outline-none">
+          {{ season.id }}
+        </button>
+      </div>
     </div>
 
     <div class="container mx-auto">
@@ -103,7 +110,7 @@
         </label>
         <input class="w-full p-2 border rounded-md mb-4 text-black" v-model="newTeamName"
           placeholder="Enter Team Name" />
-        
+
         <!-- Team Image Selection -->
         <label class="mt-4 mb-2 block text-sm font-medium text-logo-blue">
           Select Team Image
@@ -138,6 +145,7 @@
 <script>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import { SEASONS } from '@/config.js'
 
 export default {
   name: 'TeamsView',
@@ -263,6 +271,11 @@ export default {
       }
     }
 
+    const selectSeason = (season) => {
+      selectedSeason.value = season
+      fetchTeams()
+    }
+
     return {
       roles,
       isAssignModalOpen,
@@ -284,7 +297,9 @@ export default {
       addTeam,
       newTeamName,
       teamImages,
-      selectedImage
+      selectedImage,
+      seasons: SEASONS,
+      selectSeason
     }
   }
 }
