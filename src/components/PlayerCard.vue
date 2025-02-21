@@ -78,7 +78,7 @@
                 </div>
             </div>
                 <div class="flex justify-center space-x-4 mt-4">
-                    <a :href="`https://www.op.gg/summoners/na/${player.profile.name}`" target="_blank"
+                    <a :href="`https://www.op.gg/summoners/na/${player.profile.name}-${player.profile.tag}`" target="_blank"
                         class="px-4 py-2 bg-logo-blue text-white rounded hover:bg-blue-500 transition-colors">
                         OP.GG
                     </a>
