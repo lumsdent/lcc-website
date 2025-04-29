@@ -12,6 +12,11 @@ const router = createRouter({
     {
       path: '/match',
       name: 'match',
+      component: () => import('../views/MatchFormView.vue')
+    },
+    {
+      path: '/matches',
+      name: 'matches',
       component: () => import('../views/MatchView.vue')
     },
     {
