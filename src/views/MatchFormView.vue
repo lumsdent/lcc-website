@@ -59,7 +59,7 @@
 
 <script>
 import axios from 'axios'
-import { ref, onMounted, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { SEASONS } from '@/config.js'
 
 export default {

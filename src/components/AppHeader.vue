@@ -69,9 +69,9 @@ export default {
   <StyledRouterLink title="Teams" link="/teams" />
   <StyledRouterLink title="Players" link="/players" />
   
+  <StyledRouterLink title="Matches" link="/match" />
   <StyledRouterLink title="Stats" link="/stats" />
   <!-- <StyledRouterLink title="Draft" link="/draft" /> -->
-  <!-- <StyledRouterLink title="Practice" link="/practice" /> -->
   <!-- <StyledRouterLink title="Contact Us" link="/contact" /> -->
 </nav>
 </div>
