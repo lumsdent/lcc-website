@@ -69,7 +69,7 @@ export default {
   <StyledRouterLink title="Teams" link="/teams" />
   <StyledRouterLink title="Players" link="/players" />
   
-  <!-- <StyledRouterLink title="Stats" link="/stats" /> -->
+  <StyledRouterLink title="Stats" link="/stats" />
   <!-- <StyledRouterLink title="Draft" link="/draft" /> -->
   <!-- <StyledRouterLink title="Practice" link="/practice" /> -->
   <!-- <StyledRouterLink title="Contact Us" link="/contact" /> -->
