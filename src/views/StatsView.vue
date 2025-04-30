@@ -7,12 +7,9 @@
       <div class="flex items-center">
         <label class="mr-2">Sort by:</label>
         <select v-model="sortBy" class="border bg-gray-800 rounded px-2 py-1 mr-4">
-          <option value="playerName">Player Name</option>
-          <option value="kda">KDA</option>
-          <option value="winRate">Win Rate</option>
-          <option value="avgDamage">Avg Damage</option>
-          <option value="avgCS">Avg CS</option>
-          <option value="games">Games Played</option>
+          <option v-for="column in availableColumns" :key="column.key" :value="column.key">
+            {{ column.label }}
+          </option>
         </select>
         <button @click="sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'" class="border rounded px-3 py-1">
           {{ sortDirection === 'asc' ? '↑' : '↓' }}
@@ -129,7 +126,8 @@
                 </span>
 
                 <!-- Fixed decimal values -->
-                <span v-else-if="['csm', 'dpm', 'gpm', 'avgCs14', 'minutesPlayed', 'avgCS', 'avgSoloKills', 'avgHealShield', 'avgDamageTaken', 'avgGameTime'].includes(column.key)">
+                <span
+                  v-else-if="['csm', 'dpm', 'gpm', 'avgCs14', 'minutesPlayed', 'avgCS', 'avgSoloKills', 'avgHealShield', 'avgDamageTaken', 'avgGameTime'].includes(column.key)">
                   {{ player[column.key]?.toFixed(1) }}
                 </span>
 
