@@ -122,28 +122,29 @@ export default {
           // Map team names to logo paths
           const teamLogos = {
               // PNG logos
-              'Bandle City Buckaroos': '/src/assets/teams/Bandle_City_Buckaroos.png',
-              'Bilgewater Bullets': '/src/assets/teams/Bilgewater_Bullets_Logo.png',
-              'Demacia Justice': '/src/assets/teams/Demacian_Justice_Logo.png',
-              'Freljord Frost': '/src/assets/teams/Frejlord_Frost_Logo.png',
-              'Noxian Gladiators': '/src/assets/teams/Noxian_Gladiators_Logo.png',
-              'Piltover Progress': '/src/assets/teams/Piltover_Progress_Logo.png',
-              'Shurima Scorch': '/src/assets/teams/Shuriman_Scorch_Logo.png',
-              'Targon Titans': '/src/assets/teams/Targon_Titans_Logo.png',
-              'Zaun Plague': '/src/assets/teams/Zaun_Plague.png',
+              'Bandle City Buckaroos': 'Bandle_City_Buckaroos.png',
+              'Bilgewater Bullets': '/Bilgewater_Bullets_Logo.png',
+              'Demacia Justice': 'Demacian_Justice_Logo.png',
+              'Freljord Frost': 'Frejlord_Frost_Logo.png',
+              'Noxus Gladiators': 'Noxian_Gladiators_Logo.png',
+              'Piltover Progress': 'Piltover_Progress_Logo.png',
+              'Shurima Scorch': 'Shuriman_Scorch_Logo.png',
+              'Targon Titans': 'Targon_Titans_Logo.png',
+              'Zaun Plague': 'Zaun_Plague.png',
 
               // SVG logos
-              'Discord Kittens': '/src/assets/teams/Discord Kittens Logo.svg',
-              'Gets On Base': '/src/assets/teams/Gets On Base Logo.svg',
-              'League of Liquor': '/src/assets/teams/League of Liquor Logo.svg',
-              'M.A.A.': '/src/assets/teams/M.A.A. Logo.svg',
-              'S.G.I.': '/src/assets/teams/S.G.I. Logo.svg',
-              'Team Bell': '/src/assets/teams/Team Bell Logo.svg',
-              'Team Hospitalized': '/src/assets/teams/Team Hospitalized Logo.svg',
+              'Discord Kittens': 'Discord Kittens Logo.svg',
+              'Gets On Base': 'Gets On Base Logo.svg',
+              'League of Liquor': 'League of Liquor Logo.svg',
+              'M.A.A.': 'M.A.A. Logo.svg',
+              'S.G.I.': 'S.G.I. Logo.svg',
+              'Team Bell': 'Team Bell Logo.svg',
+              'Team Hospitalized': 'Team Hospitalized Logo.svg',
 
           }
-
-          return teamLogos[teamName] || '/assets/teams/Default_Team_Logo.png' // Default logo if team not found
+  
+          return new URL(`../assets/teams/${teamLogos[teamName]}`, import.meta.url).href
+        
       }
       
 
