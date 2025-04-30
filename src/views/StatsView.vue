@@ -167,7 +167,7 @@ export default {
     const loading = ref(true)
     const router = useRouter()
     const players = ref([])
-    const sortBy = ref('kda')
+    const sortBy = ref('winRate')
     const sortDirection = ref('desc')
     const showColumnSelector = ref(false)
     
