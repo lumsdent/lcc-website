@@ -143,7 +143,7 @@
 
                 <!-- Kill participation percentage -->
                 <span v-else-if="column.key === 'killParticipation'">
-                  {{ player.killParticipationPercentage }}%
+                  {{ player.killParticipationPercentage.toFixed(2) }}%
                 </span>
 
                 <!-- Default display for other columns -->
