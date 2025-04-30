@@ -106,7 +106,7 @@
                 <div class="w-full bg-gray-200 rounded-full h-4">
                   <div class="bg-blue-600 h-4 rounded-full" :style="`width: ${player.winRate}%`"></div>
                 </div>
-                <span class="text-xs">{{ player.winRate }}%</span>
+                <span class="text-xs">{{ player.winRate.toFixed(2) }}%</span>
               </div>
 
               <!-- K/D/A Column -->
@@ -129,7 +129,7 @@
                 </span>
 
                 <!-- Fixed decimal values -->
-                <span v-else-if="['csm', 'dpm', 'gpm', 'minutesPlayed', 'avgGameTime'].includes(column.key)">
+                <span v-else-if="['csm', 'dpm', 'gpm', 'avgCs14', 'minutesPlayed', 'avgCS', 'avgSoloKills', 'avgHealShield', 'avgDamageTaken', 'avgGameTime'].includes(column.key)">
                   {{ player[column.key]?.toFixed(1) }}
                 </span>
 
