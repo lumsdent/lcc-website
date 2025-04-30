@@ -167,7 +167,7 @@ export default {
     const loading = ref(true)
     const router = useRouter()
     const players = ref([])
-    const sortBy = ref('winRate')
+    const sortBy = ref('games')
     const sortDirection = ref('desc')
     const showColumnSelector = ref(false)
     
