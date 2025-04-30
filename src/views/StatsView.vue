@@ -49,7 +49,13 @@
       </div>
     </div>
 
-    <div class="overflow-x-auto">
+    <!-- Loading Indicator -->
+    <div v-if="loading" class="flex flex-col items-center justify-center py-12">
+      <div class="w-16 h-16 border-4 border-logo-blue border-t-transparent rounded-full animate-spin mb-4"></div>
+      <p class="text-gray-400">Loading player statistics...</p>
+    </div>
+
+    <div v-else class="overflow-x-auto">
       <table class="min-w-full border border-gray-300 shadow-sm rounded-lg">
         <thead>
           <tr>
@@ -158,6 +164,7 @@ import { useRouter } from 'vue-router'
 export default {
   name: 'TeamStatsView',
   setup() {
+    const loading = ref(true)
     const router = useRouter()
     const players = ref([])
     const sortBy = ref('kda')
@@ -272,6 +279,7 @@ export default {
 
     const loadData = async () => {
       try {
+        loading.value = true
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/matches/stats/season/3`)
 
         console.log(response.data)
@@ -279,6 +287,8 @@ export default {
        players.value = response.data
       } catch (error) {
         console.error('Error fetching player data:', error)
+      } finally {
+        loading.value = false
       }
     }
     
@@ -335,7 +345,7 @@ export default {
       'Demacia Justice': '#fecd0b', 
       'Zaun Plague': '#00d600',
       'Targon Titans': '#7e017e',
-      'Noxus Gladiators': '#c63736',
+      'Noxian Gladiators': '#c63736',
       'Team Hospitalized': '#e24444',
     };
 
@@ -382,7 +392,8 @@ export default {
       toggleColumn,
       isColumnVisible,
       visibleColumns,
-      formatTime
+      formatTime,
+      loading
     }
   }
 }
