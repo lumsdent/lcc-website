@@ -27,7 +27,7 @@
                         </tr>
                     </thead>
                     <tbody class="">
-                        <tr v-for="match in matchDetails" :key="match.matchId" class="text-center align-middle cursor-pointer
+                        <tr v-for="(match, index) in matchDetails" :key="match.matchId" class="text-center align-middle cursor-pointer
                             hover:bg-indigo" @click="goToMatchDetail(match.matchId)">
                             <td class="py-2 px-2 border-b">
                                 <!-- <span class="inline-block align-middle text-center">
@@ -80,7 +80,19 @@
                                 <a :href="`${match.vod}`" target="_blank" rel="noopener noreferrer"
                                     class="text-blue-500">VOD</a>
                             </td>
-
+                            <!-- TEMPORARY -->
+                            <td class="py-2 px-2 border-b" @click.stop>
+                                <button class="p-1 text-red-500 hover:text-red-300 focus:outline-none"
+                                    @click="deleteMatch(index)" title="Delete match record">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </td>
+                            <!-- END TEMPORARY -->
                         </tr>
                     </tbody>
                 </table>
@@ -139,13 +151,40 @@ export default {
             }
         })
 
+        const deleteMatch = async (index) => {
+            try {
+            
+                const response = await axios.delete(
+                    `${import.meta.env.VITE_API_URL}/players/${props.puuid}/delete`,
+                    {
+                        data: {
+                            puuid: props.puuid,
+                            index: index
+                        }
+                    }
+                );
+
+                if (response.status === 200) {
+                    // Remove the match from the local array
+                    matchDetails.value.splice(index, 1);
+                    alert('Match deleted successfully');
+                } else {
+                    alert('Failed to delete match');
+                }
+            } catch (error) {
+                console.error('Error deleting match:', error);
+                alert('An error occurred while deleting the match');
+            }
+        }
+
         return {
             player,
             matchDetails,
             goToMatchDetail,
             selectedSeason,
             DDRAGON_URL,
-            getItemImageUrl
+            getItemImageUrl,
+            deleteMatch
         }
     }
 }
