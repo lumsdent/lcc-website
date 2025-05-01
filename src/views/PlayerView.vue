@@ -81,7 +81,7 @@
                                     class="text-blue-500">VOD</a>
                             </td>
                             <!-- TEMPORARY -->
-                            <td class="py-2 px-2 border-b" @click.stop>
+                            <!-- <td class="py-2 px-2 border-b" @click.stop>
                                 <button class="p-1 text-red-500 hover:text-red-300 focus:outline-none"
                                     @click="deleteMatch(index)" title="Delete match record">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
@@ -91,7 +91,7 @@
                                             clip-rule="evenodd" />
                                     </svg>
                                 </button>
-                            </td>
+                            </td> -->
                             <!-- END TEMPORARY -->
                         </tr>
                     </tbody>
