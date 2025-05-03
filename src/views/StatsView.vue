@@ -52,31 +52,41 @@
       <p class="text-gray-400">Loading player statistics...</p>
     </div>
 
-    <div v-else class="overflow-x-auto">
-      <table class="min-w-full border border-gray-300 shadow-sm rounded-lg">
+    <div v-else class="overflow-x-auto overflow-y-auto max-h-[80vh]">
+      <table class="min-w-full shadow-sm rounded-lg">
         <thead>
           <tr>
-            <th v-for="column in visibleColumns" :key="column.key" class="py-3 px-4 border-b"
-              :class="column.align === 'center' ? 'text-center' : 'text-left'">
-              {{ column.label }}
+            <th v-for="column in visibleColumns" :key="column.key"
+              class="py-3 px-4 sticky top-0 bg-off-blue z-10" :class="[
+                column.align === 'center' ? 'text-center' : 'text-left',
+                column.key === 'playerName' ? 'sticky left-0 z-20' : ''
+              ]">
+              <div class=" flex items-center"
+                :class="column.align === 'center' ? 'justify-center' : ''">
+                {{ column.label }}
+                
+              </div>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="player in sortedPlayers" :key="player.puuid" class="hover:bg-gray-800 border-b cursor-pointer"
-            @click="navigateToPlayer(player.puuid)">
+          <tr v-for="player in sortedPlayers" :key="player.puuid"
+            class="hover:bg-gray-800 cursor-pointer" @click="navigateToPlayer(player.puuid)">
 
             <!-- Render all columns in order as defined by availableColumns -->
-            <td v-for="column in visibleColumns" :key="column.key" class="py-3 px-4"
-              :class="column.align === 'center' ? 'text-center' : ''">
+            <td v-for="column in visibleColumns" :key="column.key" class="" :class="[
+              column.align === 'center' ? 'text-center' : '',
+  column.key === 'playerName' ? 'sticky left-0 z-10 ' : 'py-3 px-4'
+            ]">
 
               <!-- Player Name Column -->
-              <div v-if="column.key === 'playerName'" class="font-medium text-logo-blue">
+              <div v-if="column.key === 'playerName'" class="font-medium text-logo-blue p-4 bg-dark-blue">
                 {{ player.playerName }}
               </div>
 
               <!-- Team Column -->
-              <div v-else-if="column.key === 'team'" class="font-medium" :style="{ color: getTeamColor(player.team) }">
+              <div v-else-if="column.key === 'team'" class="font-medium w-48"
+                :style="{ color: getTeamColor(player.team) }">
                 {{ player.team }}
               </div>
 
@@ -398,5 +408,50 @@ export default {
 </script>
 
 <style scoped>
-/* Any additional styles can go here */
+/* Only needed for hover state consistency with sticky column */
+tr:hover td[class*="sticky"] div {
+  background-color: rgb(31 41 55);
+  /* Tailwind's bg-gray-800 */
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2937;
+  /* bg-gray-800 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  /* bg-gray-700 */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+  /* bg-gray-600 */
+}
+
+::-webkit-scrollbar-corner {
+  background: #1f2937;
+  /* bg-gray-800 */
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #374151 #1f2937;
+  /* thumb track */
+}
+
+/* Ensure the corners look good when both scrollbars are visible */
+.overflow-x-auto.overflow-y-auto {
+  scrollbar-gutter: stable;
+}
+
+
+
 </style>
