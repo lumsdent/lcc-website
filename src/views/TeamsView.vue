@@ -157,7 +157,7 @@ export default {
     const selectedRole = ref('')
     const selectedPlayer = ref('')
     const availablePlayers = ref([])
-    const selectedSeason = ref('3')
+    const selectedSeason = ref('4')
     const teams = ref([])
     const isError = ref(false)
     const responseMessage = ref('')

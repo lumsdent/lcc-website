@@ -45,10 +45,14 @@ export default {
     <div>
       <h1 class="relative mt-10 text-4xl font-medium text-logo-blue">{{ message }}</h1>
       <h3 class="text-xl">
-        LCC Season 3 is live on
-        <a href="https://www.twitch.tv/jagshockey" target="_blank" rel="noopener">Twitch</a>
-        and vods are available on
-      <a href="https://www.youtube.com/@LCCS2" target="_blank" rel="noopener">Youtube</a>. Thanks
+        LCC Season 4 draft is live on Feb 19th 2026.  Catch it live on
+        <a href="https://www.twitch.tv/jagshockey" target="_blank" rel="noopener">Twitch</a>!
+      
+      While you wait, check out LCC Season 3 on <a
+          href="https://www.youtube.com/watch?v=o1rP1rY1OX4&list=PLYVMzQz4WdrA7PkG7PODF2BWh5WQRwDo9" target="_blank"
+          rel="noopener">Youtube</a>.
+
+      Thanks
       for watching!
     </h3>
     <!-- <div v-if="username" class="mt-4 text-xl text-logo-blue">

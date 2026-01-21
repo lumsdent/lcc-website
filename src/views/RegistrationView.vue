@@ -96,7 +96,7 @@ text-gray-900<template>
           class="h-4 w-4 text-blue-600  rounded  focus:ring-blue-600 ring-offset-gray-800 bg-gray-700 border-gray-600">
         <label for="thursdayAvailability" class="ml-2 block text-sm  text-logo-blue">
           Committing to the LCC is a 4.5 Month, 19 Week Commitment. I acknowledge that I will be available Thursday
-          nights from 7PM-11PM EST from March 6th to June 26th.
+          nights from 7PM-11PM EST from March 5th to June 25th.
         </label>
       </div>
       <input type="submit" value="Register"
