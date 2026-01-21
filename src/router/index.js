@@ -15,14 +15,14 @@ const router = createRouter({
       component: () => import('../views/MatchFormView.vue')
     },
     {
+      path: '/matches',
+      name: 'matches',
+      component: () => import('../views/MatchView.vue')
+    },
+    {
       path: '/match/:matchId',
       name: 'matchDetail',
       component: () => import('../views/MatchDetail.vue')
-    },
-    {
-      path: '/draft',
-      name: 'draft',
-      component: () => import('../views/DraftView.vue')
     },
     {
       path: '/registration',
@@ -45,11 +45,6 @@ const router = createRouter({
       component: () => import('../views/StatsView.vue')
     },
     {
-      path: '/practice',
-      name: 'practice',
-      component: () => import('../views/PracticeView.vue')
-    },
-    {
       path: '/players/:puuid',
       name: 'PlayersView',
       component: () => import('../views/PlayerView.vue'),
@@ -64,7 +59,12 @@ const router = createRouter({
       path: '/players',
       name: 'players',
       component: () => import('../views/PlayersView.vue')
-    }
+    },
+    {
+      path: '/patchnotes',
+      name: 'patchnotes',
+      component: () => import('../views/PatchNotesView.vue')
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

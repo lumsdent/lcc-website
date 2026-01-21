@@ -8,6 +8,15 @@
       type="text" v-model="matchInput" placeholder="Enter match here" />
 
     <label class="mt-4 mb-2 block text-sm font-medium text-gray-900 dark:text-logo-blue">
+      Select Season
+    </label>
+    <select
+      class="block w-full min-w-0 flex-1 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-logo-blue dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+      v-model="selectedSeason">
+      <option v-for="season in seasons" :key="season.id" :value="season.id">{{ season.name }}</option>
+    </select>
+
+    <label class="mt-4 mb-2 block text-sm font-medium text-gray-900 dark:text-logo-blue">
       Select Blue Team
     </label>
     <select
@@ -25,10 +34,21 @@
       <option v-for="team in teams" :key="team" :value="team">{{ team }}</option>
     </select>
 
+    <label class="mt-4 mb-2 block text-sm font-medium text-gray-900 dark:text-logo-blue">
+      Enter Password
+    </label>
+    <input
+      class="block w-full min-w-0 flex-1 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-logo-blue dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+      type="password" v-model="password" placeholder="Enter password" />
+
     <button @click="submitMatch"
       class="hover:bg-logo-blue-5 mt-4 cursor-pointer rounded bg-logo-blue px-4 py-2 font-bold text-logo-white">
       Submit
     </button>
+
+    <div v-if="isLoading" class="mt-4 text-center text-gray-900 dark:text-logo-blue">
+      Submitting...
+    </div>
 
     <div v-if="responseMessage" :class="{ 'bg-red-300 text-red-800': isError, 'bg-green-300 text-green-800': !isError }"
       class="mt-4 rounded border p-4 shadow">
@@ -39,21 +59,31 @@
 
 <script>
 import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import { ref, watch } from 'vue'
+import { SEASONS } from '@/config.js'
 
 export default {
   name: 'MatchFormView',
   setup() {
     const matchInput = ref('')
+    const selectedSeason = ref('')
     const blueTeam = ref('')
     const redTeam = ref('')
     const teams = ref([])
     const responseMessage = ref('')
-    const isError = ref(false)
+    const isError = ref(true)
+    const password = ref('')
+    const isLoading = ref(false)
+
+    watch(selectedSeason, (newSeason) => {
+      if (newSeason) {
+        fetchTeams(newSeason)
+      }
+    })
 
     const fetchTeams = async () => {
       try {
-        const response = await axios.get(import.meta.env.VITE_API_URL + '/teams/3')
+        const response = await axios.get(import.meta.env.VITE_API_URL + '/teams/' + selectedSeason.value)
         const teamsArr = []
         response.data.forEach(team => {
           teamsArr.push(team.team_name)
@@ -67,25 +97,34 @@ export default {
     }
 
     const submitMatch = async () => {
+      isLoading.value = true
+      responseMessage.value = ""
+      let response = ""
       try {
         const payload = {
           matchId: matchInput.value,
+          season: selectedSeason.value,
           blueTeam: blueTeam.value,
-          redTeam: redTeam.value
+          redTeam: redTeam.value,
+          password: password.value
         }
-        const response = await axios.post(import.meta.env.VITE_API_URL + '/matches/add', payload)
-        responseMessage.value = 'Match submitted successfully!'
+        response = await axios.post(import.meta.env.VITE_API_URL + '/matches/add', payload)
+        responseMessage.value = response.data.message
         isError.value = false
+        isLoading.value = true
       } catch (error) {
-        responseMessage.value = 'Error submitting match.'
+        if(error.response){
+          responseMessage.value = error.response.data.message
+        }
+        else{
+          responseMessage.value = "Error submitting match. Contact Tyler for help."
+        }
         isError.value = true
         console.error('Error submitting match:', error)
+        isLoading.value = false
       }
     }
 
-    onMounted(() => {
-      fetchTeams()
-    })
 
     return {
       matchInput,
@@ -94,7 +133,11 @@ export default {
       teams,
       responseMessage,
       isError,
-      submitMatch
+      submitMatch,
+      password,
+      seasons: SEASONS,
+      selectedSeason,
+      isLoading
     }
   }
 }
