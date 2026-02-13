@@ -1,4 +1,4 @@
-export const DDRAGON_URL = 'https://ddragon.leagueoflegends.com/cdn/15.1.1'
+export const DDRAGON_URL = 'https://ddragon.leagueoflegends.com/cdn/16.3.1'
 export const SEASONS = [
   { id: '2', name: 'Regular Season 2' },
   { id: '2T', name: 'Season 2 Tiebreakers' },
