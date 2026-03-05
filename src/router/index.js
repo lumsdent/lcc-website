@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/ScheduleView.vue')
+      component: () => import('../views/HomeView.vue')
     },
     {
       path: '/match',
@@ -54,6 +54,12 @@ const router = createRouter({
       path: '/teams',
       name: 'teams',
       component: () => import('../views/TeamsView.vue')
+    },
+    {
+      path: '/teams/:teamId',
+      name: 'teamDetail',
+      component: () => import('../views/TeamDetailView.vue'),
+      props: true
     },
     {
       path: '/players',

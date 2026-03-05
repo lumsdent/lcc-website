@@ -1,82 +1,68 @@
 <script>
-import StyledRouterLink from './StyledRouterLink.vue'
+import announcement from '@/data/announcement.json'
+
 export default {
   name: 'AppHeader',
-  props: {
-    message: {
-      type: String,
-      required: true
-    }
-  },
-  components: {
-    StyledRouterLink
-  },
   data() {
     return {
-      username: '',
-      isAdmin: false
+      announcement,
+      navLinks: [
+        { title: 'Home', path: '/' },
+        { title: 'Schedule', path: '/schedule' },
+        { title: 'Registration', path: '/registration' },
+        { title: 'Teams', path: '/teams' },
+        { title: 'Players', path: '/players' },
+        { title: 'Matches', path: '/matches' },
+        { title: 'Stats', path: '/stats' },
+      ]
     }
-  },
-  methods: {
-    // login() {
-    //   window.location.href = import.meta.env.VITE_API_URL + '/auth/discord/login';
-    // },
-    // async fetchUser() {
-    //   const response = await axios.get(import.meta.env.VITE_API_URL + '/me/');
-    //   console.log(response.data);
-
-    //   this.username = this.getCookie('username');
-    //   const admins = await axios.get(import.meta.env.VITE_API_URL + '/players/admins');
-    //   this.isAdmin = admins.data.some(admin => admin.discord.id === response.data.id);
-    // },
-    // async logout() {
-    //   window.location.href = import.meta.env.VITE_API_URL + '/logout';
-    // }
-  },
-  mounted() {
-    // this.fetchUser();
   }
 }
 </script>
 
 <template>
-  <div>
+  <div class="w-full">
 
-    <div>
-      <h1 class="relative mt-10 text-4xl font-medium text-logo-blue">{{ message }}</h1>
-      <h3 class="text-xl">
-        LCC Season 4 draft is live on Feb 19th 2026.  Catch it live on
-        <a href="https://www.twitch.tv/jagshockey" target="_blank" rel="noopener">Twitch</a>!
-      
-      While you wait, check out LCC Season 3 on <a
-          href="https://www.youtube.com/watch?v=o1rP1rY1OX4&list=PLYVMzQz4WdrA7PkG7PODF2BWh5WQRwDo9" target="_blank"
-          rel="noopener">Youtube</a>.
-
-      Thanks
-      for watching!
-    </h3>
-    <!-- <div v-if="username" class="mt-4 text-xl text-logo-blue">
-      Welcome, {{ username }}!
-      <button @click="logout" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-        Logout
-      </button>
+    <!-- Branding row -->
+    <div class="flex items-center justify-between py-5 border-b border-gray-800">
+      <RouterLink to="/" class="flex items-center gap-5 hover:!bg-transparent">
+        <img src="@/assets/logo.svg" alt="LCC logo" width="96" height="96" />
+        <div>
+          <h1 class="text-3xl font-bold text-white tracking-wide leading-tight">
+            League <span class="text-logo-blue">Community</span> Cup
+          </h1>
+          <p class="text-xs text-gray-500 uppercase tracking-widest mt-0.5">Amateur League of Legends &middot; Est. 2022 &middot; Season 4</p>
+        </div>
+      </RouterLink>
+      <a href="https://www.twitch.tv/jagshockey" target="_blank" rel="noopener" class="hidden sm:flex items-center gap-2 rounded-full bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-gray-300 hover:border-logo-blue transition-colors">
+        <span class="w-2 h-2 rounded-full bg-logo-blue animate-pulse"></span>
+        <span>Season 4 <span class="text-logo-blue font-semibold">Live</span></span>
+      </a>
     </div>
-    <div v-else><button @click="login" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-      Login with Discord
-    </button>
-  </div> -->
-</div>
-<nav class="-ml-4 mt-4 py-4 text-left text-base">
-  
-  <StyledRouterLink title="Schedule" link="/schedule" />
-  <StyledRouterLink title="Registration" link="/registration" />
-  <StyledRouterLink title="Teams" link="/teams" />
-  <StyledRouterLink title="Players" link="/players" />
-  
-  <StyledRouterLink title="Matches" link="/matches" />
-  <StyledRouterLink title="Stats" link="/stats" />
-  <!-- <StyledRouterLink title="Draft" link="/draft" /> -->
-  <!-- <StyledRouterLink title="Contact Us" link="/contact" /> -->
-</nav>
-</div>
+
+    <!-- Announcement strip -->
+    <div class="flex items-start gap-2.5 py-2.5 border-b border-gray-800 text-sm text-gray-400">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mt-0.5 text-logo-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.069A1 1 0 0121 8.868v6.264a1 1 0 01-1.447.894L15 14M3 8a1 1 0 011-1h8a1 1 0 011 1v8a1 1 0 01-1 1H4a1 1 0 01-1-1V8z" />
+      </svg>
+      <span>
+        <template v-for="(part, i) in announcement.parts" :key="i">
+          <a v-if="part.href" :href="part.href" target="_blank" rel="noopener" class="text-logo-blue hover:underline">{{ part.text }}</a>
+          <template v-else>{{ part.text }}</template>
+        </template>
+      </span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex flex-wrap gap-1 py-3">
+      <RouterLink
+        v-for="link in navLinks"
+        :key="link.path"
+        :to="link.path"
+        class="px-3 py-1.5 rounded-md text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors border border-transparent"
+        active-class="!text-white !bg-gray-800 !border-gray-700"
+      >{{ link.title }}</RouterLink>
+    </nav>
+
+  </div>
 </template>

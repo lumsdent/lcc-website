@@ -1,11 +1,40 @@
-text-gray-900<template>
+<template>
   <div class="mx-auto max-w-md p-4">
-    <h1 class="text-logo-blue mb-4 text-center text-xl font-semibold">Registration</h1>
+
+    <!-- Closed banner -->
+    <div v-if="!isRegistrationOpen" class="flex flex-col items-center text-center py-16 gap-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m0 0v2m0-2h2m-2 0H10m2-6V7m0 0a4 4 0 00-4 4v1H6a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6a2 2 0 00-2-2h-2v-1a4 4 0 00-4-4z" />
+      </svg>
+      <h2 class="text-xl font-bold text-white">Registration is Closed</h2>
+      <p class="text-gray-400 max-w-xs">Registration for the current season has ended. Check back next year to sign up for the LCC!</p>
+      <div class="mt-4 rounded-lg bg-gray-800 border border-gray-700 p-5 text-left max-w-sm w-full">
+        <h3 class="text-white font-semibold mb-2">Already registered? Keep your profile up to date</h3>
+        <ol class="text-gray-400 text-sm space-y-1 list-decimal list-inside">
+          <li>Go to the <router-link to="/players" class="text-blue-400 hover:underline">Players</router-link> page</li>
+          <li>Find and open your player profile</li>
+          <li>Click the <span class="text-white font-medium">Refresh</span> button to sync your latest Riot data</li>
+        </ol>
+        <p class="text-gray-500 text-xs mt-3">Profiles can be refreshed once every 24 hours.</p>
+      </div>
+      <div class="rounded-lg bg-gray-800 border border-gray-700 p-5 text-left max-w-sm w-full">
+        <h3 class="text-white font-semibold mb-1">Join the community</h3>
+        <p class="text-gray-400 text-sm">Stay connected, get updates, and chat with other players on our
+          <a href="https://discord.gg/bdn4A7FmdW" target="_blank" rel="noopener noreferrer" class="text-logo-blue hover:underline">Discord server</a>.
+        </p>
+      </div>
+      <div class="rounded-lg bg-gray-800 border border-gray-700 p-5 text-left max-w-sm w-full">
+        <h3 class="text-white font-semibold mb-1">Watch the games</h3>
+        <p class="text-gray-400 text-sm">Check out the <router-link to="/schedule" class="text-logo-blue hover:underline">Schedule</router-link> for all upcoming and past games this season.</p>
+      </div>
+    </div>
+
+    <!-- Open form -->
+    <template v-else>
     <ResponseBox :message="responseMessage" :isSuccess="!isError" />
     <h2 class="text-l mb-4 text-center font-semibold">
       Please fill out the form if you are interested in joining the LCC
     </h2>
-    <!-- <div v-if="isAuthenticated"> -->
     <form @submit.prevent="submitForm" class="flex flex-col gap-4">
       <label for="summonerName" class="text-logo-blue mb-2 block text-sm font-medium">Summoner
         Name</label>
@@ -102,10 +131,7 @@ text-gray-900<template>
       <input type="submit" value="Register"
         class="bg-logo-blue text-logo-white hover:bg-logo-blue-5 mt-4 cursor-pointer rounded px-4 py-2 font-bold" />
     </form>
-    <!-- </div> -->
-    <!-- <div v-else>
-      <p class="text-center">Please login to register</p>
-    </div> -->
+    </template>
   </div>
 </template>
 
@@ -151,6 +177,9 @@ export default {
     const discord_avatar = ref('')
     const days = ["Monday", "Tuesday", "Wednesday", "Friday", "Saturday", "Sunday"]
 
+    const REGISTRATION_CLOSE_DATE = new Date('2026-02-05')
+    const isRegistrationOpen = new Date() <= REGISTRATION_CLOSE_DATE
+
     const checkAuthentication = async () => {
       try {
         const response = await axios.get(import.meta.env.VITE_API_URL + '/me')
@@ -194,7 +223,8 @@ export default {
       isError,
       submitForm,
       isAuthenticated,
-      days
+      days,
+      isRegistrationOpen
     }
   }
 }

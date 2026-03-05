@@ -1,8 +1,32 @@
 <template>
+    <!-- BREADCRUMB -->
+    <nav class="flex items-center gap-1.5 text-sm text-gray-500 mb-4">
+        <RouterLink to="/players" class="hover:text-white transition-colors">Players</RouterLink>
+        <span>/</span>
+        <span class="text-gray-300">{{ player?.profile?.name ?? '…' }}</span>
+    </nav>
+
     <!-- PLAYER CARD -->
     <div class="grid grid-cols-1 xl:grid-cols-4 gap-4">
-        <div class="flex justify-center xl:col-span-1 mt-16">
+        <div class="flex flex-col items-center xl:col-span-1 mt-16 gap-3">
             <PlayerCard :player="player" />
+            <button
+                @click="refreshPlayer"
+                :disabled="isRefreshing || !canRefresh"
+                class="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm rounded-lg transition-colors"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 transition-transform"
+                    :class="{ 'animate-spin': isRefreshing }"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                {{ isRefreshing ? 'Refreshing…' : 'Refresh Riot Data' }}
+            </button>
+            <p v-if="!canRefresh && nextRefreshTime" class="text-xs text-gray-500">Available after {{ nextRefreshTime }}</p>
+            <p v-if="refreshMessage" class="text-xs" :class="refreshError ? 'text-red-400' : 'text-green-400'">{{ refreshMessage }}</p>
         </div>
 
 
@@ -107,7 +131,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import PlayerCard from '@/components/PlayerCard.vue';
@@ -128,9 +152,33 @@ export default {
         const matchDetails = ref([])
         const router = useRouter()
         const selectedSeason = ref('allTime')
+        const isRefreshing = ref(false)
+        const refreshMessage = ref('')
+        const refreshError = ref(false)
+
+        const canRefresh = computed(() => {
+            const lastRefreshed = player.value?.profile?.last_refreshed
+            if (!lastRefreshed) return true
+            const hoursSince = (Date.now() - lastRefreshed) / (1000 * 60 * 60)
+            return hoursSince >= 24
+        })
+
+        const nextRefreshTime = computed(() => {
+            const lastRefreshed = player.value?.profile?.last_refreshed
+            if (!lastRefreshed) return null
+            const next = new Date(lastRefreshed + 24 * 60 * 60 * 1000)
+            return next.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        })
 
         const goToMatchDetail = (matchId) => {
-            router.push(`/match/${matchId}`)
+            router.push({
+                path: `/match/${matchId}`,
+                query: {
+                    from: 'player',
+                    puuid: props.puuid,
+                    playerName: player.value?.profile?.name
+                }
+            })
         }
 
         const getItemImageUrl = (image) => {
@@ -150,6 +198,24 @@ export default {
                 console.error('Error fetching player data:', error)
             }
         })
+
+        const refreshPlayer = async () => {
+            if (!canRefresh.value) return
+            isRefreshing.value = true
+            refreshMessage.value = ''
+            refreshError.value = false
+            try {
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}/players/${props.puuid}/refresh`)
+                player.value = response.data.player
+                refreshMessage.value = 'Profile updated!'
+            } catch (error) {
+                console.error('Error refreshing player:', error)
+                refreshError.value = true
+                refreshMessage.value = 'Refresh failed.'
+            } finally {
+                isRefreshing.value = false
+            }
+        }
 
         const deleteMatch = async (index) => {
             try {
@@ -184,7 +250,13 @@ export default {
             selectedSeason,
             DDRAGON_URL,
             getItemImageUrl,
-            deleteMatch
+            deleteMatch,
+            refreshPlayer,
+            isRefreshing,
+            canRefresh,
+            nextRefreshTime,
+            refreshMessage,
+            refreshError
         }
     }
 }
