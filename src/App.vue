@@ -13,14 +13,11 @@ export default {
 </script>
 
 <template>
-  <div class="container">
+  <div class="w-full">
 
     <div class="flex flex-col min-h-screen">
-      <header class="flex max-h-screen place-items-center leading-6">
-        <img alt="LCC logo" class="mr-8" src="@/assets/logo.svg" width="125" height="125" />
-        <div class="flex flex-wrap place-items-start">
-          <AppHeader message="Welcome to the LCC!" />
-        </div>
+      <header class="w-full">
+        <AppHeader />
       </header>
       <main class="flex-grow">
         <RouterView />
@@ -41,7 +38,7 @@ export default {
                 d="M2.5 0L0 4v17.5h5V24h4l2.5-2.5h5L24 12V0H2.5zM22 11.5l-4.5 4.5h-5L10 19v-3.5H5V2h17v9.5zM17.5 6h-2v5h2V6zm-5 0h-2v5h2V6z" />
             </svg>
           </a>
-          <a href="https://www.youtube.com/@LCCS2" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.youtube.com/watch?v=o1rP1rY1OX4&list=PLYVMzQz4WdrA7PkG7PODF2BWh5WQRwDo9" target="_blank" rel="noopener noreferrer">
             <svg class="w-6 h-6 text-white hover:text-red-500" fill="currentColor" viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg">
               <path
@@ -49,14 +46,14 @@ export default {
             </svg>
           </a>
         </div>
-        <div class="mt-4 text-gray-400 text-sm">© 2025 LCC. All rights reserved.</div>
+        <div class="mt-4 text-gray-400 text-sm">© 2026 LCC. All rights reserved.</div>
         <div class="flex">
           <RouterLink to="/match" class="mt-4 text-blue-500 hover:text-blue-700">Admin</RouterLink>
           <span class="mx-4"></span>
           <RouterLink to="/patchnotes" class="mt-4 text-blue-500 hover:text-blue-700">Patch Notes</RouterLink>
         </div>
 
-        <div>(beta 1.2.0)</div>
+        <div>(beta 1.3.0)</div>
       </footer>
     </div>
   </div>

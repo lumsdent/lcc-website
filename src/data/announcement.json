@@ -1,0 +1,9 @@
+{
+  "parts": [
+    { "text": "Watch the action unfold every Thursday at 7:00 PM EST on " },
+    { "text": "Twitch", "href": "https://www.twitch.tv/jagshockey" },
+    { "text": " or catch up on " },
+    { "text": "YouTube", "href": "https://www.youtube.com/watch?v=o1rP1rY1OX4&list=PLYVMzQz4WdrA7PkG7PODF2BWh5WQRwDo9" },
+    { "text": ". Thanks for watching!" }
+  ]
+}

@@ -53,71 +53,134 @@ export default {
   setup() {
     const patchNotes = ref([
       {
+        version: 'Beta v1.3.0 - Teams, Players, Matches & Profile Overhaul',
+        date: '2026-03-05',
+        description: 'A major update across the Teams, Players, and Matches pages — adding search and filtering throughout, improving how match details are presented, closing Season 4 registration, and keeping player profiles up to date.',
+        sections: [
+          {
+            title: 'Teams Page',
+            description: 'The Teams page has been completely redesigned.',
+            features: [
+              { title: 'All Teams Always Visible', description: 'All teams are now listed at all times — the full franchise history is always on display.' },
+              { title: 'Season Filter', description: 'Filter by season to see only the teams that competed that year.' },
+              { title: 'Team Cards', description: 'Each team shows their logo, name, any former name, founding year, and which seasons they played in.' },
+              { title: 'Click to Explore', description: 'Click any team card to go to that team\'s dedicated page.' }
+            ]
+          },
+          {
+            title: 'Team Pages — New',
+            description: 'Each team now has their own dedicated page.',
+            features: [
+              { title: 'Season Histories', description: 'Read the full story of how each team performed across every season they competed in.' },
+              { title: 'Win/Loss Record', description: 'See a visual breakdown of wins and losses for each season.' },
+              { title: 'Roster', description: 'Browse the team\'s roster for any season, organised by role.' },
+              { title: 'Awards', description: 'See how many MVPs and All-Pro honours the organisation has earned.' },
+              { title: 'Recent Matches', description: 'A quick look at the team\'s most recent results.' }
+            ]
+          },
+          {
+            title: 'Players Page',
+            features: [
+              { title: 'Active Players by Default', description: 'Only active players are shown by default. Toggle the filter to also see inactive or past players.' },
+              { title: 'Search by Name', description: 'Type a name to instantly find any player.' },
+              { title: 'Filter by Role', description: 'Filter players by their role — TOP, JUNGLE, MID, ADC, SUPPORT, or FLEX.' }
+            ]
+          },
+          {
+            title: 'Player Profiles',
+            features: [
+              { title: 'Keep Info Fresh', description: 'A new button on each player\'s profile lets you pull their latest info from Riot — useful after a name change.' }
+            ]
+          },
+          {
+            title: 'Matches Page',
+            description: 'The Matches page now has a full set of filters to help you find exactly the game you\'re looking for.',
+            features: [
+              { title: 'Season Filter', description: 'Jump straight to matches from a specific season.' },
+              { title: 'Team Filter', description: 'Filter matches by team to see only games involving that team.' },
+              { title: 'Date Range', description: 'Narrow results down to a specific time window.' },
+              { title: 'Duration Filter', description: 'Looking for a short stomp or a long-running classic? Filter by how long games lasted.' },
+              { title: 'Match Count', description: 'Always see how many matches your current filters are showing.' }
+            ]
+          },
+          {
+            title: 'Match Detail Page',
+            features: [
+              { title: 'VODs are Here', description: 'Admins can now upload VODs for each match, making it easy to watch the game directly from the match page.' },
+            ]
+          },
+          {
+            title: 'Registration',
+            features: [
+              { title: 'Season 4 Registration Closed', description: 'Registration for Season 4 closed on February 5, 2026. It will reopen ahead of the next season.' }
+            ]
+          },
+          {
+            title: 'General Improvements',
+            features: [
+              { description: 'Cards across the site have a consistent look and feel, with a subtle lift effect when you hover over them.' },
+              { description: 'On smaller screens, team names are shown as short codes to save space.' }
+            ]
+          }
+        ],
+        comingSoon: [
+          'Stats, Stats, Stats!'
+        ]
+      },
+      {
         version: 'Beta v1.2.0 - Statistics & Match History Update',
         date: '2025-04-30',
-        description: "We're excited to release a major update to the LCC website that introduces two powerful new features: the Player Statistics page and the Match History overview.These tools give you unprecedented access to performance data for all players in Season 3.",
+        description: "A major update introducing two powerful new features: the Player Statistics page and the Match History overview. These tools give you access to performance data for all players in Season 3.",
         sections: [
           {
             title: 'Player Statistics Page',
             description: 'Browse season statistics for all players in the league.',
             features: [
               { 
-                title: 'Comprehensive Player Data', 
-                description: 'Available statistics include combat metrics (KDA, damage, kill participation), economy stats (CS, gold, CS/min), objectives (vision score, wards placed/cleared), and game performance (win rates, games played).' 
+                title: 'Comprehensive Stats', 
+                description: 'View KDA, damage dealt, kill participation, CS, gold earned, vision score, wards, win rates, and more — all in one place.' 
               },
               { 
-                title: 'Team Identification', 
-                description: 'Teams are color-coded for easy visual identification with official team colors.' 
+                title: 'Team Colours', 
+                description: 'Each player\'s team is colour-coded for easy identification.' 
               },
               { 
-                title: 'Customizable Display', 
-                description: 'Choose which stats matter most to you with our column selector. Your column preferences are even saved between sessions.' 
+                title: 'Pick Your Columns', 
+                description: 'Choose which stats you want to see. Your preferences are saved so they\'re there next time you visit.' 
               },
               { 
-                title: 'Advanced Sorting', 
-                description: 'Sort by any available statistic by using the sorting dropdown menu.' 
+                title: 'Sort by Anything', 
+                description: 'Click any column to sort the table by that stat.' 
               },
               { 
-                title: 'Performance Indicators', 
-                description: 'Color-coded KDA values and visual progress bars for win rates help you quickly assess player performance.' 
-              },
-              { 
-                title: 'Player Profiles', 
-                description: 'Click on any player row to navigate to their detailed profile page.' 
+                title: 'Click for Full Profile', 
+                description: 'Click any player to go straight to their profile page.' 
               }
             ]
           },
           {
-            title: 'Match Overview Page',
-            description: 'Browse through past matches with visual cards showing teams and results.',
+            title: 'Match History Page',
+            description: 'Browse through past matches with cards showing team logos and results.',
             features: [
               { 
-                title: 'Visual Match Cards', 
-                description: 'Each match is displayed as a card with team logos, match result, and key statistics.' 
+                title: 'Match Cards', 
+                description: 'Each match shows team logos, the result, game duration, patch, and kill totals.' 
               },
               { 
-                title: 'Chronological Order', 
-                description: 'Matches are sorted with the most recent games at the top.' 
+                title: 'Most Recent First', 
+                description: 'Matches are sorted with the newest games at the top.' 
               },
               { 
-                title: 'Team Visualization', 
-                description: 'Clear blue/red team distinction with team logos and colors.' 
-              },
-              { 
-                title: 'Key Match Info', 
-                description: 'See game duration, patch version, and kill scores at a glance.' 
-              },
-              { 
-                title: 'Detail Navigation', 
-                description: 'Click any match card to see the full match breakdown.' 
+                title: 'Click for Full Breakdown', 
+                description: 'Click any match to see the full scoreboard.' 
               }
             ]
           },
           {
-            title: 'Technical Improvements',
+            title: 'Bug Fixes',
             features: [
-              { description: 'Direct linking to specific pages is now working correctly.  The refresh button is back on the menu' },
-              { description: 'Fast loading times with visual loading indicators.' }
+              { description: 'Sharing a direct link to a page now takes you to the right place.' },
+              { description: 'The navigation refresh button has been restored.' }
             ]
           }
         ],
@@ -132,12 +195,12 @@ export default {
         description: 'First public release of the LCC website.',
         sections: [
           {
-            title: 'Core Features',
+            title: 'Features',
             features: [
-              { description: 'Team registration system' },
+              { description: 'Team registration' },
               { description: 'Match scheduling' },
-              { description: 'Basic player profiles' },
-              { description: 'Match History' }
+              { description: 'Player profiles' },
+              { description: 'Match history' }
             ]
           }
         ],

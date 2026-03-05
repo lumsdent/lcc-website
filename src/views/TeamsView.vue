@@ -1,140 +1,202 @@
 <template>
-  <div class="p-4">
-    <div class="mb-4 flex flex-col items-center">
-      <label class="block text-sm font-medium text-gray-700 mb-2">Select Season:</label>
-      <div class="flex space-x-2">
-        <button v-for="season in seasons" :key="season.id" @click="selectSeason(season.id)" :title="season.name" :class="{
-          'bg-blue-500 text-white': season.id === selectedSeason,
-          'bg-gray-200 text-gray-700': season.id !== selectedSeason
-        }" class="px-4 py-2 rounded-md focus:outline-none">
-          {{ season.id }}
-        </button>
-      </div>
+  <div class="p-6 max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-8 text-center">
+      <h1 class="text-3xl font-bold text-white mb-2">Teams</h1>
+      <p class="text-gray-400">{{ filteredTeams.length }} team{{ filteredTeams.length !== 1 ? 's' : '' }}
+        <span v-if="seasonFilter !== null"> in Season {{ seasonFilter }}</span>
+      </p>
     </div>
 
-    <div class="container mx-auto">
-      <table class="w-full border-collapse">
-        <tbody>
-          <tr v-for="team in teams" :key="team.team_name" class="border-b">
-            <!-- Left Column: Team Info -->
-            <td class="p-4 w-1/3">
-              <div class="flex flex-col items-center">
-                <h3 class="text-xl font-bold p-4">{{ team.team_name }}</h3>
-                <img v-if="team.image" :src="getTeamImage(team.image)" :alt="team.team_name"
-                  class="w-32 h-32 object-contain mb-2" />
-              </div>
-            </td>
-
-            <!-- Right Column: Roster Table -->
-            <td class="p-4 w-2/3">
-              <table class="w-full border-collapse">
-                <thead>
-                  <tr>
-                    <th class="border p-2 w-1/2">Role</th>
-                    <th class="border p-2 w-1/2">Player</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="role in roles" :key="role" class="border">
-                    <td class="border p-2">{{ role }}</td>
-                    <td class="border p-2">
-                      <div class="flex justify-between items-center">
-                        <span v-if="getPlayerForRole(team, role)">
-                          <router-link :to="`/players/${getPlayerForRole(team, role).puuid}`"
-                            class="text-blue-500 hover:underline">
-                            {{ getPlayerForRole(team, role).name }}
-                          </router-link>
-                        </span>
-                        <button @click="openAssignPlayerModal(team, role)"
-                          class="bg-blue-500 text-white px-2 py-1 rounded-md text-sm">
-                          {{ getPlayerForRole(team, role) ? 'Change' : 'Assign' }}
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Season Filter -->
+    <div class="mb-8 flex flex-wrap justify-center gap-2">
+      <button
+        @click="seasonFilter = null"
+        :class="seasonFilter === null
+          ? 'bg-blue-600 text-white border-blue-600'
+          : 'bg-transparent text-gray-300 border-gray-600 hover:border-gray-400'"
+        class="px-4 py-1.5 rounded-full border text-sm font-medium transition-colors"
+      >
+        All Seasons
+      </button>
+      <button
+        v-for="s in availableSeasonNumbers"
+        :key="s"
+        @click="seasonFilter = s"
+        :class="seasonFilter === s
+          ? 'bg-blue-600 text-white border-blue-600'
+          : 'bg-transparent text-gray-300 border-gray-600 hover:border-gray-400'"
+        class="px-4 py-1.5 rounded-full border text-sm font-medium transition-colors"
+      >
+        Season {{ s }}
+      </button>
     </div>
 
-    <!-- Add Team Button -->
-    <div class="flex justify-end mt-4">
-      <button @click="openAddTeamModal" class="p-4 bg-blue-500 text-white rounded-full focus:outline-none">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd"
-            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-            clip-rule="evenodd" />
+    <!-- Teams Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <router-link
+        v-for="team in filteredTeams"
+        :key="team.id"
+        :to="`/teams/${team.id}`"
+        class="group block rounded-xl overflow-hidden bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-gray-500 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+      >
+        <!-- Color accent bar -->
+        <div class="h-1 w-full" :style="{ backgroundColor: team.primaryColor }"></div>
+
+        <div class="p-5 flex flex-col items-center text-center">
+          <!-- Team Logo -->
+          <div class="w-24 h-24 mb-4 flex items-center justify-center">
+            <img
+              v-if="team.images && team.images.length"
+              :src="getTeamImage(team.images[0].name)"
+              :alt="team.name"
+              class="w-full h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-200"
+            />
+          </div>
+
+          <!-- Team Name -->
+          <h2 class="text-white font-bold text-base leading-tight mb-1 group-hover:text-blue-300 transition-colors">
+            {{ team.name }}
+          </h2>
+
+          <!-- Former Name -->
+          <p v-if="team.formerName" class="text-gray-500 text-xs mb-2">
+            fmr. {{ team.formerName }}
+          </p>
+
+          <!-- Tricode + Est -->
+          <div class="flex items-center gap-2 mt-1">
+            <span
+              class="px-2 py-0.5 rounded text-xs font-mono font-bold text-white"
+              :style="{ backgroundColor: team.primaryColor + '55', border: '1px solid ' + team.primaryColor }"
+            >
+              {{ team.tricode }}
+            </span>
+            <span class="text-gray-500 text-xs">Est. {{ team.established }}</span>
+          </div>
+
+          <!-- Season badges -->
+          <div v-if="team.seasons && team.seasons.length" class="flex flex-wrap justify-center gap-1 mt-3">
+            <span
+              v-for="s in team.seasons"
+              :key="s.season"
+              class="px-1.5 py-0.5 bg-gray-700 text-gray-400 text-xs rounded"
+            >
+              S{{ s.season }}
+            </span>
+          </div>
+          <div v-else class="mt-3">
+            <span class="text-gray-600 text-xs italic">No seasons recorded</span>
+          </div>
+        </div>
+      </router-link>
+    </div>
+
+    <!-- Empty state -->
+    <div v-if="filteredTeams.length === 0" class="text-center py-16 text-gray-500">
+      No teams found for Season {{ seasonFilter }}.
+    </div>
+
+    <!-- Admin Actions -->
+    <div class="flex justify-end mt-8 gap-3">
+      <button
+        @click="openAssignPlayerModal(null, '')"
+        class="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
         </svg>
+        Assign Player
+      </button>
+      <button
+        @click="openAddTeamModal"
+        class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm transition-colors"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/>
+        </svg>
+        Add Team
       </button>
     </div>
 
     <!-- Player Assignment Modal -->
-    <div v-if="isAssignModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div class="bg-white p-4 rounded-lg max-w-md w-full">
-        <h3 class="text-lg text-logo-blue font-bold mb-4">
-          Assign Player to {{ selectedRole }} for {{ selectedTeam?.team_name }}
-        </h3>
-        <select v-model="selectedPlayer" class="w-full p-2 border rounded-md mb-4 text-black">
+    <div v-if="isAssignModalOpen" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+      <div class="bg-gray-800 border border-gray-700 p-6 rounded-xl max-w-md w-full mx-4">
+        <h3 class="text-lg text-white font-bold mb-4">Assign Player to Roster</h3>
+
+        <!-- Season selector for admin -->
+        <label class="block text-sm font-medium text-gray-400 mb-1">Season</label>
+        <select v-model="selectedSeason" class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white">
+          <option v-for="season in seasons" :key="season.id" :value="season.id">{{ season.name }}</option>
+        </select>
+
+        <!-- Team selector -->
+        <label class="block text-sm font-medium text-gray-400 mb-1">Team</label>
+        <select v-model="selectedTeam" class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white">
+          <option value="">Select a team</option>
+          <option v-for="team in allTeams" :key="team.id" :value="{ team_name: team.name }">{{ team.name }}</option>
+        </select>
+
+        <!-- Role selector -->
+        <label class="block text-sm font-medium text-gray-400 mb-1">Role</label>
+        <select v-model="selectedRole" class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white">
+          <option value="">Select a role</option>
+          <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
+        </select>
+
+        <!-- Player selector -->
+        <label class="block text-sm font-medium text-gray-400 mb-1">Player</label>
+        <select v-model="selectedPlayer" class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white">
           <option value="">Select a player</option>
           <option v-for="player in availablePlayers" :key="player.profile.puuid" :value="player">
             {{ player.profile.name }}
           </option>
         </select>
-        <label class="mt-4 mb-2 block text-sm font-medium text-gray-900 dark:text-logo-blue">
-          Enter Password
-        </label>
-        <input class="w-full p-2 border rounded-md mb-4 text-black" type="password" v-model="password"
-          placeholder="Enter password" />
 
-        <div class="flex justify-end space-x-2">
-          <button @click="closeAssignModal" class="px-4 py-2 border rounded-md text-black">
-            Cancel
-          </button>
-          <button @click="assignPlayer" class="px-4 py-2 bg-blue-500 text-white rounded-md">
-            Assign
-          </button>
+        <label class="block text-sm font-medium text-gray-400 mb-1">Password</label>
+        <input class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white" type="password" v-model="password" placeholder="Enter password" />
+
+        <div class="flex justify-end gap-2">
+          <button @click="closeAssignModal" class="px-4 py-2 border border-gray-600 rounded-lg text-gray-300 hover:bg-gray-700">Cancel</button>
+          <button @click="assignPlayer" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg">Assign</button>
         </div>
       </div>
     </div>
 
-    <div v-if="isAddTeamModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div class="bg-white p-4 rounded-lg max-w-md w-full">
-        <h3 class="text-lg text-logo-blue font-bold mb-4">
-          Add New Team to Season {{ selectedSeason }}
-        </h3>
-        <label class="mt-4 mb-2 block text-sm font-medium text-gray-900 dark:text-logo-blue">
-          Enter Team Name
-        </label>
-        <input class="w-full p-2 border rounded-md mb-4 text-black" v-model="newTeamName"
-          placeholder="Enter Team Name" />
+    <!-- Add Team Modal -->
+    <div v-if="isAddTeamModalOpen" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+      <div class="bg-gray-800 border border-gray-700 p-6 rounded-xl max-w-md w-full mx-4">
+        <h3 class="text-lg text-white font-bold mb-4">Add New Team</h3>
 
-        <!-- Team Image Selection -->
-        <label class="mt-4 mb-2 block text-sm font-medium text-logo-blue">
-          Select Team Image
-        </label>
-        <div class="grid grid-cols-3 gap-4 mb-4 max-h-48 overflow-y-auto">
-          <div v-for="image in teamImages" :key="image" @click="selectedImage = image"
-            class="cursor-pointer p-2 border rounded-md" :class="{ 'border-blue-500': selectedImage === image }">
-            <img :src="getTeamImage(image)" :alt="image" class="w-full h-20 object-contain" />
+        <!-- Season selector for admin -->
+        <label class="block text-sm font-medium text-gray-400 mb-1">Season</label>
+        <select v-model="selectedSeason" class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white">
+          <option v-for="season in seasons" :key="season.id" :value="season.id">{{ season.name }}</option>
+        </select>
+
+        <label class="block text-sm font-medium text-gray-400 mb-1">Team Name</label>
+        <input class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white" v-model="newTeamName" placeholder="Enter Team Name" />
+
+        <label class="block text-sm font-medium text-gray-400 mb-2">Team Image</label>
+        <div class="grid grid-cols-3 gap-3 mb-4 max-h-48 overflow-y-auto">
+          <div
+            v-for="image in teamImages"
+            :key="image"
+            @click="selectedImage = image"
+            class="cursor-pointer p-2 border rounded-md bg-gray-700 transition-colors"
+            :class="selectedImage === image ? 'border-blue-500' : 'border-gray-600 hover:border-gray-400'"
+          >
+            <img :src="getTeamImage(image)" :alt="image" class="w-full h-16 object-contain" />
           </div>
         </div>
 
-        <label class="mt-4 mb-2 block text-sm font-medium text-gray-900 dark:text-logo-blue">
-          Enter Password
-        </label>
-        <input class="w-full p-2 border rounded-md mb-4 text-black" type="password" v-model="password"
-          placeholder="Enter password" />
+        <label class="block text-sm font-medium text-gray-400 mb-1">Password</label>
+        <input class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white" type="password" v-model="password" placeholder="Enter password" />
 
-        <div class="flex justify-end space-x-2">
-          <button @click="closeAddTeamModal" class="px-4 py-2 border rounded-md text-black">
-            Cancel
-          </button>
-          <button @click="addTeam" class="px-4 py-2 bg-blue-500 text-white rounded-md">
-            Add
-          </button>
+        <div class="flex justify-end gap-2">
+          <button @click="closeAddTeamModal" class="px-4 py-2 border border-gray-600 rounded-lg text-gray-300 hover:bg-gray-700">Cancel</button>
+          <button @click="addTeam" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg">Add Team</button>
         </div>
       </div>
     </div>
@@ -143,14 +205,32 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import axios from 'axios'
 import { SEASONS } from '@/config.js'
+import teamsDataJson from '@/data/teamsData.json'
 
 export default {
   name: 'TeamsView',
   setup() {
     const roles = ['TOP', 'JUNGLE', 'MID', 'BOT', 'SUPPORT']
+    const allTeams = teamsDataJson.teams
+
+    // Season filter for the view (null = all)
+    const seasonFilter = ref(null)
+
+    // Static list of unique season numbers from teamsData (plain array, not computed)
+    const availableSeasonNumbers = [
+      ...new Set(allTeams.flatMap(t => t.seasons.map(s => Number(s.season))))
+    ].sort((a, b) => a - b)
+
+    // Filtered team list
+    const filteredTeams = computed(() => {
+      if (seasonFilter.value === null) return allTeams
+      return allTeams.filter(t => t.seasons.some(s => Number(s.season) === seasonFilter.value))
+    })
+
+    // Admin state
     const isAssignModalOpen = ref(false)
     const isAddTeamModalOpen = ref(false)
     const selectedTeam = ref(null)
@@ -158,7 +238,6 @@ export default {
     const selectedPlayer = ref('')
     const availablePlayers = ref([])
     const selectedSeason = ref('4')
-    const teams = ref([])
     const isError = ref(false)
     const responseMessage = ref('')
     const password = ref('')
@@ -166,16 +245,19 @@ export default {
     const teamImages = ref([])
     const selectedImage = ref('')
 
-    const getPlayerForRole = (team, role) => {
-      const playersInRole = team.rosters[selectedSeason.value]?.filter(player => player.role === role);
-      return playersInRole?.[playersInRole.length - 1];
+    const getTeamImage = (imageName) => {
+      return new URL(`../assets/teams/${imageName}`, import.meta.url).href
     }
+
+    onMounted(() => {
+      const images = import.meta.glob('../assets/teams/*')
+      teamImages.value = Object.keys(images).map(path => path.split('/').pop())
+    })
 
     const openAssignPlayerModal = (team, role) => {
       selectedTeam.value = team
       selectedRole.value = role
       isAssignModalOpen.value = true
-      // Fetch available players
       fetchAvailablePlayers()
     }
 
@@ -184,39 +266,24 @@ export default {
       selectedTeam.value = null
       selectedRole.value = ''
       selectedPlayer.value = ''
+      password.value = ''
     }
-
-    const getTeamImage = (imageName) => {
-      return new URL(`../assets/teams/${imageName}`, import.meta.url).href
-    }
-
-    onMounted(() => {
-      fetchTeams();
-      const images = import.meta.glob('../assets/teams/*')
-      teamImages.value = Object.keys(images).map(path => {
-        return path.split('/').pop()})
-      // fetchUser();
-    })
 
     const assignPlayer = async () => {
-      if (!selectedPlayer.value) return
-
+      if (!selectedPlayer.value || !selectedTeam.value) return
       try {
         await axios.post(`${import.meta.env.VITE_API_URL}/roster/assign`, {
           teamName: selectedTeam.value.team_name,
           role: selectedRole.value,
-          player: { "puuid": selectedPlayer.value.profile.puuid, "name": selectedPlayer.value.profile.name },
+          player: { puuid: selectedPlayer.value.profile.puuid, name: selectedPlayer.value.profile.name },
           season: selectedSeason.value,
           password: password.value
         })
-        // Refresh teams data
-        await fetchTeams()
         closeAssignModal()
       } catch (error) {
         console.error('Error assigning player:', error)
       }
     }
-
 
     const openAddTeamModal = () => {
       isAddTeamModalOpen.value = true
@@ -225,6 +292,8 @@ export default {
     const closeAddTeamModal = () => {
       isAddTeamModalOpen.value = false
       newTeamName.value = ''
+      selectedImage.value = ''
+      password.value = ''
     }
 
     const addTeam = async () => {
@@ -234,7 +303,6 @@ export default {
           image: selectedImage.value,
           password: password.value
         })
-        teams.value = fetchTeams()
         isError.value = false
         responseMessage.value = response.data.message
       } catch (error) {
@@ -245,50 +313,30 @@ export default {
       closeAddTeamModal()
     }
 
-
-    const fetchTeams = async () => {
-      try {
-
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/teams/${selectedSeason.value}`)
-        console.log(response.data)
-        teams.value = response.data
-        isError.value = false
-      } catch (error) {
-        console.error(error)
-        isError.value = true
-        responseMessage.value = 'An error occurred. Please try again.'
-      }
-    }
-
     const fetchAvailablePlayers = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/players`)
-        console.log(response.data)
-        const players = response.data
-        availablePlayers.value = players.filter(player => player.profile.is_active)
+        availablePlayers.value = response.data.filter(p => p.profile.is_active)
       } catch (error) {
         console.error('Error fetching available players:', error)
       }
     }
 
-    const selectSeason = (season) => {
-      selectedSeason.value = season
-      fetchTeams()
-    }
-
     return {
       roles,
+      allTeams,
+      filteredTeams,
+      seasonFilter,
+      availableSeasonNumbers,
       isAssignModalOpen,
       selectedTeam,
       selectedRole,
       selectedSeason,
       selectedPlayer,
       availablePlayers,
-      getPlayerForRole,
       openAssignPlayerModal,
       closeAssignModal,
       assignPlayer,
-      teams,
       getTeamImage,
       password,
       openAddTeamModal,
@@ -299,7 +347,6 @@ export default {
       teamImages,
       selectedImage,
       seasons: SEASONS,
-      selectSeason
     }
   }
 }

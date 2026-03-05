@@ -4,106 +4,116 @@
         <div class="card" :class="{ 'is-flipped': isFlipped }">
             <!-- Front of card -->
             <div class="card-face front">
-                <div class="grid grid-cols-2 gap-4">
-                    <!-- Left Column - Profile Icon -->
-                    <div class="flex justify-center items-center">
-                        <img :src="`${DDRAGON_URL}${player.profile.images.icon}`" alt="Profile Picture"
-                            class="w-28 h-28 rounded-full" />
+
+                <!-- Profile icon -->
+                <div class="flex justify-center mb-3">
+                    <img :src="`${DDRAGON_URL}${player.profile.images.icon}`" alt="Profile Picture"
+                        class="w-20 h-20 rounded-full ring-2 ring-gray-600" />
+                </div>
+
+                <!-- Name + level -->
+                <div class="text-center mb-3">
+                    <h1 class="text-base font-bold text-white leading-tight">{{ player.profile.name }}</h1>
+                    <p class="text-gray-500 text-xs mt-0.5">Lv. {{ player.profile.level }}</p>
+                </div>
+
+                <!-- Roles -->
+                <div class="flex justify-center gap-2 mb-3 min-h-8">
+                    <div>
+                        <TopSvg class="w-7 h-7" v-if="player.profile.primary_role == 'TOP'" />
+                        <JungleSvg class="w-7 h-7" v-if="player.profile.primary_role == 'JUNGLE'" />
+                        <MiddleSvg class="w-7 h-7" v-if="player.profile.primary_role == 'MID'" />
+                        <BotSvg class="w-7 h-7" v-if="player.profile.primary_role == 'ADC'" />
+                        <SupportSvg class="w-7 h-7" v-if="player.profile.primary_role == 'SUPPORT'" />
+                        <FlexSvg class="w-7 h-7" v-if="player.profile.primary_role == 'FLEX'" />
                     </div>
-
-                    <!-- Right Column - Player Info -->
-                    <div class="flex flex-col items-center border-l border-gray-300">
-                        <h1 class="text-base text-logo-red">{{ player.profile.name }}</h1>
-                        <p class="text-gray-400">{{ player.profile.level }}</p>
-
-                        <div class="flex mt-4 space-x-2 min-h-8">
-                            <div>
-                                <TopSvg class="w-8 h-8" v-if="player.profile.primary_role == 'TOP'" />
-                                <JungleSvg class="w-8 h-8" v-if="player.profile.primary_role == 'JUNGLE'" />
-                                <MiddleSvg class="w-8 h-8" v-if="player.profile.primary_role == 'MID'" />
-                                <BotSvg class="w-8 h-8" v-if="player.profile.primary_role == 'ADC'" />
-                                <SupportSvg class="w-8 h-8" v-if="player.profile.primary_role == 'SUPPORT'" />
-                                <FlexSvg class="w-8 h-8" v-if="player.profile.primary_role == 'FLEX'" />
-                            </div>
-                            <div>
-                                <TopSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'TOP'" />
-                                <JungleSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'JUNGLE'" />
-                                <MiddleSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'MID'" />
-                                <BotSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'ADC'" />
-                                <SupportSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'SUPPORT'" />
-                                <FlexSvg class="w-8 h-8" v-if="player.profile.secondary_role == 'FLEX'" />
-                            </div>
-                        </div>
-
-                        <h2 class="mt-4 mb-2 text-logo-blue">Most Played</h2>
-                        <div class="flex mt-2 space-x-2">
-                            <img v-for="champ in favoriteChampions" :key="champ.name"
-                                :src="`${DDRAGON_URL}${champ.image.square}`" :alt="`Champion icon: ${champ.name}`"
-                                class="w-8 h-8 rounded-full" />
-                        </div>
+                    <div>
+                        <TopSvg class="w-7 h-7" v-if="player.profile.secondary_role == 'TOP'" />
+                        <JungleSvg class="w-7 h-7" v-if="player.profile.secondary_role == 'JUNGLE'" />
+                        <MiddleSvg class="w-7 h-7" v-if="player.profile.secondary_role == 'MID'" />
+                        <BotSvg class="w-7 h-7" v-if="player.profile.secondary_role == 'ADC'" />
+                        <SupportSvg class="w-7 h-7" v-if="player.profile.secondary_role == 'SUPPORT'" />
+                        <FlexSvg class="w-7 h-7" v-if="player.profile.secondary_role == 'FLEX'" />
                     </div>
                 </div>
-                <div class = "flex flex-col items-center">
 
-                    <h2 class="mt-4 mb-2 t text-logo-blue">Availability</h2>
+                <!-- Divider -->
+                <div class="border-t border-gray-700 mb-3"></div>
+
+                <!-- Most Played -->
+                <div class="flex flex-col items-center mb-3">
+                    <p class="text-gray-500 text-xs mb-2 uppercase tracking-wide">Most Played</p>
+                    <div class="flex gap-1.5">
+                        <img v-for="champ in favoriteChampions" :key="champ.name"
+                            :src="`${DDRAGON_URL}${champ.image.square}`" :alt="`Champion icon: ${champ.name}`"
+                            class="w-8 h-8 rounded-full ring-1 ring-gray-600" />
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="border-t border-gray-700 mb-3"></div>
+
+                <!-- Availability -->
+                <div class="flex flex-col items-center mb-3">
+                    <p class="text-gray-500 text-xs mb-2 uppercase tracking-wide">Availability</p>
                     <div v-if="player.profile.availability">
-                        
                         <table class="table-auto mx-auto">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th v-for="day in days" :key="day" class="px-2 py-2">{{ day.slice(0, 3) }}</th>
+                                    <th class="text-gray-600 text-xs"></th>
+                                    <th v-for="day in days" :key="day" class="px-1.5 py-1 text-gray-500 text-xs font-normal">{{ day.slice(0, 3) }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="px-2 py-2">AM</td>
-                                <td v-for="day in days" :key="`${day}-morning`" class="px-2 py-2">
-                                    <div :class="{ 'bg-logo-blue': player.profile.availability[day].morning, 'bg-gray-200': !player.profile.availability[day].morning }"
-                                    class="w-4 h-4 mx-auto rounded"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-2 py-2">PM</td>
-                                <td v-for="day in days" :key="`${day}-evening`" class="px-2 py-2">
-                                    <div :class="{ 'bg-logo-blue': player.profile.availability[day].evening, 'bg-gray-200': !player.profile.availability[day].evening }"
-                                    class="w-4 h-4 mx-auto rounded"></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                <tr>
+                                    <td class="px-1.5 py-1 text-gray-500 text-xs">AM</td>
+                                    <td v-for="day in days" :key="`${day}-morning`" class="px-1.5 py-1">
+                                        <div :class="player.profile.availability[day].morning ? 'bg-blue-500' : 'bg-gray-700'"
+                                            class="w-3.5 h-3.5 mx-auto rounded-sm"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-1.5 py-1 text-gray-500 text-xs">PM</td>
+                                    <td v-for="day in days" :key="`${day}-evening`" class="px-1.5 py-1">
+                                        <div :class="player.profile.availability[day].evening ? 'bg-blue-500' : 'bg-gray-700'"
+                                            class="w-3.5 h-3.5 mx-auto rounded-sm"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div v-else>
+                        <p class="text-gray-600 text-xs italic">No availability set</p>
+                    </div>
                 </div>
-                <div v-else>
-                    <p class="mt-4 text-gray-400 h-28">This player has not set their availability</p>
-                </div>
-            </div>
-                <div class="flex justify-center space-x-4 mt-4">
-                    <a :href="`https://www.op.gg/summoners/na/${player.profile.name}-${player.profile.tag}`" target="_blank"
-                        class="px-4 py-2 bg-logo-blue text-white rounded hover:bg-blue-500 transition-colors">
+
+                <!-- Action buttons -->
+                <div class="flex justify-center gap-2 mt-auto pt-2 border-t border-gray-700">
+                    <a :href="`https://www.op.gg/summoners/na/${player.profile.name}-${player.profile.tag}`"
+                        target="_blank"
+                        class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white text-xs rounded-lg transition-colors">
                         OP.GG
                     </a>
-
                     <button @click="flipCard"
-                        class="px-4 py-2 bg-logo-blue text-white rounded hover:bg-blue-500 transition-colors">
+                        class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white text-xs rounded-lg transition-colors">
                         Bio
                     </button>
-
                     <router-link :to="`/players/${player.profile.puuid}`"
-                        class="px-4 py-2 bg-logo-blue text-white rounded hover:bg-blue-500 transition-colors">
-                        Stats
+                        class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs rounded-lg transition-colors">
+                        Profile
                     </router-link>
                 </div>
             </div>
+
             <!-- Back of card -->
             <div class="card-face back flex flex-col items-center">
-                <h2 class="text-med text-logo-blue mb-4">About</h2>
-                <div class="min-h-80  flex justify-center">
-                    <p v-if="player.profile.bio" class="text-gray-400">{{ player.profile.bio }}</p>
-                    <p v-else class="text-gray-400">This player has played before but has not registered for the current
-                        season</p>
+                <p class="text-gray-500 text-xs uppercase tracking-wide mb-3">About</p>
+                <div class="flex-1 w-full overflow-y-auto">
+                    <p v-if="player.profile.bio" class="text-gray-300 text-sm leading-relaxed">{{ player.profile.bio }}</p>
+                    <p v-else class="text-gray-600 text-sm italic">This player has not added a bio yet.</p>
                 </div>
                 <button @click="flipCard"
-                    class="px-4 py-2  bg-logo-blue text-white rounded hover:bg-blue-500 transition-colors">
+                    class="mt-4 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white text-xs rounded-lg transition-colors">
                     Player Info
                 </button>
             </div>
@@ -176,11 +186,9 @@ export default {
 <style scoped>
 .card-container {
     perspective: 1000px;
-    /* min-height: 300px; */
-    height: 440px;
+    height: 460px;
     position: relative;
     width: 100%;
-    border: white
 }
 
 .card {
@@ -201,12 +209,20 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     backface-visibility: hidden;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    
+    background-color: rgb(31 41 55); /* bg-gray-800 */
+    border: 1px solid rgb(55 65 81);  /* border-gray-700 */
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.card-face:hover {
+    border-color: rgb(107 114 128); /* gray-500 */
 }
 
 .back {
