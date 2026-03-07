@@ -47,10 +47,8 @@
         <div class="p-5 flex flex-col items-center text-center">
           <!-- Team Logo -->
           <div class="w-24 h-24 mb-4 flex items-center justify-center">
-            <img
-              v-if="team.images && team.images.length"
-              :src="getTeamImage(team.images[0].name)"
-              :alt="team.name"
+            <TeamLogo
+              :teamName="team.name"
               class="w-full h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-200"
             />
           </div>
@@ -135,7 +133,7 @@
         <label class="block text-sm font-medium text-gray-400 mb-1">Team</label>
         <select v-model="selectedTeam" class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white">
           <option value="">Select a team</option>
-          <option v-for="team in allTeams" :key="team.id" :value="{ team_name: team.name }">{{ team.name }}</option>
+          <option v-for="team in teamsForSelectedSeason" :key="team.team_name" :value="{ team_name: team.team_name }">{{ team.team_name }}</option>
         </select>
 
         <!-- Role selector -->
@@ -205,29 +203,47 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import axios from 'axios'
 import { SEASONS } from '@/config.js'
 import teamsDataJson from '@/data/teamsData.json'
+import TeamLogo from '@/components/TeamLogo.vue'
 
 export default {
   name: 'TeamsView',
+  components: { TeamLogo },
   setup() {
     const roles = ['TOP', 'JUNGLE', 'MID', 'BOT', 'SUPPORT']
-    const allTeams = teamsDataJson.teams
+    const staticTeams = teamsDataJson.teams
+
+    // API-fetched roster data: maps team_name -> sorted array of season numbers
+    const apiTeamRosters = ref({})
+
+    // Merge API roster seasons into static team data so season badges and
+    // filtering reflect the actual rosters in the database, not only what
+    // is stored in the local JSON.
+    const allTeams = computed(() => {
+      return staticTeams.map(team => {
+        const apiSeasons = apiTeamRosters.value[team.name]
+        if (apiSeasons !== undefined) {
+          return { ...team, seasons: apiSeasons.map(s => ({ season: s })) }
+        }
+        return team
+      })
+    })
 
     // Season filter for the view (null = all)
     const seasonFilter = ref(null)
 
-    // Static list of unique season numbers from teamsData (plain array, not computed)
-    const availableSeasonNumbers = [
-      ...new Set(allTeams.flatMap(t => t.seasons.map(s => Number(s.season))))
-    ].sort((a, b) => a - b)
+    // Derived from the merged (API-aware) team list
+    const availableSeasonNumbers = computed(() => [
+      ...new Set(allTeams.value.flatMap(t => t.seasons.map(s => String(s.season))))
+    ].sort((a, b) => a.localeCompare(b, undefined, { numeric: true })))
 
     // Filtered team list
     const filteredTeams = computed(() => {
-      if (seasonFilter.value === null) return allTeams
-      return allTeams.filter(t => t.seasons.some(s => Number(s.season) === seasonFilter.value))
+      if (seasonFilter.value === null) return allTeams.value
+      return allTeams.value.filter(t => t.seasons.some(s => String(s.season) === seasonFilter.value))
     })
 
     // Admin state
@@ -238,6 +254,7 @@ export default {
     const selectedPlayer = ref('')
     const availablePlayers = ref([])
     const selectedSeason = ref('4')
+    const teamsForSelectedSeason = ref([])
     const isError = ref(false)
     const responseMessage = ref('')
     const password = ref('')
@@ -249,9 +266,22 @@ export default {
       return new URL(`../assets/teams/${imageName}`, import.meta.url).href
     }
 
-    onMounted(() => {
+    onMounted(async () => {
       const images = import.meta.glob('../assets/teams/*')
       teamImages.value = Object.keys(images).map(path => path.split('/').pop())
+
+      // Fetch authoritative roster data from the API so season badges and
+      // filters reflect what is actually stored in the database.
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/teams/all`)
+        const rosterMap = {}
+        for (const apiTeam of response.data) {
+          rosterMap[apiTeam.team_name] = Object.keys(apiTeam.rosters || {}).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+        }
+        apiTeamRosters.value = rosterMap
+      } catch (error) {
+        console.error('Error fetching team rosters from API:', error)
+      }
     })
 
     const openAssignPlayerModal = (team, role) => {
@@ -259,6 +289,7 @@ export default {
       selectedRole.value = role
       isAssignModalOpen.value = true
       fetchAvailablePlayers()
+      fetchTeamsForSeason(selectedSeason.value)
     }
 
     const closeAssignModal = () => {
@@ -316,11 +347,29 @@ export default {
     const fetchAvailablePlayers = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/players`)
-        availablePlayers.value = response.data.filter(p => p.profile.is_active)
+        availablePlayers.value = response.data
+          .sort((a, b) => a.profile.name.localeCompare(b.profile.name))
       } catch (error) {
         console.error('Error fetching available players:', error)
       }
     }
+
+    const fetchTeamsForSeason = async (season) => {
+      if (!season) return
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/teams/${season}`)
+        teamsForSelectedSeason.value = response.data
+      } catch (error) {
+        console.error('Error fetching teams for season:', error)
+        teamsForSelectedSeason.value = []
+      }
+    }
+
+    watch(selectedSeason, (newSeason) => {
+      // Reset selected team whenever the season changes so a stale value isn't submitted
+      selectedTeam.value = null
+      fetchTeamsForSeason(newSeason)
+    })
 
     return {
       roles,
@@ -334,6 +383,7 @@ export default {
       selectedSeason,
       selectedPlayer,
       availablePlayers,
+      teamsForSelectedSeason,
       openAssignPlayerModal,
       closeAssignModal,
       assignPlayer,

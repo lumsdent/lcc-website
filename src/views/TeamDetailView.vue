@@ -21,8 +21,8 @@
           <!-- Bio Card -->
           <div class="rounded-lg p-8 w-full text-white bg-gray-800" :style="{ boxShadow: `0 0 20px 3px ${team.primaryColor}` }">
             <div class="flex justify-center mb-6">
-              <img 
-                :src="getTeamImage(mostRecentImage.name)" 
+              <TeamLogo
+                :imageName="mostRecentImage.name"
                 :alt="team.name"
                 class="w-40 h-40 object-contain"
               />
@@ -248,9 +248,10 @@
                       <!-- Blue Team -->
                       <div class="flex flex-col items-center flex-1">
                         <div class="w-12 h-12 mb-1 flex items-center justify-center">
-                          <img :src="getTeamLogo(recentMatches[currentMatchIndex].info.teams[0].name)" 
-                               :alt="recentMatches[currentMatchIndex].info.teams[0].name" 
-                               class="max-w-full max-h-full">
+                          <TeamLogo
+                            :teamName="recentMatches[currentMatchIndex].info.teams[0].name"
+                            class="max-w-full max-h-full"
+                          />
                         </div>
                         <div class="text-center font-bold text-blue-400 text-xs">
                           {{ recentMatches[currentMatchIndex].info.teams[0].name }}
@@ -271,9 +272,10 @@
                       <!-- Red Team -->
                       <div class="flex flex-col items-center flex-1">
                         <div class="w-12 h-12 mb-1 flex items-center justify-center">
-                          <img :src="getTeamLogo(recentMatches[currentMatchIndex].info.teams[1].name)" 
-                               :alt="recentMatches[currentMatchIndex].info.teams[1].name" 
-                               class="max-w-full max-h-full">
+                          <TeamLogo
+                            :teamName="recentMatches[currentMatchIndex].info.teams[1].name"
+                            class="max-w-full max-h-full"
+                          />
                         </div>
                         <div class="text-center font-bold text-red-400 text-xs">
                           {{ recentMatches[currentMatchIndex].info.teams[1].name }}
@@ -370,8 +372,8 @@
               :key="index"
               class="rounded-lg flex flex-col items-center justify-center min-h-48"
             >
-              <img
-                :src="getTeamImage(image.name)"
+              <TeamLogo
+                :imageName="image.name"
                 :alt="`Team logo from ${image.date}`"
                 class="w-32 h-32 object-contain mb-4"
               />
@@ -398,11 +400,13 @@
 <script>
 import teamsData from '../data/teamsData.json';
 import axios from 'axios';
+import TeamLogo from '@/components/TeamLogo.vue'
 
 const VITE_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export default {
   name: 'TeamDetailView',
+  components: { TeamLogo },
   props: {
     teamId: {
       type: String,
@@ -503,17 +507,6 @@ export default {
       const largeArc = angle > Math.PI ? 1 : 0;
       
       return `M ${centerX} ${centerY} L ${startX} ${startY} A ${radius} ${radius} 0 ${largeArc} 1 ${endX} ${endY} Z`;
-    },
-    getTeamImage(imageName) {
-      return new URL(`../assets/teams/${imageName}`, import.meta.url).href;
-    },
-    getTeamLogo(teamName) {
-      // Find the team in teamsData to get their image
-      const foundTeam = teamsData.teams.find(t => t.name === teamName);
-      if (foundTeam) {
-        return this.getTeamImage(foundTeam.image);
-      }
-      return '';
     },
     getOrdinalSuffix(num) {
       const j = num % 10;

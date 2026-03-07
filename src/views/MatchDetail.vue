@@ -28,7 +28,12 @@
             <div v-for="(team, i) in match.info.teams" :key="'banner-'+i"
                 class="flex flex-col items-center flex-1 min-w-0"
                 :class="i === 1 ? 'order-last' : ''">
-                <img :src="getTeamLogo(team.name)" class="w-20 h-20 object-contain mb-2 rounded-xl" :alt="team.name" />
+                <TeamLogo
+                  :teamName="team.name"
+                  :gameDate="match.info.gameCreation"
+                  rounded="rounded-xl"
+                  class="w-20 h-20 object-contain mb-2"
+                />
                 <span class="hidden sm:block text-base font-bold text-white text-center truncate w-full px-1">{{ team.name }}</span>
                 <span class="sm:hidden text-base font-bold text-white text-center">{{ getTeamTricode(team.name) }}</span>
                 <span class="text-sm font-bold mt-0.5" :class="team.gameOutcome ? 'text-green-400' : 'text-red-400'">{{ team.gameOutcome ? 'VICTORY' : 'DEFEAT' }}</span>
@@ -293,6 +298,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ChampionIcon from '@/components/ChampionIcon.vue';
+import TeamLogo from '@/components/TeamLogo.vue';
 import axios from 'axios'
 import { DDRAGON_URL } from '@/config.js';
 import teamsData from '@/data/teamsData.json';
@@ -300,7 +306,8 @@ import teamsData from '@/data/teamsData.json';
 export default {
     name: 'MatchDetail',
     components: {
-        ChampionIcon
+        ChampionIcon,
+        TeamLogo
     },
     setup() {
         const route = useRoute()
@@ -368,37 +375,11 @@ export default {
             return team?.tricode ?? teamName
         }
 
-        const getTeamLogo = (teamName) => {            const teamLogos = {
-                'Bandle City Buckaroos': 'Bandle_City_Buckaroos.png',
-                'Bilgewater Bullets': '/Bilgewater_Bullets_Logo.png',
-                'Demacian Justice': 'Demacian_Justice_Logo.png',
-                'Freljord Frost': 'Frejlord_Frost_Logo.png',
-                'Noxian Gladiators': 'Noxian_Gladiators_Logo.png',
-                'Piltover Progress': 'Piltover_Progress_Logo.png',
-                'Shurima Scorch': 'Shuriman_Scorch_Logo.png',
-                'Targon Titans': 'Targon_Titans_Logo.png',
-                'Zaun Plague': 'Zaun_Plague.png',
-                'Discord Kittens': 'Discord Kittens Logo.svg',
-                'Gets On Base': 'Gets On Base Logo.svg',
-                'League of Liquor': 'League of Liquor Logo.svg',
-                "Matt's Alt Accounts": 'M.A.A. Logo.svg',
-                'S.G.I.': 'S.G.I. Logo.svg',
-                'Team Bell': 'Team Bell Logo.svg',
-                'Team Hospitalized': 'Team Hospitalized Logo.svg',
-            }
-            try {
-                return new URL(`../assets/teams/${teamLogos[teamName]}`, import.meta.url).href
-            } catch {
-                return ''
-            }
-        }
-
         return {
             matchId,
             match,
             DDRAGON_URL,
             getItemImageUrl,
-            getTeamLogo,
             getTeamTricode,
             fromPlayer,
             fromPuuid,
