@@ -48,18 +48,19 @@
           <!-- Team Logo -->
           <div class="w-24 h-24 mb-4 flex items-center justify-center">
             <TeamLogo
-              :teamName="team.name"
+              :teamName="team.displayName"
+              :season="seasonFilter"
               class="w-full h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-200"
             />
           </div>
 
           <!-- Team Name -->
           <h2 class="text-white font-bold text-base leading-tight mb-1 group-hover:text-blue-300 transition-colors">
-            {{ team.name }}
+            {{ team.displayName }}
           </h2>
 
-          <!-- Former Name -->
-          <p v-if="team.formerName" class="text-gray-500 text-xs mb-2">
+          <!-- Former Name — only shown when the card is using the current name -->
+          <p v-if="team.formerName && team.displayName === team.name" class="text-gray-500 text-xs mb-2">
             fmr. {{ team.formerName }}
           </p>
 
@@ -221,14 +222,27 @@ export default {
 
     // Merge API roster seasons into static team data so season badges and
     // filtering reflect the actual rosters in the database, not only what
-    // is stored in the local JSON.
+    // is stored in the local JSON.  Season values are normalised to strings
+    // here so comparisons downstream never need String() wrappers.
+    // Each season entry is tagged with the name the team used that season
+    // (former name or current name) since the API stores them separately.
     const allTeams = computed(() => {
       return staticTeams.map(team => {
-        const apiSeasons = apiTeamRosters.value[team.name]
-        if (apiSeasons !== undefined) {
-          return { ...team, seasons: apiSeasons.map(s => ({ season: s })) }
+        const currentApiSeasons = apiTeamRosters.value[team.name]
+        const formerApiSeasons = team.formerName ? apiTeamRosters.value[team.formerName] : undefined
+
+        let seasons
+        if (currentApiSeasons !== undefined || formerApiSeasons !== undefined) {
+          const current = (currentApiSeasons || []).map(s => ({ season: String(s), nameUsed: team.name }))
+          const former = (formerApiSeasons || []).map(s => ({ season: String(s), nameUsed: team.formerName }))
+          seasons = [...former, ...current].sort((a, b) =>
+            a.season.localeCompare(b.season, undefined, { numeric: true })
+          )
+        } else {
+          seasons = team.seasons.map(s => ({ ...s, season: String(s.season), nameUsed: team.name }))
         }
-        return team
+
+        return { ...team, seasons }
       })
     })
 
@@ -237,13 +251,21 @@ export default {
 
     // Derived from the merged (API-aware) team list
     const availableSeasonNumbers = computed(() => [
-      ...new Set(allTeams.value.flatMap(t => t.seasons.map(s => String(s.season))))
+      ...new Set(allTeams.value.flatMap(t => t.seasons.map(s => s.season)))
     ].sort((a, b) => a.localeCompare(b, undefined, { numeric: true })))
 
-    // Filtered team list
+    // Filtered team list — also sets displayName to the name used that season
     const filteredTeams = computed(() => {
-      if (seasonFilter.value === null) return allTeams.value
-      return allTeams.value.filter(t => t.seasons.some(s => String(s.season) === seasonFilter.value))
+      const teams = seasonFilter.value === null
+        ? allTeams.value
+        : allTeams.value.filter(t => t.seasons.some(s => s.season === seasonFilter.value))
+
+      return teams.map(t => {
+        const seasonEntry = seasonFilter.value !== null
+          ? t.seasons.find(s => s.season === seasonFilter.value)
+          : null
+        return { ...t, displayName: seasonEntry?.nameUsed ?? t.name }
+      })
     })
 
     // Admin state
@@ -255,8 +277,6 @@ export default {
     const availablePlayers = ref([])
     const selectedSeason = ref('4')
     const teamsForSelectedSeason = ref([])
-    const isError = ref(false)
-    const responseMessage = ref('')
     const password = ref('')
     const newTeamName = ref('')
     const teamImages = ref([])
@@ -329,17 +349,13 @@ export default {
 
     const addTeam = async () => {
       try {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/teams/${selectedSeason.value}/add`, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/teams/${selectedSeason.value}/add`, {
           teamName: newTeamName.value,
           image: selectedImage.value,
           password: password.value
         })
-        isError.value = false
-        responseMessage.value = response.data.message
       } catch (error) {
         console.error(error)
-        isError.value = true
-        responseMessage.value = 'An error occurred. Please try again.'
       }
       closeAddTeamModal()
     }

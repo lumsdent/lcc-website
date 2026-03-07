@@ -17,6 +17,9 @@ import teamsDataJson from '@/data/teamsData.json'
  * Usage (by team name – picks the most recent logo):
  *   <TeamLogo :teamName="'Piltover Progress'" class="w-12 h-12" />
  *
+ * Usage with season-aware logo (picks the logo active in that season):
+ *   <TeamLogo :teamName="'Bandle City Buckaroos'" :season="'2'" class="w-14 h-14" />
+ *
  * Usage with date-aware logo (picks the logo active at that date):
  *   <TeamLogo :teamName="'Bandle City Buckaroos'" :gameDate="match.info.gameCreation" class="w-14 h-14" />
  *
@@ -35,6 +38,13 @@ export default {
     teamName: { type: String, default: null },
     /** Use an explicit image file name from assets/teams/. */
     imageName: { type: String, default: null },
+    /**
+     * A season key (e.g. '1', '2', '3', '4') used to pick the logo that was
+     * active during that season. Each image entry in teamsData.json carries a
+     * `seasons` array; the first matching image is used. Takes priority over
+     * gameDate when both are provided.
+     */
+    season: { type: String, default: null },
     /**
      * A date (timestamp number, ISO string, or Date) used to pick the logo
      * that was active at the time of a match. Falls back to the most recent
@@ -59,6 +69,12 @@ export default {
           t => t.name === this.teamName || t.formerName === this.teamName
         )
         if (!found) return null
+
+        // Try to find the logo by season key (img.seasons array)
+        if (this.season && found.images?.length) {
+          const byseason = found.images.find(img => img.seasons?.includes(this.season))
+          if (byseason) return byseason.name
+        }
 
         // Try to find the logo that was active on the given match date
         if (this.gameDate && found.images?.length) {
