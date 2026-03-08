@@ -1,10 +1,17 @@
 ﻿<template>
   <div class="container mx-auto px-4 py-8">
 
+    <!-- Breadcrumbs -->
+    <nav class="flex items-center gap-1.5 text-sm text-gray-500 mb-6">
+      <RouterLink to="/stats" class="hover:text-gray-300 transition-colors">Stats</RouterLink>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+      <span class="text-gray-300">Players</span>
+    </nav>
+
     <!-- Header -->
     <div class="mb-8">
       <h1 class="text-3xl font-bold text-white mb-1">Player Statistics</h1>
-      <p class="text-gray-400 text-sm">{{ selectedSeason === null ? 'All Time' : `Season ${selectedSeason}` }} Â· {{ sortedPlayers.length }} players</p>
+      <p class="text-gray-400 text-sm">{{ selectedSeason === null ? 'All Time' : `Season ${selectedSeason}` }} &middot; {{ sortedPlayers.length }} players</p>
     </div>
 
     <!-- Season Selector -->
@@ -60,7 +67,7 @@
     <!-- Loading -->
     <div v-if="loading" class="flex flex-col items-center justify-center py-16">
       <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-3"></div>
-      <p class="text-gray-400 text-sm">Loading statisticsâ€¦</p>
+      <p class="text-gray-400 text-sm">Loading statistics...</p>
     </div>
 
     <!-- Table -->
@@ -80,7 +87,7 @@
                 @click="column.key !== 'playerName' ? setSort(column.key) : null"
               >
                 {{ column.label }}
-                <span v-if="sortBy === column.key" class="ml-1 text-blue-400">{{ sortDirection === 'asc' ? 'â†‘' : 'â†“' }}</span>
+                <span v-if="sortBy === column.key" class="ml-1 text-blue-400">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
               </th>
             </tr>
           </thead>
@@ -88,7 +95,7 @@
             <tr
               v-for="player in sortedPlayers"
               :key="player.puuid"
-              class="border-b border-gray-700 hover:bg-gray-700 cursor-pointer transition-colors"
+              class="group border-b border-gray-700 hover:bg-gray-700 cursor-pointer transition-colors"
               @click="navigateToPlayer(player.puuid)"
             >
               <td
@@ -96,7 +103,7 @@
                 :key="column.key"
                 :class="[
                   column.align === 'center' ? 'text-center' : '',
-                  column.key === 'playerName' ? 'sticky left-0 z-10 bg-gray-800 hover:bg-gray-700' : 'py-3 px-4',
+                  column.key === 'playerName' ? 'sticky left-0 z-10 bg-gray-800 group-hover:bg-gray-700 transition-colors' : 'py-3 px-4',
                 ]"
               >
                 <!-- Player Name -->
@@ -197,13 +204,14 @@
 <script>
 import { ref, computed, onMounted, watch } from 'vue'
 import axios from 'axios'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 export default {
   name: 'StatsView',
   setup() {
     const loading = ref(true)
     const router = useRouter()
+    const route = useRoute()
     const players = ref([])
     const seasons = ref([])
     const selectedSeason = ref(null)
@@ -263,9 +271,16 @@ export default {
       try {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/matches/seasons`)
         seasons.value = res.data
-        // Default to most recent season
         if (seasons.value.length) {
-          selectedSeason.value = seasons.value[seasons.value.length - 1]
+          const q = route.query.season
+          if (q === 'alltime') {
+            selectedSeason.value = null
+          } else if (q) {
+            const match = seasons.value.find(s => String(s) === String(q))
+            selectedSeason.value = match !== undefined ? match : seasons.value[seasons.value.length - 1]
+          } else {
+            selectedSeason.value = seasons.value[seasons.value.length - 1]
+          }
         }
       } catch (e) {
         console.error('Failed to load seasons', e)
@@ -368,7 +383,6 @@ export default {
 </script>
 
 <style scoped>
-tr:hover td.sticky div { background-color: rgb(55 65 81); }
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: #1f2937; }

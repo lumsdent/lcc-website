@@ -41,8 +41,18 @@ const router = createRouter({
     },
     {
       path: '/stats',
+      name: 'statsOverview',
+      component: () => import('../views/StatsOverviewView.vue')
+    },
+    {
+      path: '/stats/player',
       name: 'stats',
       component: () => import('../views/StatsView.vue')
+    },
+    {
+      path: '/stats/champion',
+      name: 'championStats',
+      component: () => import('../views/ChampionStatsView.vue')
     },
     {
       path: '/players/:puuid',
