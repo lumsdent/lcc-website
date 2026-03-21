@@ -98,7 +98,7 @@
     </div>
 
     <!-- Admin Actions -->
-    <div class="flex justify-end mt-8 gap-3">
+    <div v-if="authStore.isAdmin" class="flex justify-end mt-8 gap-3">
       <button
         @click="openAssignPlayerModal(null, '')"
         class="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
@@ -153,9 +153,6 @@
           </option>
         </select>
 
-        <label class="block text-sm font-medium text-gray-400 mb-1">Password</label>
-        <input class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white" type="password" v-model="password" placeholder="Enter password" />
-
         <div class="flex justify-end gap-2">
           <button @click="closeAssignModal" class="px-4 py-2 border border-gray-600 rounded-lg text-gray-300 hover:bg-gray-700">Cancel</button>
           <button @click="assignPlayer" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg">Assign</button>
@@ -190,9 +187,6 @@
           </div>
         </div>
 
-        <label class="block text-sm font-medium text-gray-400 mb-1">Password</label>
-        <input class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white" type="password" v-model="password" placeholder="Enter password" />
-
         <div class="flex justify-end gap-2">
           <button @click="closeAddTeamModal" class="px-4 py-2 border border-gray-600 rounded-lg text-gray-300 hover:bg-gray-700">Cancel</button>
           <button @click="addTeam" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg">Add Team</button>
@@ -207,6 +201,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import axios from 'axios'
 import { SEASONS } from '@/config.js'
+import { useAuthStore } from '@/stores/auth.js'
 import teamsDataJson from '@/data/teamsData.json'
 import TeamLogo from '@/components/TeamLogo.vue'
 
@@ -214,6 +209,7 @@ export default {
   name: 'TeamsView',
   components: { TeamLogo },
   setup() {
+    const authStore = useAuthStore()
     const roles = ['TOP', 'JUNGLE', 'MID', 'BOT', 'SUPPORT']
     const staticTeams = teamsDataJson.teams
 
@@ -277,7 +273,6 @@ export default {
     const availablePlayers = ref([])
     const selectedSeason = ref('4')
     const teamsForSelectedSeason = ref([])
-    const password = ref('')
     const newTeamName = ref('')
     const teamImages = ref([])
     const selectedImage = ref('')
@@ -317,7 +312,6 @@ export default {
       selectedTeam.value = null
       selectedRole.value = ''
       selectedPlayer.value = ''
-      password.value = ''
     }
 
     const assignPlayer = async () => {
@@ -328,8 +322,7 @@ export default {
           role: selectedRole.value,
           player: { puuid: selectedPlayer.value.profile.puuid, name: selectedPlayer.value.profile.name },
           season: selectedSeason.value,
-          password: password.value
-        })
+        }, { withCredentials: true })
         closeAssignModal()
       } catch (error) {
         console.error('Error assigning player:', error)
@@ -344,7 +337,6 @@ export default {
       isAddTeamModalOpen.value = false
       newTeamName.value = ''
       selectedImage.value = ''
-      password.value = ''
     }
 
     const addTeam = async () => {
@@ -352,8 +344,7 @@ export default {
         await axios.post(`${import.meta.env.VITE_API_URL}/teams/${selectedSeason.value}/add`, {
           teamName: newTeamName.value,
           image: selectedImage.value,
-          password: password.value
-        })
+        }, { withCredentials: true })
       } catch (error) {
         console.error(error)
       }
@@ -404,7 +395,6 @@ export default {
       closeAssignModal,
       assignPlayer,
       getTeamImage,
-      password,
       openAddTeamModal,
       closeAddTeamModal,
       isAddTeamModalOpen,
@@ -413,6 +403,7 @@ export default {
       teamImages,
       selectedImage,
       seasons: SEASONS,
+      authStore,
     }
   }
 }

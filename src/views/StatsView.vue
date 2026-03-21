@@ -82,9 +82,10 @@
                 class="py-3 px-4 whitespace-nowrap sticky top-0 bg-gray-900 z-10 select-none"
                 :class="[
                   column.align === 'center' ? 'text-center' : 'text-left',
-                  column.key === 'playerName' ? 'sticky left-0 z-20' : 'cursor-pointer hover:text-white',
+                  column.key === 'playerName' ? 'sticky left-0 z-20' : '',
+                  'cursor-pointer hover:text-white',
                 ]"
-                @click="column.key !== 'playerName' ? setSort(column.key) : null"
+                @click="setSort(column.key)"
               >
                 {{ column.label }}
                 <span v-if="sortBy === column.key" class="ml-1 text-blue-400">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>

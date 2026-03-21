@@ -298,7 +298,7 @@
                                          "seasons":  ["2", "2T", "2P"]
                                      }
                                  ],
-                      "primaryColor":  "rgb(70, 130, 180)",
+                      "primaryColor":  "rgb(128, 0, 128)",
                       "established":  2024,
                       "allPros":  2,
                       "mvps":  1,
@@ -343,7 +343,7 @@
                                          "seasons":  ["1", "1T", "1P"]
                                      }
                                  ],
-                      "primaryColor":  "rgb(128, 0, 128)",
+                      "primaryColor":  "rgb(0, 162, 0)",
                       "established":  2022,
                       "allPros":  6,
                       "mvps":  1,

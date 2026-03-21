@@ -1,13 +1,16 @@
 <script>
+import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import AppHeader from './components/AppHeader.vue'
+import { useAuthStore } from '@/stores/auth'
 
 export default {
   name: 'App',
-  components: {
-    AppHeader,
-    RouterView,
-    
+  components: { AppHeader, RouterView },
+  setup() {
+    const authStore = useAuthStore()
+    onMounted(() => authStore.fetchMe())
+    return { authStore }
   }
 }
 </script>
@@ -48,7 +51,7 @@ export default {
         </div>
         <div class="mt-4 text-gray-400 text-sm">© 2026 LCC. All rights reserved.</div>
         <div class="flex">
-          <RouterLink to="/match" class="mt-4 text-blue-500 hover:text-blue-700">Admin</RouterLink>
+          <RouterLink v-if="authStore.isAdmin" to="/match" class="mt-4 text-blue-500 hover:text-blue-700">Admin</RouterLink>
           <span class="mx-4"></span>
           <RouterLink to="/patchnotes" class="mt-4 text-blue-500 hover:text-blue-700">Patch Notes</RouterLink>
         </div>

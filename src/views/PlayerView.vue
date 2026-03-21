@@ -481,9 +481,13 @@ export default {
                 player.value = response.data.player
                 refreshMessage.value = 'Profile updated!'
             } catch (error) {
-                console.error('Error refreshing player:', error)
-                refreshError.value = true
-                refreshMessage.value = 'Refresh failed.'
+                if (error.response?.status === 429) {
+                    refreshMessage.value = 'Profile was updated within the last 24 hours.'
+                } else {
+                    console.error('Error refreshing player:', error)
+                    refreshError.value = true
+                    refreshMessage.value = error.response?.data?.message ?? 'Refresh failed.'
+                }
             } finally {
                 isRefreshing.value = false
             }

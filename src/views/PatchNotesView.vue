@@ -53,6 +53,56 @@ export default {
   setup() {
     const patchNotes = ref([
       {
+        version: 'Beta v1.4.0 - Art Gallery, Stats Fixes & Profile Improvements',
+        date: '2026-03-10',
+        description: 'An update focused on exploring stats in more depth, fixing some bugs, and improving community engagement with a new Art Gallery page.',
+        sections: [
+          {
+            title: 'CHARTS, CHARTS, CHARTS!',
+            description: 'A Stats overview screen with graphics of our top performers',
+            features: [
+              { title: 'Team Colors', description: 'All charts are color-coded by team for easy identification.' }
+              
+            ]
+          },
+          {
+            title: 'Player Statistics',
+            description: 'The Player Statistics page tracks aggregated performance data for every player across all LCC matches.',
+            features: [
+              { title: 'Season Filter', description: 'Switch between individual seasons or view all-time aggregates with a single click.' },
+              { title: 'Sortable Columns', description: 'Click any column header to sort — including Player Name (fixed this update), KDA, Damage/min, CS/min, Gold/min, and more.' },
+              { title: 'Customisable Columns', description: 'Choose exactly which stats you want on screen. Preferences are saved in your browser so they persist between visits.' },
+            ]
+          },
+          {
+            title: 'Champion Stats',
+            description: 'Each player profile includes a full champion stats breakdown showing how they\'ve performed on every champion they\'ve played in the league.',
+            features: [
+              { title: 'Per-Champion Rows', description: 'Each champion is its own row showing games played, win rate, KDA, K/D/A, kill participation, damage/min, and CS@14.' },
+              { title: 'Sortable', description: 'Click any column to sort by that stat — useful for finding a player\'s most-played or best-performing champion.' },
+              { title: 'Filter Match History', description: 'Click a champion row to filter the match history table on that page to only show games on that champion.' }
+            ]
+          },
+                   {
+            title: 'Art Gallery',
+            description: 'A new Art Gallery page is now live.',
+            features: [
+              { title: 'Community Art', description: 'Browse fan and community art submitted for the league, all in one place.' },
+            ]
+          },
+          {
+            title: 'Bug Fixes',
+            features: [
+              { description: 'Fixed images.' },
+              { description: 'Fixed seasons missing from the season filter on the Player/Team page.' }
+            ]
+          }
+        ],
+        comingSoon: [
+          'Idk, Let me know what you want to see next!'
+        ]
+      },
+      {
         version: 'Beta v1.3.0 - Teams, Players, Matches & Profile Overhaul',
         date: '2026-03-05',
         description: 'A major update across the Teams, Players, and Matches pages — adding search and filtering throughout, improving how match details are presented, closing Season 4 registration, and keeping player profiles up to date.',

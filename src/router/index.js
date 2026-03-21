@@ -81,6 +81,31 @@ const router = createRouter({
       name: 'patchnotes',
       component: () => import('../views/PatchNotesView.vue')
     },
+    {
+      path: '/practice',
+      name: 'practice',
+      component: () => import('../views/PracticeView.vue')
+    },
+    {
+      path: '/tournament',
+      name: 'tournament',
+      component: () => import('../views/TournamentView.vue')
+    },
+    {
+      path: '/art',
+      name: 'art',
+      component: () => import('../views/ArtGalleryView.vue')
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../views/DashboardView.vue')
+    },
+    {
+      path: '/claim-profile',
+      name: 'claimProfile',
+      component: () => import('../views/ClaimProfileView.vue')
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

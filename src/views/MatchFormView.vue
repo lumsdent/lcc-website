@@ -31,7 +31,7 @@
           <label class="field-label">Season</label>
           <select v-model="add.season" class="field-input">
             <option value="">Select season...</option>
-            <option v-for="s in seasons" :key="s" :value="String(s)">Season {{ s }}</option>
+            <option v-for="s in seasons" :key="s.id" :value="s.id">{{ s.name }}</option>
           </select>
         </div>
         <div>
@@ -50,11 +50,6 @@
         </div>
       </div>
 
-      <div>
-        <label class="field-label">Password</label>
-        <input v-model="password" type="password" placeholder="Admin password" class="field-input max-w-xs" />
-      </div>
-
       <button @click="submitAdd" :disabled="loading"
         class="rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-50 px-5 py-2 text-sm font-semibold text-white transition-colors">
         {{ loading ? 'Submitting...' : 'Add Match' }}
@@ -68,11 +63,6 @@
         <strong>Warning:</strong> This re-fetches every match in
         <code class="text-yellow-200 text-xs">matches_index</code> from the Riot API and overwrites existing records.
         This may take several minutes.
-      </div>
-
-      <div>
-        <label class="field-label">Password</label>
-        <input v-model="password" type="password" placeholder="Admin password" class="field-input max-w-xs" />
       </div>
 
       <button @click="submitRefresh" :disabled="loading"
@@ -105,7 +95,7 @@
             <label class="field-label">Season</label>
             <select v-model="manual.season" class="field-input" @change="fetchManualTeams">
               <option value="">Select...</option>
-              <option v-for="s in seasons" :key="s" :value="String(s)">Season {{ s }}</option>
+              <option v-for="s in seasons" :key="s.id" :value="s.id">{{ s.name }}</option>
             </select>
           </div>
           <div>
@@ -158,11 +148,6 @@
           </div>
         </div>
         <PlayerTable :players="manual.red.players" :playerOptions="manualPlayers" :championOptions="manualChampions" />
-      </div>
-
-      <div>
-        <label class="field-label">Password</label>
-        <input v-model="password" type="password" placeholder="Admin password" class="field-input max-w-xs" />
       </div>
 
       <button @click="submitManual" :disabled="loading"
@@ -238,10 +223,6 @@
       </div>
 
       <template v-if="mvp.players.length">
-        <div>
-          <label class="field-label">Password</label>
-          <input v-model="password" type="password" placeholder="Admin password" class="field-input max-w-xs" />
-        </div>
         <button @click="submitMvp" :disabled="loading || !mvp.selectedPuuid"
           class="rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-50 px-5 py-2 text-sm font-semibold text-white transition-colors">
           {{ loading ? 'Saving...' : 'Assign MVP' }}
@@ -256,6 +237,8 @@
 <script>
 import axios from 'axios'
 import { ref, watch, defineComponent, h, onMounted } from 'vue'
+import { SEASONS } from '@/config.js'
+import { useAuthStore } from '@/stores/auth'
 
 // ── Inline sub-components ─────────────────────────────────────────────────
 
@@ -368,6 +351,7 @@ export default {
 
   setup() {
     const API = import.meta.env.VITE_API_URL
+    const authStore = useAuthStore()
     const tabs = [
       { id: 'add',     label: 'Add Match'   },
       { id: 'refresh', label: 'Refresh'      },
@@ -375,11 +359,10 @@ export default {
       { id: 'mvp',     label: 'Assign MVP'   },
     ]
     const activeTab = ref('add')
-    const password  = ref('')
     const isError   = ref(false)
     const statusMsg = ref('')
     const loading   = ref(false)
-    const seasons   = ref([])
+    const seasons   = ref(SEASONS)
 
     // ── Add tab ───────────────────────────────────────────────
     const add      = ref({ matchId: '', season: '', blueTeam: '', redTeam: '' })
@@ -402,8 +385,7 @@ export default {
           season:   add.value.season,
           blueTeam: add.value.blueTeam,
           redTeam:  add.value.redTeam,
-          password: password.value,
-        })
+        }, { withCredentials: true })
         statusMsg.value = res.data.message; isError.value = false
         add.value = { matchId: '', season: '', blueTeam: '', redTeam: '' }
       } catch (e) {
@@ -418,7 +400,7 @@ export default {
     const submitRefresh = async () => {
       loading.value = true; statusMsg.value = ''; refreshErrors.value = []
       try {
-        const res = await axios.post(`${API}/matches/refresh`, { password: password.value })
+        const res = await axios.post(`${API}/matches/refresh`, {}, { withCredentials: true })
         statusMsg.value = res.data.message; isError.value = false
         if (res.data.errors?.length) refreshErrors.value = res.data.errors
       } catch (e) {
@@ -488,8 +470,7 @@ export default {
           redTeamName:  manual.value.red.name,
           bluePlayers:  manual.value.blue.players,
           redPlayers:   manual.value.red.players,
-          password:     password.value,
-        })
+        }, { withCredentials: true })
         statusMsg.value = res.data.message; isError.value = false
       } catch (e) {
         statusMsg.value = e.response?.data?.message ?? 'Error creating match.'
@@ -541,8 +522,7 @@ export default {
         const res = await axios.patch(`${API}/matches/lcc/${mvp.value.matchIdLCC}/mvp`, {
           puuid:      selected.puuid,
           playerName: selected.name,
-          password:   password.value,
-        })
+        }, { withCredentials: true })
         statusMsg.value = res.data.message; isError.value = false
         mvp.value.currentMvp = selected.name
       } catch (e) {
@@ -552,10 +532,9 @@ export default {
     }
 
     // ── Init ──────────────────────────────────────────────────
-    axios.get(`${API}/matches/seasons`).then(r => { seasons.value = r.data }).catch(() => {})
 
     return {
-      tabs, activeTab, password, isError, statusMsg, loading, seasons,
+      tabs, activeTab, isError, statusMsg, loading, seasons,
       add, addTeams, submitAdd,
       refreshErrors, submitRefresh,
       manual, manualTeams, manualPlayers, manualChampions, submitManual,

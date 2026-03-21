@@ -212,6 +212,7 @@ import { ref, computed, onMounted } from 'vue'
 import axios from 'axios'
 import { Bar, Line } from 'vue-chartjs'
 import { DDRAGON_URL } from '@/config.js'
+import teamsData from '@/data/teamsData.json'
 import {
   Chart as ChartJS,
   Title, Tooltip, Legend,
@@ -222,13 +223,30 @@ import {
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Filler)
 
 const CHART_COLORS = {
-  blue: 'rgba(59, 130, 246, 0.85)',
-  blueHover: 'rgba(96, 165, 250, 1)',
-  green: 'rgba(34, 197, 94, 0.85)',
-  red: 'rgba(239, 68, 68, 0.85)',
+  lccBlue: 'rgba(32, 164, 243, 0.85)',
+  lccRed: 'rgba(255, 51, 102, 0.85)',
+  gray: 'rgba(107, 114, 128, 0.85)',
   grid: 'rgba(55, 65, 81, 0.8)',
   text: 'rgba(156, 163, 175, 1)',
 }
+
+const toRgba = (rgb, alpha = 0.85) => {
+  const [r, g, b] = rgb.match(/\d+/g)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
+const TEAM_COLOR_MAP = {}
+teamsData.teams.forEach(t => {
+  const color = toRgba(t.primaryColor)
+  TEAM_COLOR_MAP[t.name] = color
+  if (t.formerName) TEAM_COLOR_MAP[t.formerName] = color
+})
+
+const alternatingColors = (n) =>
+  Array.from({ length: n }, (_, i) => i % 2 === 0 ? CHART_COLORS.lccBlue : CHART_COLORS.lccRed)
+
+const playerTeamColors = (players) =>
+  players.map(p => TEAM_COLOR_MAP[p.team] ?? CHART_COLORS.gray)
 
 export default {
   name: 'StatsOverviewView',
@@ -323,22 +341,25 @@ export default {
       labels: items.map(labelFn),
       datasets: [{
         data: items.map(valueFn),
-        backgroundColor: colors ?? items.map(() => CHART_COLORS.blue),
+        backgroundColor: colors ?? alternatingColors(items.length),
         borderRadius: 4,
         borderSkipped: false,
+        teams: items.map(p => p.team ?? ''),
       }],
     })
 
     const kdaChartData = computed(() => {
       const players = top10By('kda')
       return makeBarData(players, p => p.playerName, p => parseFloat(p.kda.toFixed(2)),
-        players.map(p => p.kda >= 3.5 ? CHART_COLORS.green : p.kda >= 2.5 ? 'rgba(234,179,8,0.85)' : CHART_COLORS.red)
+        playerTeamColors(players)
       )
     })
 
     const dpmChartData = computed(() => {
       const players = top10By('dpm')
-      return makeBarData(players, p => p.playerName, p => parseFloat(p.dpm.toFixed(1)))
+      return makeBarData(players, p => p.playerName, p => parseFloat(p.dpm.toFixed(1)),
+        playerTeamColors(players)
+      )
     })
 
     const winRateChartData = computed(() => {
@@ -347,13 +368,15 @@ export default {
         .sort((a, b) => b.winRate - a.winRate)
         .slice(0, 10)
       return makeBarData(players, p => p.playerName, p => parseFloat(p.winRate.toFixed(1)),
-        players.map(p => p.winRate >= 50 ? CHART_COLORS.blue : CHART_COLORS.red)
+        playerTeamColors(players)
       )
     })
 
     const uniqueChampsChartData = computed(() => {
       const players = top10By('uniqueChampionsCount')
-      return makeBarData(players, p => p.playerName, p => p.uniqueChampionsCount)
+      return makeBarData(players, p => p.playerName, p => p.uniqueChampionsCount,
+        playerTeamColors(players)
+      )
     })
 
     const horizontalBarOptions = {
@@ -368,6 +391,13 @@ export default {
           bodyColor: '#9ca3af',
           borderColor: '#374151',
           borderWidth: 1,
+          callbacks: {
+            label: (ctx) => {
+              const team = ctx.dataset.teams?.[ctx.dataIndex]
+              const suffix = team ? ` · ${team}` : ''
+              return ` ${ctx.formattedValue}${suffix}`
+            },
+          },
         },
       },
       scales: {

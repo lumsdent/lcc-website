@@ -1,11 +1,27 @@
 <script>
 import announcement from '@/data/announcement.json'
+import flag1 from '@/assets/flags/Season_1_Champions_Banner.png'
+import flag2 from '@/assets/flags/Season_2_Champions_Banner.png'
+import flag3 from '@/assets/flags/Season_3_Champions_Banner.png'
+import { useAuthStore } from '@/stores/auth'
+import LoginButton from '@/components/LoginButton.vue'
+import ProfileButton from '@/components/ProfileButton.vue'
 
 export default {
   name: 'AppHeader',
+  components: { LoginButton, ProfileButton },
+  setup() {
+    const authStore = useAuthStore()
+    return { authStore }
+  },
   data() {
     return {
       announcement,
+      flags: [
+        { src: flag1, alt: 'Season 1 Champions Banner' },
+        { src: flag2, alt: 'Season 2 Champions Banner' },
+        { src: flag3, alt: 'Season 3 Champions Banner' },
+      ],
       navLinks: [
         { title: 'Home', path: '/' },
         { title: 'Schedule', path: '/schedule' },
@@ -14,6 +30,8 @@ export default {
         { title: 'Players', path: '/players' },
         { title: 'Matches', path: '/matches' },
         { title: 'Stats', path: '/stats' },
+        // { title: 'Practice', path: '/practice' },
+        { title: 'Art', path: '/art' },
       ]
     }
   }
@@ -24,7 +42,7 @@ export default {
   <div class="w-full">
 
     <!-- Branding row -->
-    <div class="flex items-center justify-between py-5 border-b border-gray-800">
+    <div class="flex items-stretch justify-between pt-0 pb-5 border-b border-gray-800">
       <RouterLink to="/" class="flex items-center gap-5 hover:!bg-transparent">
         <img src="@/assets/logo.svg" alt="LCC logo" width="96" height="96" />
         <div>
@@ -34,10 +52,22 @@ export default {
           <p class="text-xs text-gray-500 uppercase tracking-widest mt-0.5">Amateur League of Legends &middot; Est. 2022 &middot; Season 4</p>
         </div>
       </RouterLink>
-      <a href="https://www.twitch.tv/jagshockey" target="_blank" rel="noopener" class="hidden sm:flex items-center gap-2 rounded-full bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-gray-300 hover:border-logo-blue transition-colors">
-        <span class="w-2 h-2 rounded-full bg-logo-blue animate-pulse"></span>
-        <span>Season 4 <span class="text-logo-blue font-semibold">Live</span></span>
-      </a>
+
+      <!-- Championship banners -->
+      <div class="flex items-start gap-3 self-stretch pointer-events-none select-none">
+        <div v-for="(flag, i) in flags" :key="i">
+          <img :src="flag.src" :alt="flag.alt" class="w-auto h-32 object-contain drop-shadow-lg opacity-80 hover:opacity-100 transition-opacity pointer-events-auto" />
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 self-center flex-shrink-0">
+        <a href="https://www.twitch.tv/jagshockey" target="_blank" rel="noopener" class="hidden sm:flex items-center gap-2 rounded-full bg-gray-800 border border-gray-700 px-4 py-2 text-sm text-gray-300 hover:border-logo-blue transition-colors">
+          <span class="w-2 h-2 rounded-full bg-logo-blue animate-pulse"></span>
+          <span>Season 4 <span class="text-logo-blue font-semibold">Live</span></span>
+        </a>
+        <LoginButton v-if="!authStore.loading && !authStore.isLoggedIn" />
+        <ProfileButton v-else-if="authStore.isLoggedIn" />
+      </div>
     </div>
 
     <!-- Announcement strip -->
