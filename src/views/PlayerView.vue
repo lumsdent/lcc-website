@@ -72,8 +72,8 @@
                     :class="match.win ? 'border-l-2 border-l-green-500' : 'border-l-2 border-l-red-500'"
                     @click="goToMatchDetail(match.matchId)"
                   >
-                    <td class="py-3 px-4 font-medium text-white">{{ match.team.name }}</td>
-                    <td class="py-3 px-4 text-gray-400">{{ match.vs.teamName }}</td>
+                    <td class="py-3 px-4 font-medium text-white">{{ match.teamName }}</td>
+                    <td class="py-3 px-4 text-gray-400">{{ match.opponentTeamName }}</td>
                     <td class="py-3 px-4 text-center text-gray-400">{{ new Date(match.gameStartTimestamp).toLocaleDateString() }}</td>
                     <td class="py-3 px-4 text-center">
                       <span
@@ -87,7 +87,7 @@
                       <div class="flex items-center justify-center gap-1">
                         <img class="w-8 h-8 rounded" :src="`${DDRAGON_URL}${match.champion.image.square}`" :title="match.champion.name" :alt="match.champion.name" />
                         <span class="text-gray-600 text-xs">vs</span>
-                        <img class="w-8 h-8 rounded" :src="`${DDRAGON_URL}${match.vs.championImage.square}`" :title="match.vs.championName" :alt="match.vs.championName" />
+                        <img v-if="match.opponentChampion" class="w-8 h-8 rounded" :src="`${DDRAGON_URL}${match.opponentChampion.image.square}`" :title="match.opponentChampion.name" :alt="match.opponentChampion.name" />
                       </div>
                     </td>
                     <td class="py-3 px-4 text-center font-mono">
@@ -493,32 +493,6 @@ export default {
             }
         }
 
-        const deleteMatch = async (index) => {
-            try {
-            
-                const response = await axios.delete(
-                    `${import.meta.env.VITE_API_URL}/players/${props.puuid}/delete`,
-                    {
-                        data: {
-                            puuid: props.puuid,
-                            index: index
-                        }
-                    }
-                );
-
-                if (response.status === 200) {
-                    // Remove the match from the local array
-                    matchDetails.value.splice(index, 1);
-                    alert('Match deleted successfully');
-                } else {
-                    alert('Failed to delete match');
-                }
-            } catch (error) {
-                console.error('Error deleting match:', error);
-                alert('An error occurred while deleting the match');
-            }
-        }
-
         return {
             player,
             matchDetails,
@@ -540,7 +514,6 @@ export default {
             selectedSeason,
             DDRAGON_URL,
             getItemImageUrl,
-            deleteMatch,
             refreshPlayer,
             isRefreshing,
             canRefresh,
