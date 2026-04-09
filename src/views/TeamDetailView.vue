@@ -21,8 +21,8 @@
           <!-- Bio Card -->
           <div class="rounded-lg p-8 w-full text-white bg-gray-800" :style="{ boxShadow: `0 0 20px 3px ${team.primaryColor}` }">
             <div class="flex justify-center mb-6">
-              <img 
-                :src="getTeamImage(mostRecentImage.name)" 
+              <TeamLogo
+                :imageName="mostRecentImage.name"
                 :alt="team.name"
                 class="w-40 h-40 object-contain"
               />
@@ -38,6 +38,21 @@
                 <p class="text-base font-semibold text-white">{{ team.formerName }}</p>
               </div>
 
+              <!-- Accolades -->
+              <div v-if="team.accolades && team.accolades.length > 0" class="text-center" style="border-color: rgba(255,255,255,0.2);">
+                <p class="text-xs font-bold tracking-widest mb-3" style="color: rgba(255,255,255,0.5);">ACCOLADES</p>
+                <div class="flex flex-wrap justify-center gap-2">
+                  <span
+                    v-for="(accolade, index) in team.accolades"
+                    :key="index"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold tracking-wide"
+                    style="background-color: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.6); color: #fde68a;"
+                  >
+                    <span>&#9733;</span>
+                    {{ accolade.title }}
+                  </span>
+                </div>
+              </div>
               <!-- Established -->
               <div class="border-b pb-6" style="border-color: rgba(255,255,255,0.2);">
                 <div class="grid grid-cols-3 gap-4">
@@ -55,6 +70,7 @@
                   </div>
                 </div>
               </div>
+
 
               <!-- Stats Section: Win/Loss and Kills/Deaths -->
               <div class="flex flex-row gap-8 justify-center">
@@ -78,6 +94,8 @@
                         fill="#ef4444"
                         opacity="0.8"
                       />
+                      <!-- Border -->
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="#374151" stroke-width="5"/>
                     </svg>
                     <!-- Record Text -->
                     <div class="text-center">
@@ -116,6 +134,8 @@
                         fill="#f97316"
                         opacity="0.8"
                       />
+                      <!-- Border -->
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="#374151" stroke-width="5"/>
                     </svg>
                     <!-- Stats Text -->
                     <div class="text-center">
@@ -135,6 +155,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
 
@@ -248,9 +269,10 @@
                       <!-- Blue Team -->
                       <div class="flex flex-col items-center flex-1">
                         <div class="w-12 h-12 mb-1 flex items-center justify-center">
-                          <img :src="getTeamLogo(recentMatches[currentMatchIndex].info.teams[0].name)" 
-                               :alt="recentMatches[currentMatchIndex].info.teams[0].name" 
-                               class="max-w-full max-h-full">
+                          <TeamLogo
+                            :teamName="recentMatches[currentMatchIndex].info.teams[0].name"
+                            class="max-w-full max-h-full"
+                          />
                         </div>
                         <div class="text-center font-bold text-blue-400 text-xs">
                           {{ recentMatches[currentMatchIndex].info.teams[0].name }}
@@ -271,9 +293,10 @@
                       <!-- Red Team -->
                       <div class="flex flex-col items-center flex-1">
                         <div class="w-12 h-12 mb-1 flex items-center justify-center">
-                          <img :src="getTeamLogo(recentMatches[currentMatchIndex].info.teams[1].name)" 
-                               :alt="recentMatches[currentMatchIndex].info.teams[1].name" 
-                               class="max-w-full max-h-full">
+                          <TeamLogo
+                            :teamName="recentMatches[currentMatchIndex].info.teams[1].name"
+                            class="max-w-full max-h-full"
+                          />
                         </div>
                         <div class="text-center font-bold text-red-400 text-xs">
                           {{ recentMatches[currentMatchIndex].info.teams[1].name }}
@@ -370,8 +393,8 @@
               :key="index"
               class="rounded-lg flex flex-col items-center justify-center min-h-48"
             >
-              <img
-                :src="getTeamImage(image.name)"
+              <TeamLogo
+                :imageName="image.name"
                 :alt="`Team logo from ${image.date}`"
                 class="w-32 h-32 object-contain mb-4"
               />
@@ -398,11 +421,13 @@
 <script>
 import teamsData from '../data/teamsData.json';
 import axios from 'axios';
+import TeamLogo from '@/components/TeamLogo.vue'
 
 const VITE_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export default {
   name: 'TeamDetailView',
+  components: { TeamLogo },
   props: {
     teamId: {
       type: String,
@@ -421,7 +446,9 @@ export default {
   computed: {
     sortedSeasons() {
       if (!this.team || !this.team.seasons) return [];
-      return [...this.team.seasons].sort((a, b) => a.season - b.season);
+      return [...this.team.seasons].sort((a, b) =>
+        String(a.season).localeCompare(String(b.season), undefined, { numeric: true })
+      );
     },
     currentSeasonRoster() {
       if (!this.team || !this.team.seasons) return null;
@@ -432,8 +459,8 @@ export default {
       
       // Filter matches for this team
       const teamMatches = this.matches.filter(match => {
-        const teamNames = match.info.teams.map(t => t.name);
-        return teamNames.includes(this.team.name);
+        const matchTeamNames = match.info.teams.map(t => t.name);
+        return this.allTeamNames.some(n => matchTeamNames.includes(n));
       });
       
       // Sort by game creation time (newest first) and get last 5
@@ -445,11 +472,16 @@ export default {
       if (!this.team || this.team.totalWins + this.team.totalLosses === 0) return 0;
       return Math.round((this.team.totalWins / (this.team.totalWins + this.team.totalLosses)) * 100);
     },
+    allTeamNames() {
+      const names = [this.team.name];
+      if (this.team.formerName) names.push(this.team.formerName);
+      return names;
+    },
     totalKills() {
       if (!this.matches) return 0;
       let kills = 0;
       this.matches.forEach(match => {
-        const teamData = match.info.teams.find(t => t.name === this.team.name);
+        const teamData = match.info.teams.find(t => this.allTeamNames.includes(t.name));
         if (teamData) {
           kills += teamData.kills || 0;
         }
@@ -460,7 +492,7 @@ export default {
       if (!this.matches) return 0;
       let deaths = 0;
       this.matches.forEach(match => {
-        const teamData = match.info.teams.find(t => t.name === this.team.name);
+        const teamData = match.info.teams.find(t => this.allTeamNames.includes(t.name));
         if (teamData && teamData.players) {
           teamData.players.forEach(player => {
             deaths += player.deaths || 0;
@@ -503,17 +535,6 @@ export default {
       const largeArc = angle > Math.PI ? 1 : 0;
       
       return `M ${centerX} ${centerY} L ${startX} ${startY} A ${radius} ${radius} 0 ${largeArc} 1 ${endX} ${endY} Z`;
-    },
-    getTeamImage(imageName) {
-      return new URL(`../assets/teams/${imageName}`, import.meta.url).href;
-    },
-    getTeamLogo(teamName) {
-      // Find the team in teamsData to get their image
-      const foundTeam = teamsData.teams.find(t => t.name === teamName);
-      if (foundTeam) {
-        return this.getTeamImage(foundTeam.image);
-      }
-      return '';
     },
     getOrdinalSuffix(num) {
       const j = num % 10;

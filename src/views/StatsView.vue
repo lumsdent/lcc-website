@@ -1,457 +1,395 @@
-<template>
-  <div class="container mx-auto py-6 px-4">
-    <h1 class="text-2xl font-bold text-logo-blue mb-4">Player Statistics</h1>
+﻿<template>
+  <div class="container mx-auto px-4 py-8">
 
-    <!-- Sorting and Column Controls -->
-    <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center">
-        <label class="mr-2">Sort by:</label>
-        <select v-model="sortBy" class="border bg-gray-800 rounded px-2 py-1 mr-4">
-          <option v-for="column in availableColumns" :key="column.key" :value="column.key">
-            {{ column.label }}
-          </option>
-        </select>
-        <button @click="sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'" class="border rounded px-3 py-1">
-          {{ sortDirection === 'asc' ? '↑' : '↓' }}
-        </button>
-      </div>
+    <!-- Breadcrumbs -->
+    <nav class="flex items-center gap-1.5 text-sm text-gray-500 mb-6">
+      <RouterLink to="/stats" class="hover:text-gray-300 transition-colors">Stats</RouterLink>
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+      <span class="text-gray-300">Players</span>
+    </nav>
 
-      <!-- Column Selector -->
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-white mb-1">Player Statistics</h1>
+      <p class="text-gray-400 text-sm">{{ selectedSeason === null ? 'All Time' : `Season ${selectedSeason}` }} &middot; {{ sortedPlayers.length }} players</p>
+    </div>
+
+    <!-- Season Selector -->
+    <div class="mb-6 flex flex-wrap items-center gap-2">
+      <button
+        @click="selectSeason(null)"
+        :class="selectedSeason === null ? 'bg-blue-600 text-white border-blue-600' : 'bg-transparent text-gray-300 border-gray-600 hover:border-gray-400'"
+        class="px-4 py-1.5 rounded-full border text-sm font-medium transition-colors"
+      >All Time</button>
+      <button
+        v-for="season in seasons"
+        :key="season"
+        @click="selectSeason(season)"
+        :class="selectedSeason === season ? 'bg-blue-600 text-white border-blue-600' : 'bg-transparent text-gray-300 border-gray-600 hover:border-gray-400'"
+        class="px-4 py-1.5 rounded-full border text-sm font-medium transition-colors"
+      >Season {{ season }}</button>
+    </div>
+
+    <!-- Controls bar -->
+    <div class="mb-4 flex justify-end">
       <div class="relative">
-        <button @click="showColumnSelector = !showColumnSelector"
-          class="flex items-center gap-2 px-3 py-1 border rounded bg-gray-800">
-          <span>Columns</span>
+        <button
+          @click="showColumnSelector = !showColumnSelector"
+          class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-800 border border-gray-700 text-sm text-gray-300 hover:text-white transition-colors"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h18M3 8h18M3 12h12" />
           </svg>
+          Columns
         </button>
-
-        <div v-if="showColumnSelector"
-          class="absolute right-0 mt-2 w-64 bg-gray-900 border border-gray-700 rounded shadow-lg z-10 p-2">
-          <div class="flex justify-between border-b border-gray-700 pb-2 mb-2">
-            <h3 class="font-medium">Select Columns</h3>
-            <button @click="showColumnSelector = false" class="text-gray-500 hover:text-white">
-              &times;
-            </button>
+        <div
+          v-if="showColumnSelector"
+          class="absolute right-0 mt-2 w-64 bg-gray-900 border border-gray-700 rounded-lg shadow-xl z-20 p-2"
+        >
+          <div class="flex justify-between items-center border-b border-gray-700 pb-2 mb-2 px-1">
+            <span class="text-sm font-semibold text-white">Columns</span>
+            <button @click="showColumnSelector = false" class="text-gray-500 hover:text-white text-xl leading-none">&times;</button>
           </div>
-          <div class="max-h-64 overflow-y-auto">
-            <label v-for="col in selectableColumns" :key="col.key"
-              class="flex items-center py-1 px-2 hover:bg-gray-800">
-              <input type="checkbox" :checked="selectedColumns.includes(col.key)" @change="toggleColumn(col.key)"
-                class="mr-2" />
-              {{ col.label }}
+          <div class="max-h-72 overflow-y-auto space-y-0.5">
+            <label
+              v-for="col in selectableColumns"
+              :key="col.key"
+              class="flex items-center gap-2 py-1.5 px-2 rounded hover:bg-gray-800 cursor-pointer text-sm"
+            >
+              <input type="checkbox" :checked="selectedColumns.includes(col.key)" @change="toggleColumn(col.key)" class="accent-blue-500" />
+              <span :class="selectedColumns.includes(col.key) ? 'text-white' : 'text-gray-400'">{{ col.label }}</span>
             </label>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Loading Indicator -->
-    <div v-if="loading" class="flex flex-col items-center justify-center py-12">
-      <div class="w-16 h-16 border-4 border-logo-blue border-t-transparent rounded-full animate-spin mb-4"></div>
-      <p class="text-gray-400">Loading player statistics...</p>
+    <!-- Loading -->
+    <div v-if="loading" class="flex flex-col items-center justify-center py-16">
+      <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-3"></div>
+      <p class="text-gray-400 text-sm">Loading statistics...</p>
     </div>
 
-    <div v-else class="overflow-x-auto overflow-y-auto max-h-[80vh]">
-      <table class="min-w-full shadow-sm rounded-lg">
-        <thead>
-          <tr>
-            <th v-for="column in visibleColumns" :key="column.key"
-              class="py-3 px-4 sticky top-0 bg-off-blue z-10" :class="[
-                column.align === 'center' ? 'text-center' : 'text-left',
-                column.key === 'playerName' ? 'sticky left-0 z-20' : ''
-              ]">
-              <div class=" flex items-center"
-                :class="column.align === 'center' ? 'justify-center' : ''">
+    <!-- Table -->
+    <div v-else class="rounded-lg overflow-hidden bg-gray-800">
+      <div class="overflow-x-auto overflow-y-auto max-h-[75vh]">
+        <table class="w-full text-sm text-gray-300">
+          <thead>
+            <tr class="text-xs uppercase tracking-wider text-gray-500 border-b border-gray-700 bg-gray-900">
+              <th
+                v-for="column in visibleColumns"
+                :key="column.key"
+                class="py-3 px-4 whitespace-nowrap sticky top-0 bg-gray-900 z-10 select-none"
+                :class="[
+                  column.align === 'center' ? 'text-center' : 'text-left',
+                  column.key === 'playerName' ? 'sticky left-0 z-20' : '',
+                  'cursor-pointer hover:text-white',
+                ]"
+                @click="setSort(column.key)"
+              >
                 {{ column.label }}
-                
-              </div>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="player in sortedPlayers" :key="player.puuid"
-            class="hover:bg-gray-800 cursor-pointer" @click="navigateToPlayer(player.puuid)">
-
-            <!-- Render all columns in order as defined by availableColumns -->
-            <td v-for="column in visibleColumns" :key="column.key" class="" :class="[
-              column.align === 'center' ? 'text-center' : '',
-  column.key === 'playerName' ? 'sticky left-0 z-10 ' : 'py-3 px-4'
-            ]">
-
-              <!-- Player Name Column -->
-              <div v-if="column.key === 'playerName'" class="font-medium text-logo-blue p-4 bg-dark-blue">
-                {{ player.playerName }}
-              </div>
-
-              <!-- Team Column -->
-              <div v-else-if="column.key === 'team'" class="font-medium w-48"
-                :style="{ color: getTeamColor(player.team) }">
-                {{ player.team }}
-              </div>
-
-              <!-- Role Column -->
-              <div v-else-if="column.key === 'roles'" class="flex space-x-1">
-                <span v-for="role in player.rolesPlayed" :key="role"
-                  class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                  {{ formatRole(role) }}
-                </span>
-              </div>
-
-              <!-- Games Column -->
-              <div v-else-if="column.key === 'games'" class="text-sm">
-                {{ player.games }} ({{ player.wins }}-{{ player.losses }})
-              </div>
-
-              <!-- KDA Column -->
-              <div v-else-if="column.key === 'kda'" class="font-semibold" :class="getKdaColor(player.kda)">
-                {{ player.kda.toFixed(1) }}
-              </div>
-
-              <!-- Win Rate Column -->
-              <div v-else-if="column.key === 'winRate'">
-                <div class="w-full bg-gray-200 rounded-full h-4">
-                  <div class="bg-blue-600 h-4 rounded-full" :style="`width: ${player.winRate}%`"></div>
+                <span v-if="sortBy === column.key" class="ml-1 text-blue-400">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="player in sortedPlayers"
+              :key="player.puuid"
+              class="group border-b border-gray-700 hover:bg-gray-700 cursor-pointer transition-colors"
+              @click="navigateToPlayer(player.puuid)"
+            >
+              <td
+                v-for="column in visibleColumns"
+                :key="column.key"
+                :class="[
+                  column.align === 'center' ? 'text-center' : '',
+                  column.key === 'playerName' ? 'sticky left-0 z-10 bg-gray-800 group-hover:bg-gray-700 transition-colors' : 'py-3 px-4',
+                ]"
+              >
+                <!-- Player Name -->
+                <div v-if="column.key === 'playerName'" class="font-semibold text-blue-400 px-4 py-3 whitespace-nowrap">
+                  {{ player.playerName }}
                 </div>
-                <span class="text-xs">{{ player.winRate.toFixed(2) }}%</span>
-              </div>
 
-              <!-- K/D/A Column -->
-              <div v-else-if="column.key === 'kda_detailed'" class="text-sm">
-                {{ player.kills }}/{{ player.deaths }}/{{ player.assists }}
-              </div>
+                <!-- Team -->
+                <div v-else-if="column.key === 'team'" class="font-medium whitespace-nowrap" :style="{ color: getTeamColor(player.team) }">
+                  {{ player.team }}
+                </div>
 
-              <!-- Champions Column -->
-              <div v-else-if="column.key === 'champions'" class="flex flex-wrap gap-1">
-                <span v-for="champ in player.championsPlayed" :key="champ"
-                  class="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
-                  {{ champ }}
+                <!-- Roles -->
+                <div v-else-if="column.key === 'roles'" class="flex flex-wrap gap-1">
+                  <span
+                    v-for="role in player.rolesPlayed"
+                    :key="role"
+                    class="inline-block bg-gray-700 text-gray-300 text-xs px-2 py-0.5 rounded"
+                  >{{ formatRole(role) }}</span>
+                </div>
+
+                <!-- Games -->
+                <div v-else-if="column.key === 'games'">
+                  <div class="font-medium text-white">{{ player.games }}</div>
+                  <div class="text-xs text-gray-500">{{ player.wins }}W {{ player.losses }}L</div>
+                </div>
+
+                <!-- Win Rate -->
+                <div v-else-if="column.key === 'winRate'" class="min-w-[90px]">
+                  <div class="w-full bg-gray-700 rounded-full h-1.5 mb-1">
+                    <div
+                      class="h-1.5 rounded-full"
+                      :class="player.winRate >= 50 ? 'bg-blue-500' : 'bg-red-500'"
+                      :style="`width: ${Math.min(100, player.winRate).toFixed(0)}%`"
+                    ></div>
+                  </div>
+                  <span class="text-xs">{{ player.winRate.toFixed(1) }}%</span>
+                </div>
+
+                <!-- KDA -->
+                <div
+                  v-else-if="column.key === 'kda'"
+                  class="font-semibold"
+                  :class="player.kda >= 3.5 ? 'text-green-400' : player.kda >= 2.5 ? 'text-yellow-400' : 'text-red-400'"
+                >{{ player.kda.toFixed(2) }}</div>
+
+                <!-- K/D/A -->
+                <div v-else-if="column.key === 'kda_detailed'" class="font-mono text-xs">
+                  <span class="text-green-400">{{ player.kills }}</span>
+                  <span class="text-gray-500">/</span>
+                  <span class="text-red-400">{{ player.deaths }}</span>
+                  <span class="text-gray-500">/</span>
+                  <span class="text-blue-400">{{ player.assists }}</span>
+                </div>
+
+                <!-- Kill Participation -->
+                <span v-else-if="column.key === 'killParticipation'">
+                  {{ player.killParticipationPercentage?.toFixed(1) }}%
                 </span>
-              </div>
 
-              <template v-else>
-                <!-- CS Diff -->
-                <span v-if="column.key === 'avgCsd14'">
-                  {{ player.avgCsd14 > 0 ? '+' + player.avgCsd14 : player.avgCsd14 }}
-                </span>
+                <!-- Champions -->
+                <div v-else-if="column.key === 'champions'" class="flex flex-wrap gap-1 max-w-[200px]">
+                  <span
+                    v-for="champ in player.championsPlayed"
+                    :key="champ"
+                    class="inline-block bg-gray-700 text-gray-300 text-xs px-1.5 py-0.5 rounded"
+                  >{{ champ }}</span>
+                </div>
 
-                <!-- Fixed decimal values -->
+                <!-- CS Diff (signed) -->
                 <span
-                  v-else-if="['csm', 'dpm', 'gpm', 'avgCs14', 'minutesPlayed', 'avgCS', 'avgSoloKills', 'avgHealShield', 'avgDamageTaken', 'avgGameTime'].includes(column.key)">
+                  v-else-if="column.key === 'avgCsd14'"
+                  :class="player.avgCsd14 >= 0 ? 'text-green-400' : 'text-red-400'"
+                >{{ player.avgCsd14 > 0 ? '+' : '' }}{{ player.avgCsd14?.toFixed(1) }}</span>
+
+                <!-- 1 decimal -->
+                <span v-else-if="['csm','dpm','gpm','avgCs14','avgCS','avgSoloKills','avgHealShield','avgDamageTaken','avgGameTime','minutesPlayed','vspm'].includes(column.key)">
                   {{ player[column.key]?.toFixed(1) }}
                 </span>
 
-                <span v-else-if="column.key === 'vspm'">
-                  {{ player.vspm?.toFixed(2) }}
-                </span>
+                <span v-else-if="column.key === 'damagePerGold'">{{ player.damagePerGold?.toFixed(2) ?? 'N/A' }}</span>
 
-                <span v-else-if="column.key === 'damagePerGold'">
-                  {{ player.damagePerGold ? player.damagePerGold.toFixed(2) : 'N/A' }}
-                </span>
-
-                <!-- Kill participation percentage -->
-                <span v-else-if="column.key === 'killParticipation'">
-                  {{ player.killParticipationPercentage.toFixed(2) }}%
-                </span>
-
-                <!-- Default display for other columns -->
+                <!-- Default -->
                 <span v-else>{{ player[column.key] }}</span>
-              </template>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div v-if="!loading && sortedPlayers.length === 0" class="py-12 text-center text-gray-500">
+          No data available for this season.
+        </div>
+      </div>
     </div>
+
   </div>
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import axios from 'axios'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+
 export default {
-  name: 'TeamStatsView',
+  name: 'StatsView',
   setup() {
     const loading = ref(true)
     const router = useRouter()
+    const route = useRoute()
     const players = ref([])
+    const seasons = ref([])
+    const selectedSeason = ref(null)
     const sortBy = ref('games')
     const sortDirection = ref('desc')
     const showColumnSelector = ref(false)
-    
-    // Define all available columns
+
     const availableColumns = [
       { key: 'playerName', label: 'Player', align: 'left' },
       { key: 'team', label: 'Team', align: 'left' },
       { key: 'roles', label: 'Roles', align: 'left' },
       { key: 'winRate', label: 'Win Rate', align: 'center' },
       { key: 'games', label: 'Games', align: 'center' },
-      { key: "minutesPlayed", label: "Minutes Played", align: "center" },
+      { key: 'minutesPlayed', label: 'Minutes Played', align: 'center' },
       { key: 'avgGameTime', label: 'Avg Game Time', align: 'center' },
-      
-      { key: 'kills', label: 'Kills', align: 'center'},
-      { key: 'deaths', label: 'Deaths', align: 'center'},
-      { key: 'assists', label: 'Assists', align: 'center'},
+      { key: 'kills', label: 'Kills', align: 'center' },
+      { key: 'deaths', label: 'Deaths', align: 'center' },
+      { key: 'assists', label: 'Assists', align: 'center' },
       { key: 'kda', label: 'KDA', align: 'center' },
       { key: 'kda_detailed', label: 'K/D/A', align: 'center' },
-      { key: 'killParticipation', label: 'Kill Participation', align: 'center' },
-
-      { key: 'totalDamage', label: 'Total Damage', align: 'center'},
-      { key: 'dpm', label: 'Damage/min', align: 'center' },
-      { key: 'damagePerGold', label: 'Damage per Gold', align: 'center' },
-
+      { key: 'killParticipation', label: 'Kill Part%', align: 'center' },
+      { key: 'totalDamage', label: 'Total Damage', align: 'center' },
+      { key: 'dpm', label: 'Dmg/min', align: 'center' },
+      { key: 'damagePerGold', label: 'Dmg/Gold', align: 'center' },
       { key: 'totalCs', label: 'Total CS', align: 'center' },
       { key: 'avgCS', label: 'Avg CS', align: 'center' },
       { key: 'csm', label: 'CS/min', align: 'center' },
-      { key: 'avgCs14', label: 'Avg CS@14', align: 'center' },
-      { key: 'avgCsd14', label: 'Avg CS Diff@14', align: 'center' },
-
+      { key: 'avgCs14', label: 'CS@14', align: 'center' },
+      { key: 'avgCsd14', label: 'CS Diff@14', align: 'center' },
       { key: 'totalGold', label: 'Total Gold', align: 'center' },
       { key: 'gpm', label: 'Gold/min', align: 'center' },
       { key: 'unspentGold', label: 'Unspent Gold', align: 'center' },
-      
       { key: 'visionScore', label: 'Vision', align: 'center' },
       { key: 'vspm', label: 'Vision/min', align: 'center' },
       { key: 'wardsPlaced', label: 'Wards Placed', align: 'center' },
       { key: 'wardsKilled', label: 'Wards Killed', align: 'center' },
-      
-      
       { key: 'firstBloods', label: 'First Bloods', align: 'center' },
-      { key: 'soloKills', label: 'Solo Kills', align: 'center'},
+      { key: 'soloKills', label: 'Solo Kills', align: 'center' },
       { key: 'avgSoloKills', label: 'Avg Solo Kills', align: 'center' },
-
-      { key: 'avgDamageTaken', label: 'Avg Damage Taken', align: 'center' },
+      { key: 'avgDamageTaken', label: 'Avg Dmg Taken', align: 'center' },
       { key: 'avgHealShield', label: 'Avg Heal/Shield', align: 'center' },
-      
-      { key: 'uniqueChampionsCount', label: 'Unique Champions', align: 'center' }
+      { key: 'uniqueChampionsCount', label: 'Unique Champs', align: 'center' },
     ]
 
-    const selectableColumns = computed(() => {
-      return availableColumns.filter(col => col.key !== 'playerName')
-    })
+    const selectableColumns = computed(() => availableColumns.filter(col => col.key !== 'playerName'))
 
-    // Default selected columns
     const selectedColumns = ref([
-      'playerName',
-      'team',
-      'roles',
-      'games',
-      'kda',
-      'winRate',
-      'kda_detailed',
-      'totalDamageDealt',
-      'dpm',
-      'totalCs',
-      "csm",
-      'avgCs14',
-      'firstBloods',
-      'vision',
-      'uniqueChampionsCount'
+      'playerName', 'team', 'roles', 'games', 'winRate',
+      'kda', 'kda_detailed', 'killParticipation',
+      'dpm', 'csm', 'avgCs14', 'gpm', 'vspm', 'uniqueChampionsCount',
     ])
 
-    // Load saved column preferences
-    onMounted(() => {
+    onMounted(async () => {
       const savedColumns = localStorage.getItem('statsViewColumns')
-      if (savedColumns) {
-        selectedColumns.value = JSON.parse(savedColumns)
+      if (savedColumns) selectedColumns.value = JSON.parse(savedColumns)
+
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/matches/seasons`)
+        seasons.value = res.data
+        if (seasons.value.length) {
+          const q = route.query.season
+          if (q === 'alltime') {
+            selectedSeason.value = null
+          } else if (q) {
+            const match = seasons.value.find(s => String(s) === String(q))
+            selectedSeason.value = match !== undefined ? match : seasons.value[seasons.value.length - 1]
+          } else {
+            selectedSeason.value = seasons.value[seasons.value.length - 1]
+          }
+        }
+      } catch (e) {
+        console.error('Failed to load seasons', e)
       }
+
+      await loadData()
     })
-
-    // Toggle column visibility
-    const toggleColumn = (columnKey) => {
-      if (columnKey === 'playerName') return // Always keep player name visible
-
-      if (selectedColumns.value.includes(columnKey)) {
-        selectedColumns.value = selectedColumns.value.filter(col => col !== columnKey)
-      } else {
-        selectedColumns.value.push(columnKey)
-      }
-
-      // Save preferences
-      localStorage.setItem('statsViewColumns', JSON.stringify(selectedColumns.value))
-    }
-
-    // Check if column is visible
-    const isColumnVisible = (columnKey) => {
-      return selectedColumns.value.includes(columnKey)
-    }
-
-    // Get visible columns in order
-    const visibleColumns = computed(() => {
-      return availableColumns.filter(col => selectedColumns.value.includes(col.key))
-    })
-
-    const navigateToPlayer = (puuid) => {
-      router.push(`/players/${puuid}`)
-    }
 
     const loadData = async () => {
+      loading.value = true
       try {
-        loading.value = true
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/matches/stats/season/3`)
-
-        console.log(response.data)
-
-       players.value = response.data
-      } catch (error) {
-        console.error('Error fetching player data:', error)
+        const url = selectedSeason.value === null
+          ? `${import.meta.env.VITE_API_URL}/matches/stats/alltime`
+          : `${import.meta.env.VITE_API_URL}/matches/stats/season/${selectedSeason.value}`
+        const res = await axios.get(url)
+        players.value = res.data
+      } catch (e) {
+        console.error('Failed to load stats', e)
       } finally {
         loading.value = false
       }
     }
-    
-    // Call the load data function
-    loadData()
-    
-    const sortedPlayers = computed(() => {
-      return [...players.value].sort((a, b) => {
-        let valueA = a[sortBy.value]
-        let valueB = b[sortBy.value]
-        
-        // Special case for string sorting
-        if (typeof valueA === 'string') {
-          return sortDirection.value === 'asc' 
-            ? valueA.localeCompare(valueB)
-            : valueB.localeCompare(valueA)
-        }
-        
-        // Numeric sorting
-        return sortDirection.value === 'asc' 
-          ? valueA - valueB 
-          : valueB - valueA
-      })
-    })
 
-    const formatTime = (seconds) => {
-      if (!seconds) return 'N/A';
-      const minutes = Math.floor(seconds / 60);
-      const remainingSeconds = seconds % 60;
-      return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    const selectSeason = async (season) => {
+      selectedSeason.value = season
+      await loadData()
     }
-    
-    const formatRole = (role) => {
-      const roles = {
-        'TOP': 'Top',
-        'JUNGLE': 'Jungle',
-        'MIDDLE': 'Mid',
-        'BOTTOM': 'Bot',
-        'SUPPORT': 'Support'
+
+    const toggleColumn = (key) => {
+      if (key === 'playerName') return
+      if (selectedColumns.value.includes(key)) {
+        selectedColumns.value = selectedColumns.value.filter(c => c !== key)
+      } else {
+        selectedColumns.value.push(key)
       }
-      return roles[role] || role
+      localStorage.setItem('statsViewColumns', JSON.stringify(selectedColumns.value))
     }
-    
-    const getKdaColor = (kda) => {
-      if (kda >= 3.5) return 'text-green-600'
-      if (kda >= 2.5) return 'text-yellow-500'
-      return 'text-red-500'
+
+    const visibleColumns = computed(() =>
+      availableColumns.filter(col => selectedColumns.value.includes(col.key))
+    )
+
+    const setSort = (key) => {
+      if (sortBy.value === key) {
+        sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
+      } else {
+        sortBy.value = key
+        sortDirection.value = 'desc'
+      }
+    }
+
+    const sortedPlayers = computed(() =>
+      [...players.value].sort((a, b) => {
+        const vA = a[sortBy.value]
+        const vB = b[sortBy.value]
+        if (typeof vA === 'string') {
+          return sortDirection.value === 'asc' ? vA.localeCompare(vB) : vB.localeCompare(vA)
+        }
+        return sortDirection.value === 'asc' ? vA - vB : vB - vA
+      })
+    )
+
+    const navigateToPlayer = (puuid) => router.push(`/players/${puuid}`)
+
+    const formatRole = (role) => {
+      const map = { TOP: 'Top', JUNGLE: 'Jungle', MIDDLE: 'Mid', BOTTOM: 'Bot', SUPPORT: 'Support' }
+      return map[role] || role
     }
 
     const teamColors = {
       'Discord Kittens': '#872aa6',
-      'Freljord Frost': '#78b4fe', 
-      'Bandle City Buckaroos': '#c76fa7', 
-      'Demacia Justice': '#fecd0b', 
+      'Freljord Frost': '#78b4fe',
+      'Bandle City Buckaroos': '#c76fa7',
+      'Demacia Justice': '#fecd0b',
       'Zaun Plague': '#00d600',
       'Targon Titans': '#7e017e',
       'Noxian Gladiators': '#c63736',
       'Team Hospitalized': '#e24444',
-    };
-
-    // Color generation for teams not in the mapping
-    const generatedTeamColors = ref({});
-
-    const getTeamColor = (teamName) => {
-      if (!teamName) return '#ffffff'; // Default white
-
-      // Return predefined color if exists
-      if (teamColors[teamName]) return teamColors[teamName];
-
-      // Generate and cache color if not already done
-      if (!generatedTeamColors.value[teamName]) {
-        // Generate a color based on team name string
-        const hash = teamName.split('').reduce((acc, char) => {
-          return char.charCodeAt(0) + ((acc << 5) - acc);
-        }, 0);
-
-        // Generate vibrant HSL color with good saturation and lightness
-        const h = Math.abs(hash % 360);
-        const s = 70 + Math.abs((hash >> 8) % 30); // 70-100% saturation
-        const l = 55 + Math.abs((hash >> 16) % 15); // 55-70% lightness
-
-        generatedTeamColors.value[teamName] = `hsl(${h}, ${s}%, ${l}%)`;
+    }
+    const generatedTeamColors = ref({})
+    const getTeamColor = (name) => {
+      if (!name) return '#ffffff'
+      if (teamColors[name]) return teamColors[name]
+      if (!generatedTeamColors.value[name]) {
+        const hash = name.split('').reduce((acc, c) => c.charCodeAt(0) + ((acc << 5) - acc), 0)
+        generatedTeamColors.value[name] = `hsl(${Math.abs(hash % 360)}, ${70 + Math.abs((hash >> 8) % 30)}%, ${55 + Math.abs((hash >> 16) % 15)}%)`
       }
+      return generatedTeamColors.value[name]
+    }
 
-      return generatedTeamColors.value[teamName];
-    };
-    
     return {
-      players,
-      sortBy,
-      sortDirection,
-      sortedPlayers,
-      formatRole,
-      getKdaColor,
-      getTeamColor,
-      navigateToPlayer,
-      availableColumns,
-      selectableColumns,
-      selectedColumns,
-      showColumnSelector,
-      toggleColumn,
-      isColumnVisible,
-      visibleColumns,
-      formatTime,
-      loading
+      loading, players, seasons, selectedSeason, selectSeason,
+      sortBy, sortDirection, setSort, sortedPlayers,
+      showColumnSelector, availableColumns, selectableColumns,
+      selectedColumns, toggleColumn, visibleColumns,
+      navigateToPlayer, formatRole, getTeamColor,
     }
   }
 }
 </script>
 
 <style scoped>
-/* Only needed for hover state consistency with sticky column */
-tr:hover td[class*="sticky"] div {
-  background-color: rgb(31 41 55);
-  /* Tailwind's bg-gray-800 */
-}
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #1f2937;
-  /* bg-gray-800 */
-}
-
-::-webkit-scrollbar-thumb {
-  background: #374151;
-  /* bg-gray-700 */
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
-  /* bg-gray-600 */
-}
-
-::-webkit-scrollbar-corner {
-  background: #1f2937;
-  /* bg-gray-800 */
-}
-
-/* Firefox scrollbar styling */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #374151 #1f2937;
-  /* thumb track */
-}
-
-/* Ensure the corners look good when both scrollbars are visible */
-.overflow-x-auto.overflow-y-auto {
-  scrollbar-gutter: stable;
-}
-
-
-
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #1f2937; }
+::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+::-webkit-scrollbar-corner { background: #1f2937; }
+* { scrollbar-width: thin; scrollbar-color: #374151 #1f2937; }
+.overflow-x-auto.overflow-y-auto { scrollbar-gutter: stable; }
 </style>

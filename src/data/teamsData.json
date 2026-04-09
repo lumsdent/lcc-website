@@ -1,237 +1,368 @@
-{
-  "teams": [
-    {
-      "id": "bandle-city-buckaroos",
-      "name": "Bandle City Buckaroos",
-      "tricode": "BCB",
-      "formerName": "League of Liquor",
-      "images": [
-        { "name": "BCB_4.svg", "date": "2026-02-12 - Present" },
-        { "name": "Bandle_City_Buckaroos.png", "date": "2025-02-01 - Present" },
-        { "name": "League of Liquor Logo.svg", "date": "2024-01-07 - 2025-01-31" },
-        { "name": "LOL_1.png", "date": "2022-02-04 - 2024-01-06" }
-      ],
-      "primaryColor": "rgb(205 134 178)",
-      "established": 2022,
-      "allPros": 3,
-      "mvps": 0,
-      "seasons": [
-        {
-          "season": 1,
-          "history": " League of Liquor got their name from a certain attorney who, for legal reasons, shall remain implicated but unnamed.  They fielded different players throughout their season, but Support Crimson Yoni, Mid laner Simon, and Jungler Aztec were their prominent members.  Sombob also made several appearances and they had several sub players including guacmanjon, Psychotikk, and eventually Daal subbing in as their permanent top laner for the playoffs.  League of Liquor seemed to capture magic in a bottle, as Aztec and Simon had exceptionally great chemistry, both of them having small individual mistakes but more often than not capitalizing on skirmishes together to find leads and victories.  League of Liquor would go 4-1 in the regular season and eventually lose to SGI 0-3 in the finals.  Their only defeats all season came at the hands of SGI and they were a cut above the rest of the league.  They were a team that capitalized on the weaknesses of others and had both the macro and micro to make it to the finals, but ultimately fell to the French pressure."
-        },
-        {
-          "season": 2,
-          "history": "League of Liquor would find themselves with almost an entirely new roster, retaining Daal but this time she would star as their Support and Mid laner rather than top.  Matt’s Sion/Illaoi duo would prove to be league defining and with the first pick in the draft, Hope had huge shoes to fill.  Whisper and Bassoon would fill out the roster and this team needed no time to gel, they found success quickly and often.  Their first match against SGI was one for the record books and they came out with intent to win.  This was the only team that swapped players around for strategic advantage and they would end the regular season in 2nd place with a bye in the playoffs.  Gets on Base would meet them there and their late season swell proved to be difficult, but in the end League of Liquor displayed fantastic coordination and flexibility and would win that series rather convincingly despite dropping a game.  The only thing that remained for these bad boys of the LCC was HPZ in the finals, and it was Goliath vs Goliath as the league's two behemoths squared up one last time in a best of 5 to claim the championship.  They brought out versatile picks and Whisper went toe to toe with Wittle in the game, finding great counterganks but in the end it wasn’t enough as HPZ were able to find angles for their star carry Agateo in every game, as they dropped 0-3 in another Finals sweep.  League of Liquor is the only organization to make it to back to back finals but they have yet to claim a championship."
-        },
-        {
-          "season": 3,
-          "history": "The Buckaroos story of Season 3 was a hot fire topic around the proverbial LCC watercooler.  With strong dominant solo-laners of Matt and Cerelius this roster had an already stacked line up, and Cerelius looked primed to finally call a team home after a tumultuous two seasons spent at the bottom of the standings.  A young upstart in both Jungle and Support with veteran Carry Miso, the Bucks made instant fans.  Quickly, the community rallied behind the Buckaroos and the attention on their games became much anticipated.  Fundamentally the start of the season produced some rough and rocky moments for BCB, finding early leads that then fell to poor coordination or lack of team play and the ability to find late game angles.  The league had leveled up and Bandle City was finding it difficult to replicate the win conditions necessary.  They finished the season a disappointing 6th with a 2-8 record.  Some highlight performances from Miso’s adaptation to Lux and Jinx bot lane, Gemzii’s Xin Zhou in particular stood out as solid, and Dan’s heavy roaming playstyle helped to facilitate the early game but simply put they were lacking in the late game.  They faced Targon in the Quarter Finals who looked to be Hot/Cold and Game 1 was spectacular, using Lux as a flex pick between both Mid and Bot, they were able to secure advantages and Cerelius hit an incredible 3 man Lux Final Spark onto the entire backline of Targon to win a huge upset in Game 1.  Targon however made the most of the new Best of 5 format and came back to win 3 in a row, ending the season for the Buckaroos."
-        }
-      ]
-    },
-    {
-      "id": "bilgewater-bullets",
-      "name": "Bilgewater Bullets",
-      "tricode": "BLT",
-      "images": [
-        { "name": "BLT_4.svg", "date": "2026-02-12 - Present" },
-        { "name": "Bilgewater_Bullets_Logo.png", "date": "2026-02-01 - 2026-02-11" }
-      ],
-      "primaryColor": "rgb(139, 69, 19)",
-      "established": 2026,
-      "allPros": 0,
-      "mvps": 0,
-      "seasons": [
-      ]
-    },
-    {
-      "id": "demacian-justice",
-      "name": "Demacia Justice",
-      "formerName": "Team Bell",
-      "tricode": "DMJ",
-      "images": [
-        { "name": "Demacian_Justice_Logo.png", "date": "2025-02-01 - Present" },
-        { "name": "Team Bell Logo.svg", "date": "2024-01-07 - 2025-01-31" },
-        { "name": "TB_1.png", "date": "2022-02-04 - 2024-01-06" }
-      ],
-      "primaryColor": "rgb(184, 134, 11)",
-      "established": 2022,
-      "allPros": 3,
-      "mvps": 0,
-      "seasons": [
-        {
-          "season": 1,
-          "history": "Team Bell came into the league as friends first and competitors second, but their taste of the competition left them wanting more.  They picked their players based on friendships and ended up with two top laners rather than a true mid laner.  Bell and Matt both swapped roles regularly throughout the season and that proved difficult for the team to find form or identity.  Inferno played Carry for TB and was supported by close ally Mayah, with German jungler Werner. By the end of season one, they had shown individual greatness but had failed to string together victories and headed into the playoffs as clear underdogs.  Team Bell would end up getting knocked out quickly by LOL in their Semi finals matchup, and their only wins the entire year came by way of beating a winless DK and a HPZ that only picked up one win, against DK.  Team Bell clearly had to find purpose going into Season 2, and with that in mind they absolutely did."
-        },
-        {
-          "season": 2,
-          "history": "This year was going to be different, and with Bell as the definitive Top Laner and team captain, he set out to draft competitors as well as friends this time.  Cerelius was drafted 3rd overall despite never having an earned win on his record throughout his time on DK in season one.  They also picked up Inferno who had played on Team Bell the year prior and had some chemistry with.  Their final additions were no stranger to the late stages of the playoffs, with Jungler Aztec who had dismantled Team Bell in the playoffs the year prior and Support Chestnut who was coming off a Championship run himself with SGI.  Team Bell looked to be rebuilt as a more competitive version of themselves the year prior and the clear focus was going to be performance this year, it was only a matter of time. Analysts such as “Jags” would go on to refer to this team as a “Rubix cube half finished”, to indicate that clearly progress was being made, but they had not yet jelled to reflect the sum of their individual parts.  Aztec would find himself cut off from his laners throughout the tournament many times, the bot lane of Inferno and Chestnut found it difficult to sync together and Cerelius would get many early game leads and huge damage output but they just couldn’t find a way to close games.  Towards the end of the season they would pull matches together and picked up a crucial game against HPZ to clinch their playoff berth.  They would fall to MAA 2-1 in the Quarterfinals this year and finish 6th overall, but this was a team that felt that it finally reached a true version of itself at the end and while frustrations about some games in the regular season will linger, their playoff battle against MAA is one they can hang their proverbial hats on."
-        },
-        {
-          "season": 3,
-          "history": "DMJ Entered the season as underdogs and flew under the unofficial title 'The Power of Friendship' throughout the season.  They absolutely cashed in on that power as they drove to the middle of the pack standings with stellar performances all around and great team play.  Lowell was a consistent threat all season long and proved his place among the very best in the league, earning his first ever All Pro 1st team award. 3 members of season 2’s Team Bell reunited and with the synergy from the year prior continued to improve.  They were able to show us new picks and unique synergies, Renata Smolder and Jarvan Galio notably.  Chestnut and Boxy were on engage duty and they teamed up consistently to produce highlights all season long.  Bell and Inferno both showed marked improvements and had moments throughout the season where they individually carried games.  These players have all been around since the inception of the LCC and the familiarity came up clutch time and time again.  They eventually finished the season tied for 3rd with the Titans and would play Garen Yuumi in a tie breaker match. Facing up against the Frost in the Quarterfinals nobody knew what to expect as the Frost on paper were a stronger team but had failed to deliver wins throughout the season and the Justice had proven that the power of friendship was not a nomenclature to be overlooked.  As the Game 1 draft unfolded it was clear that the meta had been shaken up with unconventional picks like Kassadin, KogMaw, Morde Jungle, Shen support all present.  14 minutes in, both toplaners teleported bot lane and it was an all out 5v5 brawl as these two organizations squared up to do battle for the evening.  Bell on Gnar top, a pick he is not renowned for, found 2 kills early, then a third while fighting alone at the bottom of the fight.  He then went to join his team and saw the blinking health bars of the two remaining members and the moment will go down in history as pre 15 minutes in Game 1 of the Quarter Finals, Bell got his first Penta Kill and secured a huge advantage not only in gold but in momentum. They went on to win the first two games in the series but the Frost fought back with vengeance, winning games 3 and 4.  Going into Game 5 with the momentum shifted away from them the Power of Friendship was called upon once more and with an LCC first Rammus Jungle, they delivered to win Game 5 and send themselves to the Semi-Finals. The Justice met the Plague in the following stage and would look to overcome the regular season goliath.  Though they showed great determination and team play, specifically around neutral objectives early and skirmishes that involved both Boxy and Chestnut, Demacia was brought down by Zaun in 3-0 fashion."
-        }
-      ]
-    },
-    {
-      "id": "frejlord-frost",
-      "name": "Freljord Frost",
-      "formerName": "Matt's Alt Accounts",
-      "tricode": "FF",
-      "images": [
-        { "name": "FF_4.svg", "date": "2026-02-12 - Present" },
-        { "name": "Frejlord_Frost_Logo.png", "date": "2025-02-01 - 2026-02-11" },
-        { "name": "M.A.A. Logo.svg", "date": "2024-01-07 - 2025-01-31" },
-        { "name": "MAA_1.png", "date": "2022-02-04 - 2024-01-06" }
-      ],
-      "primaryColor": "rgb(100, 149, 237)",
-      "established": 2022,
-      "allPros": 1,
-      "mvps": 0,
-      "seasons": [
-        {
-          "season": 1,
-          "history": "Matt's Alt Accounts was created out of jest and they used that thorn in the side of their opponents to put together a middle of the pack performance throughout the year. Duck claimed his home as the Top Laner of MAA, with Jungler Zandy, Mid Laner Dr Screams, and Bot duo Boxy and Redz.  This was a team of misfits and in season two we would see both players of the bot lane swap to other roles.  They got away with gutsy play carried by their mechanics, and ended the regular season 3-2.  They matched up in the semi’s against SGI and pulled off a semi controversial player swap, bringing in collegiate stars of Empro and Hope.  The upgraded MAA would be the first team to take a game off of SGI, but would still fall 2-1 in the series."
-        },
-        {
-          "season": 2,
-          "history": "MAA seemed likely and ready to run back their playoff team from season one, but their late stage star Hope would be drafted away from them.  They were able to get Empro again as their Jungler, and Redz stayed on the team, this time swapping to play mid lane for the organization.  They added a fresh faced botlane in RSexy and Phia who in game one of the season put on an absolute show with Caitlyn Lux, the first of many, and the stage was set for MAA to have a competitive year.  Struggles would come in as drafting weaknesses would begin to get exploited.  Empro’s Viego was prominent as well as Duck’s Sett.  MAA was more or less seen as the 3rd best team all year, and going into the playoffs they were looking to make easy work of their first round opponents TB in order to make a statement prior to their HPZ match.  Game one was give and take, as both organizations measured well into each other, but Redz iconic Pantheon and Duck’s Sett landed killer blows and would clinch the first game.  TB bounced back in game 2 but left Sett up for Duck in game 3 who made short work of the lane phase and would see his team into the Semi Finals.  As essential as he was to their quarter finals victory, Duck also was a major factor in their defeat as TJ for HPZ had the series of a lifetime and unexpectedly dominated the pick/ban as well as the lane phase of the series.  HPZ swept 2-0 and MAA went home packing, finishing a disappointed but perhaps expected 3rd place."
-        },
-        {
-          "season": 3,
-          "history": "Freljord took the rebrand and a host of new players but with Duck, Empro, and occasionally Redz making appearances this was one of the organizations that was able to retain its primary identity year over year.  A stacked roster on paper gave us some of the most entertaining games of the season including the first team to push the Plague to near breaking point in the longest match of the season.  Bezza/Bassoon bot lane was a great pairing and the synergies with their top side of the map came through clearly.  Some early season roster inconsistencies with Redz and Hope meant that they got off to an awkward start with fragmented practice schedules and little time as a full unit.  They found crucial wins throughout the season and beat Demacia in the regular season ahead of their Best of 5 Quarter Finals matchup.  Heading into the Quarters it felt like a season of “should’ve” and when they went down 0-2 it was looking like lights out.  Game 3, Duck’s Chogath weathered the early lane into Rumble and turned things around in the mid game, finding crucial kills and snowballing the Frost to find their way back into the series. Hope found a Solo Bolo onto Lowell, taking away the signature A’Sol.  Bassoon was landing critical Nautilus engage onto the Justice.  The Frost were finally online.  Game 4 was breezy, and heading into Game 5 momentum was solidly on their side.  Both teams' nerves were high and on display.  Hope had his best lane phase of the series into Lowell and secured kills and pressure, but the rest of the map went the way of the Justice and despite some incredible plays from the Frost on their signature champions they just couldn’t crush one last nexus and were eliminated."
-        }
-      ]
-    },
- 
-    {
-      "id": "noxus-gladiators",
-      "name": "Noxus Gladiators",
-      "formerName": "Team Hospitalized",
-      "tricode": "NOX",
-      "images": [
-        { "name": "Noxian_Gladiators_Logo.png", "date": "2025-02-01 - Present" },
-        { "name": "Team Hospitalized Logo.svg", "date": "2024-01-07 - 2025-01-31" },
-        { "name": "HPZ_1.png", "date": "2022-02-04 - 2024-01-06" }
-      ],
-      "primaryColor": "rgb(220, 20, 60)",
-      "established": 2022,
-      "allPros": 5,
-      "mvps": 2,
-      "seasons": [
-        {
-          "season": 1,
-          "history": "HPZ was named after the number of medical exemptions that caused delayed games and a disrupted schedule.  HPZ came into the league to have fun first and win games second and unfortunately they rarely moved onto step two.  Team Hospitalized consisted of young talent in Bug, Daal, Bezza, Phia, and Vipsy.  They showed up to each and every game and gave themselves a shot at victory, but the other teams in the LCC were more prepared and decisive and their time spent playing the game was a huge benefit.  HPZ’s shining moment of the season was their win against Discord Kittens.  Both teams were 0-4 and whoever won the game would once and for all determine who the worst team was and who was a step above.  It went deep into the late game and it looked like DK’s Cerelius would be able to carry the game, but an amazing play from Daal’s Vel'koz caught 4 of DK in the southern jungle and HPZ went on to smash their only nexus of the season finishing 1-4 and missing playoffs."
-          },
-          {
-          "season": 2,
-          "history": "A fully revamped and nearly all rookie roster, Hospitalized in Season Two was a completely new look.  TJ was their top laner and draft dude and he took the role seriously, conducting pre draft interviews, getting to know the rookies, and studying the draft board closely.  He conducted dozens of mock drafts and in the end, it paid off.  He drafted Agateo for bot lane, Abraxo for support, Wittle in the jungle and THE CrimsonYoni as a role swapped mid laner.  A roster full of unproven names, they had nothing to lose and everything to prove.  Their first few matches were against perceived weaker teams, but beating reigning champions SGI 2-0 put their name on the map.  As they headed into the thick of their schedule, their apparent strategy to send Wittle to hard camp their bot lane proved to be a cheat code that generated wins.  HPZ even ran a full protect the puppy composition, with Galio mid and Kogmaw AD.  Agateo did not let the team down, delivering the most kills in the entire league with 195.  HPZ dropped a few games to specific amumu comps throughout the regular season but really tightened things up come playoff time and swept both their semifinal and finals series, finishing the season with a 14-3 record and claiming the LCC Season 2 Championship."
-         },
-          {
-            "season": 3,
-            "history": "Noxus came into the 3rd season with expectations at an all time high.  Securing their star AD from Season 2, Agateo was able to insulate himself with some star studded talent just like the year prior.  Yoni was on a role swap to support and that Hospitalized synergy was highly respected.  New players Karpusky and Starling both had huge imprints on the DNA of this roster throughout the season and most expected the bare minimum of a Finals appearance.  The season itself proved to be difficult for the Gladiators, Mage bottom in the META neutralized the Season 2 MVP and while Clone especially excelled at  skirmishing, Noxus had a hard time capitalizing with their positioning in the team fights.  In the best game of the season we got to see up and coming Carry player Krispy and Targon take on the Gladiators and with Agateo on Kaisa the visions of his finals performance was fresh in the minds of all spectators.  Noxus had moments where they looked like champions, but also struggled to consistently find opportunities in the late game and would eventually finish the season a solid 2nd.  This roster had a lot to show heading into playoffs but Targon showed up on the day and in convincing fashion won the Semi Finals 3-1.  The Gladiators definitely looked to have promise but whenever the top team would fall it was never them to take the reins."
-          }
-      ]
-    },
-    {
-      "id": "piltover-progress",
-      "name": "Piltover Progress",
-      "formerName": "Some Genuine Idiots (SGI)",
-      "tricode": "PRO",
-      "images": [
-        { "name": "PRO_4.svg", "date": "2026-02-12 - Present" },
-        { "name": "Piltover_Progress_Logo.png", "date": "2025-02-01 - 2026-02-11" },
-        { "name": "S.G.I. Logo.svg", "date": "2024-01-07 - 2025-01-31" },
-        { "name": "SGI_1.png", "date": "2022-02-04 - 2024-01-06" }
-      ],
-      "primaryColor": "rgb(255, 215, 0)",
-      "established": 2022,
-      "allPros": 0,
-      "mvps": 0,
-      "seasons": [
-        {
-          "season": 1,
-          "history": "SGI came into the LCC in season one as one of the only nearly fully developed rosters.  Backed by the French core of V, Lucky, and Djo, SGI found many wins early on in the season through their strong solo lanes and mechanical strength.  V’s Camille early on in season one stands out as one of the prominent moments of the year, when he took his opportunity on the big stage and demanded that his playstyle be paid attention.  Lucky played a variety of picks in the mid lane, teaming up with the French jungler turned American, Bluewolf.  Bluewolf showed great proficiency on tank picks like Poppy and Zac, and worked in tandem with Lucky to dismantle and demolish many of the mid/jungle duo’s in season one.  Djo’s Kaisa and Varus were stand out picks as well, showcasing talent in any game that went late and had a close gold count. These four partnered with new teammate Chestnut who played some iconic engage tank supports and even selected Blitzcrank in the finals.  It was like Chestnut had scripts installed as he simply did not miss a hook, the man was on fire, especially in the finals of season one.  SGI was utterly dominant, losing only a single game in the semi-finals match against an upgraded and updated MAA, they went on to become LCC Season One Champions and to this day are remembered for their dominance in an undefeated regular season as well as for their European approach to the game."
-        },
-        {
-          "season": 2,
-          "history": "SGI was able to keep their core intact as they signed what came to be called the “French Compromise” in which they gave up their draft position and choices in order to retain every French player.  V, Lucky, and Djo were able to run it back, and as luck would have it, their first draft choice ended up being a jungler who had fallen to the 3rd round, Blue Wolf.  With 80% of the championship roster from Season One and Mayah as their new support, early speculation had SGI as pre-season favorites.  Their first match of the season was against LOL and it was absolutely blow for blow.  They picked Jayce into Sion top and Matt for LOL had other plans.  He pushed his team to victory and the Undefeated* Season One champions were already on the back foot.  They came into game 2 with a new mindset and approach to the game.  V locked in Camille this time, but it was Lucky who found the game winning play as he swept over the wall on Azir into the dragon pit and found a 4 man game winning Shuriman Shuffle that we ranked as the 2nd best play all year in the LCC.  They went on to play HPZ in their next match and lost both games, looking out of place and confused on how to approach the meta and the game.  After a 1-3 start to the year, SGI went dormant and they got behind on matches.  Eventually SGI was forced to relinquish their players and pick up a fresh roster with only 3 weeks left in the season.  The Season One champions and French Trio of V, Lucky, and Djo would exit the league for good on June 14th 2024.  Blue Wolf continued to represent the roster for the remainder of the year but they never got their mojo together as they faltered to not only schedule their games but also put together a competitive roster.  They brought on temporary talent in Milk Chugga, Minty, and Demi, and ultimately had a bright spot in up and coming top laner Gemzii.  They finished the season 1-7 with 4 of their matches being a forfeit, and the team that had looked brilliant in Season One, and rightfully earned themselves a championship, would fall to 2-10 in Season Two and fail to make the playoffs."
-        },
-        {
-          "season": 3,
-          "history": "Season 3 - SGI was relegated from the LCC’s top league after their performance in Season 2 and struggled to find pieces to fill the gaps during their stint in tier 2.  After a season filled with tribulations the reforged organization flying under the banner of Piltover received an aptly named makeover ahead of Season 4."
-        }
-      ]
-    },
+﻿{
+    "teams":  [
+                  {
+                      "id":  "bandle-city-buckaroos",
+                      "name":  "Bandle City Buckaroos",
+                      "tricode":  "BCB",
+                      "formerName":  "League of Liquor",
+                      "images":  [
+                                     {
+                                         "name":  "BCB_4.svg",
+                                         "date":  "2026-02-12 - Present",
+                                         "seasons":  ["4", "4T", "4P"]
+                                     },
+                                     {
+                                         "name":  "Bandle_City_Buckaroos.png",
+                                         "date":  "2025-02-01 - Present",
+                                         "seasons":  ["3", "3T", "3P"]
+                                     },
+                                     {
+                                         "name":  "League of Liquor Logo.svg",
+                                         "date":  "2024-01-07 - 2025-01-31",
+                                         "seasons":  ["2", "2T", "2P"]
+                                     },
+                                     {
+                                         "name":  "LOL_1.png",
+                                         "date":  "2022-02-04 - 2024-01-06",
+                                         "seasons":  ["1", "1T", "1P"]
+                                     }
+                                 ],
+                      "primaryColor":  "rgb(205 134 178)",
+                      "established":  2022,
+                      "allPros":  3,
+                      "mvps":  0,
+                      "accolades":  [],
+                      "seasons":  [
+                                      {
+                                          "season":  1,
+                                          "history":  " League of Liquor got their name from a certain attorney who, for legal reasons, shall remain implicated but unnamed.  They fielded different players throughout their season, but Support Crimson Yoni, Mid laner Simon, and Jungler Aztec were their prominent members.  Sombob also made several appearances and they had several sub players including guacmanjon, Psychotikk, and eventually Daal subbing in as their permanent top laner for the playoffs.  League of Liquor seemed to capture magic in a bottle, as Aztec and Simon had exceptionally great chemistry, both of them having small individual mistakes but more often than not capitalizing on skirmishes together to find leads and victories.  League of Liquor would go 4-1 in the regular season and eventually lose to SGI 0-3 in the finals.  Their only defeats all season came at the hands of SGI and they were a cut above the rest of the league.  They were a team that capitalized on the weaknesses of others and had both the macro and micro to make it to the finals, but ultimately fell to the French pressure."
+                                      },
+                                      {
+                                          "season":  2,
+                                          "history":  "League of Liquor would find themselves with almost an entirely new roster, retaining Daal but this time she would star as their Support and Mid laner rather than top.  Matt\u0027s Sion/Illaoi duo would prove to be league defining and with the first pick in the draft, Hope had huge shoes to fill.  Whisper and Bassoon would fill out the roster and this team needed no time to gel, they found success quickly and often.  Their first match against SGI was one for the record books and they came out with intent to win.  This was the only team that swapped players around for strategic advantage and they would end the regular season in 2nd place with a bye in the playoffs.  Gets on Base would meet them there and their late season swell proved to be difficult, but in the end League of Liquor displayed fantastic coordination and flexibility and would win that series rather convincingly despite dropping a game.  The only thing that remained for these bad boys of the LCC was HPZ in the finals, and it was Goliath vs Goliath as the league\u0027s two behemoths squared up one last time in a best of 5 to claim the championship.  They brought out versatile picks and Whisper went toe to toe with Wittle in the game, finding great counterganks but in the end it wasn\u0027t enough as HPZ were able to find angles for their star carry Agateo in every game, as they dropped 0-3 in another Finals sweep.  League of Liquor is the only organization to make it to back to back finals but they have yet to claim a championship."
+                                      },
+                                      {
+                                          "season":  3,
+                                          "history":  "The Buckaroos story of Season 3 was a hot fire topic around the proverbial LCC watercooler.  With strong dominant solo-laners of Matt and Cerelius this roster had an already stacked line up, and Cerelius looked primed to finally call a team home after a tumultuous two seasons spent at the bottom of the standings.  A young upstart in both Jungle and Support with veteran Carry Miso, the Bucks made instant fans.  Quickly, the community rallied behind the Buckaroos and the attention on their games became much anticipated.  Fundamentally the start of the season produced some rough and rocky moments for BCB, finding early leads that then fell to poor coordination or lack of team play and the ability to find late game angles.  The league had leveled up and Bandle City was finding it difficult to replicate the win conditions necessary.  They finished the season a disappointing 6th with a 2-8 record.  Some highlight performances from Miso\u0027s adaptation to Lux and Jinx bot lane, Gemzii\u0027s Xin Zhou in particular stood out as solid, and Dan\u0027s heavy roaming playstyle helped to facilitate the early game but simply put they were lacking in the late game.  They faced Targon in the Quarter Finals who looked to be Hot/Cold and Game 1 was spectacular, using Lux as a flex pick between both Mid and Bot, they were able to secure advantages and Cerelius hit an incredible 3 man Lux Final Spark onto the entire backline of Targon to win a huge upset in Game 1.  Targon however made the most of the new Best of 5 format and came back to win 3 in a row, ending the season for the Buckaroos."
+                                      }
+                                  ]
+                  },
+                  {
+                      "id":  "bilgewater-bullets",
+                      "name":  "Bilgewater Bullets",
+                      "tricode":  "BLT",
+                      "images":  [
+                                     {
+                                         "name":  "BLT_4.svg",
+                                         "date":  "2026-02-12 - Present",
+                                         "seasons":  ["4", "4T", "4P"]
+                                     },
+                                     {
+                                         "name":  "Bilgewater_Bullets_Logo.png",
+                                         "date":  "2026-02-01 - 2026-02-11",
+                                         "seasons":  ["3", "3T", "3P"]
+                                     }
+                                 ],
+                      "primaryColor":  "rgb(139, 69, 19)",
+                      "established":  2026,
+                      "allPros":  0,
+                      "mvps":  0,
+                      "accolades":  [],
+                      "seasons":  [
 
-    {
-      "id": "shuriman-scorch",
-      "name": "Shuriman Scorch",
-      "tricode": "SSC",
-      "images": [
-        { "name": "Shuriman_Scorch_Logo.png", "date": "2026-02-01 - Present" }
-      ],
-      "primaryColor": "rgb(218, 165, 32)",
-      "established": 2026,
-      "allPros": 0,
-      "mvps": 0,
-      "seasons": []
-    },
-    {
-      "id": "targon-titans",
-      "name": "Targon Titans",
-      "formerName": "Gets On Base",
-      "tricode": "TAR",
-      "images": [
-        { "name": "TAR_4.svg", "date": "2026-02-12 - Present" },
-        { "name": "Targon_Titans_Logo.png", "date": "2025-02-01 - 2026-02-11" },
-        { "name": "Gets On Base Logo.svg", "date": "2024-01-07 - 2025-01-31" }
-      ],
-      "primaryColor": "rgb(70, 130, 180)",
-      "established": 2024,
-      "allPros": 2,
-      "mvps": 1,
-      "seasons": [
-        {
-          "season": 2,
-          "history": "GOB made it clear from the start that they weren’t here to try and win the league, they just wanted to get on base.  A team with a small ball attitude, they struggled out of the gate, finding scheduling to be a major concern they had to add Rizz and Gator to the team in order to ensure their matches got played.  Chaffles top lane Kennen instantly earned respect as one of the only bright spots on this roster early on and the feeling was that Chaffles this year was going to have a year very similar to Cerelius on DK in season 1.  About half way through the season things started to click.  Boxy popped in a few great games in the jungle, bringing out an especially dominant volibear game.  Rizz had a league leading single game kill record of 20 Kills on Miss Fortune, and Gator tossed his name in the ring for best engage support, honing in on Braum, Leona, and Rell as his big 3.  Clone’s Hwei became a necessary pick/ban and created many angles for the team and they went on a Cinderella late season run, finishing with 4 wins in a row to end 5-7.  Their playoff match against DK was one to remember as game one was lost to a few bad positioning errors, but they swapped to Shen top and Rell support and that duo went on to win them the series.  In the Semi finals against LOL they used the same composition with Shen and Rell and won another game, but after draft one the trick was up, and League of Liquor turned things around quickly to knock them out 2-1."
-        },
-        {
-          "season": 3,
-          "history": "Targon went with Veteran top lane talent Chaffles and Rookie Krispy in their draft, filling out the roster with Rookies Minty and Oreganen.  A team most analysts had 3rd definitely had struggles throughout the year.  Losing key games to Freljord, Noxus, Zaun, and Demacia, they looked susceptible to coordination and consistency would be a key factor for this lineup.  With Matt struggling on Bandle City, Chaffles had a clear and decisive season as Top Dog.  Aztec’s Skarner was heavily nerfed throughout the season which led to varying performances as the jungler was seeking a replacement pick.  Minty struggled heavily until supportive picks like Lux, Seraphine, Karma, Galio allowed them to contribute meaningful impact, at times being the primary carry in some key victories.  Krispy was a jack of all trades, but hypercarries such as Zeri, Jinx, Vayne were the bread and butter of their most dominant moments.  Oreganen looked to synergize with his Carry, supplying a variety of playstyles including Engage Rakan, Damage Velkoz, Enchanter Taric and many others throughout the season.  Losing some key matches in the regular season meant that Targon would begin their playoff campaign in the Quarter Finals.  Facing off into Bandle City, the emphasis was on their solo-laners to hold strong and let their team synergy take over in the mid to late game.  After a shocking play at the end of Game 1, Targon stabilized and won 3 in a row, ending 3-1.  Meeting Noxus in the Semi Finals was primed to be the best matchup of the playoffs, with many analysts predicting it would go all 5.  Game 1 again went against Targon, with Noxus surprising everyone with a role swap in Mid/Jungle.  Game 2 however, just like in the Quarters, Targon found their stride.  From there they soundly pushed through the Gladiators to win 3-1 and punch their ticket into the Finals.  Zaun were the Favorites, but Targon was the only team to take a game against them all year.  Every lane had an all pro player in it and these two teams were set to Clash in an epic battle for the crown.  Targon proved not only to themselves but to the world that Diamonds are formed from pressure, as in all 3 games they went down in gold in the early game.  3 straight games in a row they fought back with vengeance against their oppressors to find victory.  Chaffles had incredible consistency into Orcas all series long, Aztec stymied every play the Plague made and had gorgeous neutral objective control. Minty found 3 straight different matchups where he was able to neutralize Spike, Krispy and Oreganen bought time and played for item spikes and didn't over step in key moments to perform up to the pressure.  All 5 players had an incredible series and while Krispy won the Season 3 Finals MVP, without the performances of all 5 members, the Titans would not have surmounted the summit of victory.  The Targon Titans are the LCC Season 3 Champions."
-        }
-      ]
-    },
-    {
-      "id": "zaun-plague",
-      "name": "Zaun Plague",
-      "formerName": "Discord Kittens",
-      "tricode": "ZAP",
-      "images": [
-        { "name": "ZAP_4.svg", "date": "2026-02-12 - Present" },
-        { "name": "Zaun_Plague.png", "date": "2025-02-01 - 2026-02-11" },
-        { "name": "Discord Kittens Logo.svg", "date": "2024-01-07 - 2025-01-31" },
-        { "name": "DK_1.png", "date": "2022-02-04 - 2024-01-06" }
-      ],
-      "primaryColor": "rgb(128, 0, 128)",
-      "established": 2022,
-      "allPros": 6,
-      "mvps": 1,
-      "seasons": [
-        {
-          "season": 1,
-          "history": "Discord Kittens was a group of players that wanted to compete, but truthfully had almost never played the game.  They ended up never playing with their intended mid laner and having to emergency replace them with Cerelius at the last minute.  Marki Milkers in the top lane was account level 16 when the tournament started and only owned 19 champions.  Wannabe was the TO and Jungler, Savage played Carry, and A Female was their support.  A Female had a few good Zyra games and Cerelius held a huge lane advantage in almost every game but ultimately they just lacked game experience to pull off a victory.  Their closest match came against HPZ in a 0-4 vs 0-4 battle of redemption, and while they genuinely almost pulled off the win, Daal and HPZ had other plans as a masterful catch in the jungle ended their season winless.  DK ended 0-5 and the general sentiment was that we might not see many of the team return for Season 2."
-        },
-        {
-          "season": 2,
-          "history": "DK was fully revamped, a new top laner and Cerelius being drafted 3rd overall meant that all 5 players would be completely new to the org.  Psychotik was just returning from a trip to Japan and hadn’t had time to prepare, and with the final pick in the snake draft having to pick back to back meant extra pressure.  Bug had moved to the jungle, Simon was coming off a finals appearance, Miso arrived with a name change and role swap, and Jags was support.  DK eventually added a British Superstar (Bezza) to the roster.  DK’s 6-Man team found themselves middle of the pack, picking up wins against HPZ and MAA but also dropping games to TB and both of the LOL matches.  Sitting at 5-5 before the SGI forfeits promoted them to 7-5, they were exactly average.  DK found themselves the 4th seed in the playoffs and battling against a GOB that they had 2-0’d early in the season.  They made the controversial decision to play all 6 of their players to ensure everyone got a taste of the playoffs, and in the end their flip-flopping cost them consistency and they fell to GOB 1-2."
-        },
-        {
-          "season": 3,
-          "history": "Plague left the draft with 3 rookies and 2 all pro 2nd team players, already looking like a contender line up.  With a quick 2-0 to start the season it looked like nothing would topple them but then due to some out of game issues a swap was made.  Whisper, another highly touted jungler from Season 2 was brought in to cover the gap and the Plague went on to sweep the first round robin.  Week 6 would foreshadow their year as a resounding stomp from Targon brought down the top dogs.  Winning out the rest of the season, the Plague sat at 9-1, top of the standings in nearly every category.  RSexy and Jags combined to create the most powerful bot duo in league history, and solo-laners Orcas and Spike played consistent in the lane phases as well as late game macro to make it a roster of super stars.  All 5 players were voted onto the all pro line up and with a bye to the Semi’s, they swept their opponents Demacia in 3-0 fashion, awaiting the winner of Targon vs Noxus.  In all 3 games, Zaun was able to find substantial gold leads in the lane phase, a motif from the regular season.  This time however Targon found the cure, their midgame was superior and teamfighting brought them back into every game.  Targon upset the Plague 3-0 in the finals and the Zaun Plague, who were 12-1 going into the finals, tasted resounding defeat for the first time all year right when it hurt the most."
-         }
-      ]
-    }
-  ]
+                                  ]
+                  },
+                  {
+                      "id":  "demacian-justice",
+                      "name":  "Demacian Justice",
+                      "formerName":  "Team Bell",
+                      "tricode":  "DMJ",
+                      "images":  [
+                                     {
+                                         "name":  "Demacian_Justice_Logo.png",
+                                         "date":  "2025-02-01 - Present",
+                                         "seasons":  ["3", "3T", "3P", "4", "4T", "4P"]
+                                     },
+                                     {
+                                         "name":  "Team Bell Logo.svg",
+                                         "date":  "2024-01-07 - 2025-01-31",
+                                         "seasons":  ["2", "2T", "2P"]
+                                     },
+                                     {
+                                         "name":  "TB_1.png",
+                                         "date":  "2022-02-04 - 2024-01-06",
+                                         "seasons":  ["1", "1T", "1P"]
+                                     }
+                                 ],
+                      "primaryColor":  "rgb(184, 134, 11)",
+                      "established":  2022,
+                      "allPros":  3,
+                      "mvps":  0,
+                      "accolades":  [
+                                   ],
+                      "seasons":  [
+                                      {
+                                          "season":  1,
+                                          "history":  "Team Bell came into the league as friends first and competitors second, but their taste of the competition left them wanting more.  They picked their players based on friendships and ended up with two top laners rather than a true mid laner.  Bell and Matt both swapped roles regularly throughout the season and that proved difficult for the team to find form or identity.  Inferno played Carry for TB and was supported by close ally Mayah, with German jungler Werner. By the end of season one, they had shown individual greatness but had failed to string together victories and headed into the playoffs as clear underdogs.  Team Bell would end up getting knocked out quickly by LOL in their Semi finals matchup, and their only wins the entire year came by way of beating a winless DK and a HPZ that only picked up one win, against DK.  Team Bell clearly had to find purpose going into Season 2, and with that in mind they absolutely did."
+                                      },
+                                      {
+                                          "season":  2,
+                                          "history":  "This year was going to be different, and with Bell as the definitive Top Laner and team captain, he set out to draft competitors as well as friends this time.  Cerelius was drafted 3rd overall despite never having an earned win on his record throughout his time on DK in season one.  They also picked up Inferno who had played on Team Bell the year prior and had some chemistry with.  Their final additions were no stranger to the late stages of the playoffs, with Jungler Aztec who had dismantled Team Bell in the playoffs the year prior and Support Chestnut who was coming off a Championship run himself with SGI.  Team Bell looked to be rebuilt as a more competitive version of themselves the year prior and the clear focus was going to be performance this year, it was only a matter of time. Analysts such as â€œJagsâ€ would go on to refer to this team as a â€œRubix cube half finishedâ€, to indicate that clearly progress was being made, but they had not yet jelled to reflect the sum of their individual parts.  Aztec would find himself cut off from his laners throughout the tournament many times, the bot lane of Inferno and Chestnut found it difficult to sync together and Cerelius would get many early game leads and huge damage output but they just couldn\u0027t find a way to close games.  Towards the end of the season they would pull matches together and picked up a crucial game against HPZ to clinch their playoff berth.  They would fall to MAA 2-1 in the Quarterfinals this year and finish 6th overall, but this was a team that felt that it finally reached a true version of itself at the end and while frustrations about some games in the regular season will linger, their playoff battle against MAA is one they can hang their proverbial hats on."
+                                      },
+                                      {
+                                          "season":  3,
+                                          "history":  "DMJ Entered the season as underdogs and flew under the unofficial title \u0027The Power of Friendship\u0027 throughout the season.  They absolutely cashed in on that power as they drove to the middle of the pack standings with stellar performances all around and great team play.  Lowell was a consistent threat all season long and proved his place among the very best in the league, earning his first ever All Pro 1st team award. 3 members of season 2\u0027s Team Bell reunited and with the synergy from the year prior continued to improve.  They were able to show us new picks and unique synergies, Renata Smolder and Jarvan Galio notably.  Chestnut and Boxy were on engage duty and they teamed up consistently to produce highlights all season long.  Bell and Inferno both showed marked improvements and had moments throughout the season where they individually carried games.  These players have all been around since the inception of the LCC and the familiarity came up clutch time and time again.  They eventually finished the season tied for 3rd with the Titans and would play Garen Yuumi in a tie breaker match. Facing up against the Frost in the Quarterfinals nobody knew what to expect as the Frost on paper were a stronger team but had failed to deliver wins throughout the season and the Justice had proven that the power of friendship was not a nomenclature to be overlooked.  As the Game 1 draft unfolded it was clear that the meta had been shaken up with unconventional picks like Kassadin, KogMaw, Morde Jungle, Shen support all present.  14 minutes in, both toplaners teleported bot lane and it was an all out 5v5 brawl as these two organizations squared up to do battle for the evening.  Bell on Gnar top, a pick he is not renowned for, found 2 kills early, then a third while fighting alone at the bottom of the fight.  He then went to join his team and saw the blinking health bars of the two remaining members and the moment will go down in history as pre 15 minutes in Game 1 of the Quarter Finals, Bell got his first Penta Kill and secured a huge advantage not only in gold but in momentum. They went on to win the first two games in the series but the Frost fought back with vengeance, winning games 3 and 4.  Going into Game 5 with the momentum shifted away from them the Power of Friendship was called upon once more and with an LCC first Rammus Jungle, they delivered to win Game 5 and send themselves to the Semi-Finals. The Justice met the Plague in the following stage and would look to overcome the regular season goliath.  Though they showed great determination and team play, specifically around neutral objectives early and skirmishes that involved both Boxy and Chestnut, Demacia was brought down by Zaun in 3-0 fashion."
+                                      }
+                                  ]
+                  },
+                  {
+                      "id":  "frejlord-frost",
+                      "name":  "Freljord Frost",
+                      "formerName":  "Matt\u0027s Alt Accounts",
+                      "tricode":  "FF",
+                      "images":  [
+                                     {
+                                         "name":  "FF_4.svg",
+                                         "date":  "2026-02-12 - Present",
+                                         "seasons":  ["4", "4T", "4P"]
+                                     },
+                                     {
+                                         "name":  "Frejlord_Frost_Logo.png",
+                                         "date":  "2025-02-01 - 2026-02-11",
+                                         "seasons":  ["3", "3T", "3P"]
+                                     },
+                                     {
+                                         "name":  "M.A.A. Logo.svg",
+                                         "date":  "2024-01-07 - 2025-01-31",
+                                         "seasons":  ["2", "2T", "2P"]
+                                     },
+                                     {
+                                         "name":  "MAA_1.png",
+                                         "date":  "2022-02-04 - 2024-01-06",
+                                         "seasons":  ["1", "1T", "1P"]
+                                     }
+                                 ],
+                      "primaryColor":  "rgb(100, 149, 237)",
+                      "established":  2022,
+                      "allPros":  1,
+                      "mvps":  0,
+                      "accolades":  [
+                                   ],
+                      "seasons":  [
+                                      {
+                                          "season":  1,
+                                          "history":  "Matt\u0027s Alt Accounts was created out of jest and they used that thorn in the side of their opponents to put together a middle of the pack performance throughout the year. Duck claimed his home as the Top Laner of MAA, with Jungler Zandy, Mid Laner Dr Screams, and Bot duo Boxy and Redz.  This was a team of misfits and in season two we would see both players of the bot lane swap to other roles.  They got away with gutsy play carried by their mechanics, and ended the regular season 3-2.  They matched up in the semi\u0027s against SGI and pulled off a semi controversial player swap, bringing in collegiate stars of Empro and Hope.  The upgraded MAA would be the first team to take a game off of SGI, but would still fall 2-1 in the series."
+                                      },
+                                      {
+                                          "season":  2,
+                                          "history":  "MAA seemed likely and ready to run back their playoff team from season one, but their late stage star Hope would be drafted away from them.  They were able to get Empro again as their Jungler, and Redz stayed on the team, this time swapping to play mid lane for the organization.  They added a fresh faced botlane in RSexy and Phia who in game one of the season put on an absolute show with Caitlyn Lux, the first of many, and the stage was set for MAA to have a competitive year.  Struggles would come in as drafting weaknesses would begin to get exploited.  Empro\u0027s Viego was prominent as well as Duck\u0027s Sett.  MAA was more or less seen as the 3rd best team all year, and going into the playoffs they were looking to make easy work of their first round opponents TB in order to make a statement prior to their HPZ match.  Game one was give and take, as both organizations measured well into each other, but Redz iconic Pantheon and Duck\u0027s Sett landed killer blows and would clinch the first game.  TB bounced back in game 2 but left Sett up for Duck in game 3 who made short work of the lane phase and would see his team into the Semi Finals.  As essential as he was to their quarter finals victory, Duck also was a major factor in their defeat as TJ for HPZ had the series of a lifetime and unexpectedly dominated the pick/ban as well as the lane phase of the series.  HPZ swept 2-0 and MAA went home packing, finishing a disappointed but perhaps expected 3rd place."
+                                      },
+                                      {
+                                          "season":  3,
+                                          "history":  "Freljord took the rebrand and a host of new players but with Duck, Empro, and occasionally Redz making appearances this was one of the organizations that was able to retain its primary identity year over year.  A stacked roster on paper gave us some of the most entertaining games of the season including the first team to push the Plague to near breaking point in the longest match of the season.  Bezza/Bassoon bot lane was a great pairing and the synergies with their top side of the map came through clearly.  Some early season roster inconsistencies with Redz and Hope meant that they got off to an awkward start with fragmented practice schedules and little time as a full unit.  They found crucial wins throughout the season and beat Demacia in the regular season ahead of their Best of 5 Quarter Finals matchup.  Heading into the Quarters it felt like a season of â€œshould\u0027veâ€ and when they went down 0-2 it was looking like lights out.  Game 3, Duck\u0027s Chogath weathered the early lane into Rumble and turned things around in the mid game, finding crucial kills and snowballing the Frost to find their way back into the series. Hope found a Solo Bolo onto Lowell, taking away the signature A\u0027Sol.  Bassoon was landing critical Nautilus engage onto the Justice.  The Frost were finally online.  Game 4 was breezy, and heading into Game 5 momentum was solidly on their side.  Both teams\u0027 nerves were high and on display.  Hope had his best lane phase of the series into Lowell and secured kills and pressure, but the rest of the map went the way of the Justice and despite some incredible plays from the Frost on their signature champions they just couldn\u0027t crush one last nexus and were eliminated."
+                                      }
+                                  ]
+                  },
+                  {
+                      "id":  "noxian-gladiators",
+                      "name":  "Noxian Gladiators",
+                      "formerName":  "Team Hospitalized",
+                      "tricode":  "NOX",
+                      "images":  [
+                                     {
+                                         "name":  "Noxian_Gladiators_Logo.png",
+                                         "date":  "2025-02-01 - Present",
+                                         "seasons":  ["3", "3T", "3P", "4", "4T", "4P"]
+                                     },
+                                     {
+                                         "name":  "Team Hospitalized Logo.svg",
+                                         "date":  "2024-01-07 - 2025-01-31",
+                                         "seasons":  ["2", "2T", "2P"]
+                                     },
+                                     {
+                                         "name":  "HPZ_1.png",
+                                         "date":  "2022-02-04 - 2024-01-06",
+                                         "seasons":  ["1", "1T", "1P"]
+                                     }
+                                 ],
+                      "primaryColor":  "rgb(220, 20, 60)",
+                      "established":  2022,
+                      "allPros":  5,
+                      "mvps":  2,
+                      "accolades":  [
+                                       { "title": "Season 2 Champions", "season": 2 }
+                                   ],
+                      "seasons":  [
+                                      {
+                                          "season":  1,
+                                          "history":  "HPZ was named after the number of medical exemptions that caused delayed games and a disrupted schedule.  HPZ came into the league to have fun first and win games second and unfortunately they rarely moved onto step two.  Team Hospitalized consisted of young talent in Bug, Daal, Bezza, Phia, and Vipsy.  They showed up to each and every game and gave themselves a shot at victory, but the other teams in the LCC were more prepared and decisive and their time spent playing the game was a huge benefit.  HPZ\u0027s shining moment of the season was their win against Discord Kittens.  Both teams were 0-4 and whoever won the game would once and for all determine who the worst team was and who was a step above.  It went deep into the late game and it looked like DK\u0027s Cerelius would be able to carry the game, but an amazing play from Daal\u0027s Vel\u0027koz caught 4 of DK in the southern jungle and HPZ went on to smash their only nexus of the season finishing 1-4 and missing playoffs."
+                                      },
+                                      {
+                                          "season":  2,
+                                          "history":  "A fully revamped and nearly all rookie roster, Hospitalized in Season Two was a completely new look.  TJ was their top laner and draft dude and he took the role seriously, conducting pre draft interviews, getting to know the rookies, and studying the draft board closely.  He conducted dozens of mock drafts and in the end, it paid off.  He drafted Agateo for bot lane, Abraxo for support, Wittle in the jungle and THE CrimsonYoni as a role swapped mid laner.  A roster full of unproven names, they had nothing to lose and everything to prove.  Their first few matches were against perceived weaker teams, but beating reigning champions SGI 2-0 put their name on the map.  As they headed into the thick of their schedule, their apparent strategy to send Wittle to hard camp their bot lane proved to be a cheat code that generated wins.  HPZ even ran a full protect the puppy composition, with Galio mid and Kogmaw AD.  Agateo did not let the team down, delivering the most kills in the entire league with 195.  HPZ dropped a few games to specific amumu comps throughout the regular season but really tightened things up come playoff time and swept both their semifinal and finals series, finishing the season with a 14-3 record and claiming the LCC Season 2 Championship."
+                                      },
+                                      {
+                                          "season":  3,
+                                          "history":  "Noxus came into the 3rd season with expectations at an all time high.  Securing their star AD from Season 2, Agateo was able to insulate himself with some star studded talent just like the year prior.  Yoni was on a role swap to support and that Hospitalized synergy was highly respected.  New players Karpusky and Starling both had huge imprints on the DNA of this roster throughout the season and most expected the bare minimum of a Finals appearance.  The season itself proved to be difficult for the Gladiators, Mage bottom in the META neutralized the Season 2 MVP and while Clone especially excelled at  skirmishing, Noxus had a hard time capitalizing with their positioning in the team fights.  In the best game of the season we got to see up and coming Carry player Krispy and Targon take on the Gladiators and with Agateo on Kaisa the visions of his finals performance was fresh in the minds of all spectators.  Noxus had moments where they looked like champions, but also struggled to consistently find opportunities in the late game and would eventually finish the season a solid 2nd.  This roster had a lot to show heading into playoffs but Targon showed up on the day and in convincing fashion won the Semi Finals 3-1.  The Gladiators definitely looked to have promise but whenever the top team would fall it was never them to take the reins."
+                                      }
+                                  ]
+                  },
+                  {
+                      "id":  "piltover-progress",
+                      "name":  "Piltover Progress",
+                      "formerName":  "Some Genuine Idiots",
+                      "tricode":  "PRO",
+                      "images":  [
+                                     {
+                                         "name":  "PRO_4.svg",
+                                         "date":  "2026-02-12 - Present",
+                                         "seasons":  ["4", "4T", "4P"]
+                                     },
+                                     {
+                                         "name":  "Piltover_Progress_Logo.png",
+                                         "date":  "2025-02-01 - 2026-02-11",
+                                         "seasons":  ["3", "3T", "3P"]
+                                     },
+                                     {
+                                         "name":  "S.G.I. Logo.svg",
+                                         "date":  "2024-01-07 - 2025-01-31",
+                                         "seasons":  ["2", "2T", "2P"]
+                                     },
+                                     {
+                                         "name":  "SGI_1.png",
+                                         "date":  "2022-02-04 - 2024-01-06",
+                                         "seasons":  ["1", "1T", "1P"]
+                                     }
+                                 ],
+                      "primaryColor":  "rgb(255, 215, 0)",
+                      "established":  2022,
+                      "allPros":  0,
+                      "mvps":  0,
+                      "accolades":  [
+                                       { "title": "Season 1 Champions", "season": 1 }
+                                   ],
+                      "seasons":  [
+                                      {
+                                          "season":  1,
+                                          "history":  "SGI came into the LCC in season one as one of the only nearly fully developed rosters.  Backed by the French core of V, Lucky, and Djo, SGI found many wins early on in the season through their strong solo lanes and mechanical strength.  V’s Camille early on in season one stands out as one of the prominent moments of the year, when he took his opportunity on the big stage and demanded that his playstyle be paid attention.  Lucky played a variety of picks in the mid lane, teaming up with the French jungler turned American, Bluewolf.  Bluewolf showed great proficiency on tank picks like Poppy and Zac, and worked in tandem with Lucky to dismantle and demolish many of the mid/jungle duo’s in season one.  Djo’s Kaisa and Varus were stand out picks as well, showcasing talent in any game that went late and had a close gold count. These four partnered with new teammate Chestnut who played some iconic engage tank supports and even selected Blitzcrank in the finals.  It was like Chestnut had scripts installed as he simply did not miss a hook, the man was on fire, especially in the finals of season one.  SGI was utterly dominant, losing only a single game in the semi-finals match against an upgraded and updated MAA, they went on to become LCC Season One Champions and to this day are remembered for their dominance in an undefeated regular season as well as for their European approach to the game."
+                                      },
+                                      {
+                                            "season":  2,
+                                            "history":  "SGI was able to keep their core intact as they signed what came to be called the “French Compromise” in which they gave up their draft position and choices in order to retain every French player.  V, Lucky, and Djo were able to run it back, and as luck would have it, their first draft choice ended up being a jungler who had fallen to the 3rd round, Blue Wolf.  With 80% of the championship roster from Season One and Mayah as their new support, early speculation had SGI as pre-season favorites.  Their first match of the season was against LOL and it was absolutely blow for blow.  They picked Jayce into Sion top and Matt for LOL had other plans.  He pushed his team to victory and the Undefeated* Season One champions were already on the back foot.  They came into game 2 with a new mindset and approach to the game.  V locked in Camille this time, but it was Lucky who found the game winning play as he swept over the wall on Azir into the dragon pit and found a 4 man game winning Shuriman Shuffle that we ranked as the 2nd best play all year in the LCC.  They went on to play HPZ in their next match and lost both games, looking out of place and confused on how to approach the meta and the game.  After a 1-3 start to the year, SGI went dormant and they got behind on matches.  Eventually SGI was forced to relinquish their players and pick up a fresh roster with only 3 weeks left in the season.  The Season One champions and French Trio of V, Lucky, and Djo would exit the league for good on June 14th 2024.  Blue Wolf continued to represent the roster for the remainder of the year but they never got their mojo together as they faltered to not only schedule their games but also put together a competitive roster.  They brought on temporary talent in Milk Chugga, Minty, and Demi, and ultimately had a bright spot in up and coming top laner Gemzii.  They finished the season 1-7 with 4 of their matches being a forfeit, and the team that had looked brilliant in Season One, and rightfully earned themselves a championship, would fall to 2-10 in Season Two and fail to make the playoffs."
+                                      },
+                                      {
+                                          "season":  3,
+                                          "history":  "SGI was relegated from the LCC’s top league after their performance in Season 2 and struggled to find pieces to fill the gaps during their stint in tier 2.  After a season filled with tribulations the reforged organization flying under the banner of Piltover received an aptly named makeover ahead of Season 4."
+                                      }
+                                  ]
+                  },
+                  {
+                      "id":  "shuriman-scorch",
+                      "name":  "Shuriman Scorch",
+                      "tricode":  "SSC",
+                      "images":  [
+                                     {
+                                         "name":  "Shuriman_Scorch_Logo.png",
+                                         "date":  "2026-02-01 - Present",
+                                         "seasons":  ["4", "4T", "4P"]
+                                     }
+                                 ],
+                      "primaryColor":  "rgb(218, 165, 32)",
+                      "established":  2026,
+                      "allPros":  0,
+                      "mvps":  0,
+                      "accolades":  [],
+                      "seasons":  [
+
+                                  ]
+                  },
+                  {
+                      "id":  "targon-titans",
+                      "name":  "Targon Titans",
+                      "formerName":  "Gets On Base",
+                      "tricode":  "TAR",
+                      "images":  [
+                                     {
+                                         "name":  "TAR_4.svg",
+                                         "date":  "2026-02-12 - Present",
+                                         "seasons":  ["4", "4T", "4P"]
+                                     },
+                                     {
+                                         "name":  "Targon_Titans_Logo.png",
+                                         "date":  "2025-02-01 - 2026-02-11",
+                                         "seasons":  ["3", "3T", "3P"]
+                                     },
+                                     {
+                                         "name":  "Gets On Base Logo.svg",
+                                         "date":  "2024-01-07 - 2025-01-31",
+                                         "seasons":  ["2", "2T", "2P"]
+                                     }
+                                 ],
+                      "primaryColor":  "rgb(128, 0, 128)",
+                      "established":  2024,
+                      "allPros":  2,
+                      "mvps":  1,
+                      "accolades":  [
+                                       { "title": "Season 3 Champions", "season": 3 }
+                                   ],
+                      "seasons":  [
+                                      {
+                                          "season":  2,
+                                          "history":  "GOB made it clear from the start that they weren\u0027t here to try and win the league, they just wanted to get on base.  A team with a small ball attitude, they struggled out of the gate, finding scheduling to be a major concern they had to add Rizz and Gator to the team in order to ensure their matches got played.  Chaffles top lane Kennen instantly earned respect as one of the only bright spots on this roster early on and the feeling was that Chaffles this year was going to have a year very similar to Cerelius on DK in season 1.  About half way through the season things started to click.  Boxy popped in a few great games in the jungle, bringing out an especially dominant volibear game.  Rizz had a league leading single game kill record of 20 Kills on Miss Fortune, and Gator tossed his name in the ring for best engage support, honing in on Braum, Leona, and Rell as his big 3.  Clone\u0027s Hwei became a necessary pick/ban and created many angles for the team and they went on a Cinderella late season run, finishing with 4 wins in a row to end 5-7.  Their playoff match against DK was one to remember as game one was lost to a few bad positioning errors, but they swapped to Shen top and Rell support and that duo went on to win them the series.  In the Semi finals against LOL they used the same composition with Shen and Rell and won another game, but after draft one the trick was up, and League of Liquor turned things around quickly to knock them out 2-1."
+                                      },
+                                      {
+                                          "season":  3,
+                                          "history":  "Targon went with Veteran top lane talent Chaffles and Rookie Krispy in their draft, filling out the roster with Rookies Minty and Oreganen.  A team most analysts had 3rd definitely had struggles throughout the year.  Losing key games to Freljord, Noxus, Zaun, and Demacia, they looked susceptible to coordination and consistency would be a key factor for this lineup.  With Matt struggling on Bandle City, Chaffles had a clear and decisive season as Top Dog.  Aztec\u0027s Skarner was heavily nerfed throughout the season which led to varying performances as the jungler was seeking a replacement pick.  Minty struggled heavily until supportive picks like Lux, Seraphine, Karma, Galio allowed them to contribute meaningful impact, at times being the primary carry in some key victories.  Krispy was a jack of all trades, but hypercarries such as Zeri, Jinx, Vayne were the bread and butter of their most dominant moments.  Oreganen looked to synergize with his Carry, supplying a variety of playstyles including Engage Rakan, Damage Velkoz, Enchanter Taric and many others throughout the season.  Losing some key matches in the regular season meant that Targon would begin their playoff campaign in the Quarter Finals.  Facing off into Bandle City, the emphasis was on their solo-laners to hold strong and let their team synergy take over in the mid to late game.  After a shocking play at the end of Game 1, Targon stabilized and won 3 in a row, ending 3-1.  Meeting Noxus in the Semi Finals was primed to be the best matchup of the playoffs, with many analysts predicting it would go all 5.  Game 1 again went against Targon, with Noxus surprising everyone with a role swap in Mid/Jungle.  Game 2 however, just like in the Quarters, Targon found their stride.  From there they soundly pushed through the Gladiators to win 3-1 and punch their ticket into the Finals.  Zaun were the Favorites, but Targon was the only team to take a game against them all year.  Every lane had an all pro player in it and these two teams were set to Clash in an epic battle for the crown.  Targon proved not only to themselves but to the world that Diamonds are formed from pressure, as in all 3 games they went down in gold in the early game.  3 straight games in a row they fought back with vengeance against their oppressors to find victory.  Chaffles had incredible consistency into Orcas all series long, Aztec stymied every play the Plague made and had gorgeous neutral objective control. Minty found 3 straight different matchups where he was able to neutralize Spike, Krispy and Oreganen bought time and played for item spikes and didn\u0027t over step in key moments to perform up to the pressure.  All 5 players had an incredible series and while Krispy won the Season 3 Finals MVP, without the performances of all 5 members, the Titans would not have surmounted the summit of victory.  The Targon Titans are the LCC Season 3 Champions."
+                                      }
+                                  ]
+                  },
+                  {
+                      "id":  "zaun-plague",
+                      "name":  "Zaun Plague",
+                      "formerName":  "Discord Kittens",
+                      "tricode":  "ZAP",
+                      "images":  [
+                                     {
+                                         "name":  "ZAP_4.svg",
+                                         "date":  "2026-02-12 - Present",
+                                         "seasons":  ["4", "4T", "4P"]
+                                     },
+                                     {
+                                         "name":  "Zaun_Plague.png",
+                                         "date":  "2025-02-01 - 2026-02-11",
+                                         "seasons":  ["3", "3T", "3P"]
+                                     },
+                                     {
+                                         "name":  "Discord Kittens Logo.svg",
+                                         "date":  "2024-01-07 - 2025-01-31",
+                                         "seasons":  ["2", "2T", "2P"]
+                                     },
+                                     {
+                                         "name":  "DK_1.png",
+                                         "date":  "2022-02-04 - 2024-01-06",
+                                         "seasons":  ["1", "1T", "1P"]
+                                     }
+                                 ],
+                      "primaryColor":  "rgb(0, 162, 0)",
+                      "established":  2022,
+                      "allPros":  6,
+                      "mvps":  1,
+                      "accolades":  [
+                                   ],
+                      "seasons":  [
+                                      {
+                                          "season":  1,
+                                          "history":  "Discord Kittens was a group of players that wanted to compete, but truthfully had almost never played the game.  They ended up never playing with their intended mid laner and having to emergency replace them with Cerelius at the last minute.  Marki Milkers in the top lane was account level 16 when the tournament started and only owned 19 champions.  Wannabe was the TO and Jungler, Savage played Carry, and A Female was their support.  A Female had a few good Zyra games and Cerelius held a huge lane advantage in almost every game but ultimately they just lacked game experience to pull off a victory.  Their closest match came against HPZ in a 0-4 vs 0-4 battle of redemption, and while they genuinely almost pulled off the win, Daal and HPZ had other plans as a masterful catch in the jungle ended their season winless.  DK ended 0-5 and the general sentiment was that we might not see many of the team return for Season 2."
+                                      },
+                                      {
+                                          "season":  2,
+                                          "history":  "DK was fully revamped, a new top laner and Cerelius being drafted 3rd overall meant that all 5 players would be completely new to the org.  Psychotik was just returning from a trip to Japan and hadn\u0027t had time to prepare, and with the final pick in the snake draft having to pick back to back meant extra pressure.  Bug had moved to the jungle, Simon was coming off a finals appearance, Miso arrived with a name change and role swap, and Jags was support.  DK eventually added a British Superstar (Bezza) to the roster.  DK\u0027s 6-Man team found themselves middle of the pack, picking up wins against HPZ and MAA but also dropping games to TB and both of the LOL matches.  Sitting at 5-5 before the SGI forfeits promoted them to 7-5, they were exactly average.  DK found themselves the 4th seed in the playoffs and battling against a GOB that they had 2-0\u0027d early in the season.  They made the controversial decision to play all 6 of their players to ensure everyone got a taste of the playoffs, and in the end their flip-flopping cost them consistency and they fell to GOB 1-2."
+                                      },
+                                      {
+                                          "season":  3,
+                                          "history":  "Plague left the draft with 3 rookies and 2 all pro 2nd team players, already looking like a contender line up.  With a quick 2-0 to start the season it looked like nothing would topple them but then due to some out of game issues a swap was made.  Whisper, another highly touted jungler from Season 2 was brought in to cover the gap and the Plague went on to sweep the first round robin.  Week 6 would foreshadow their year as a resounding stomp from Targon brought down the top dogs.  Winning out the rest of the season, the Plague sat at 9-1, top of the standings in nearly every category.  RSexy and Jags combined to create the most powerful bot duo in league history, and solo-laners Orcas and Spike played consistent in the lane phases as well as late game macro to make it a roster of super stars.  All 5 players were voted onto the all pro line up and with a bye to the Semi\u0027s, they swept their opponents Demacia in 3-0 fashion, awaiting the winner of Targon vs Noxus.  In all 3 games, Zaun was able to find substantial gold leads in the lane phase, a motif from the regular season.  This time however Targon found the cure, their midgame was superior and teamfighting brought them back into every game.  Targon upset the Plague 3-0 in the finals and the Zaun Plague, who were 12-1 going into the finals, tasted resounding defeat for the first time all year right when it hurt the most."
+                                      }
+                                  ]
+                  }
+              ]
 }

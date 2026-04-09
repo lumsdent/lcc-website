@@ -41,8 +41,18 @@ const router = createRouter({
     },
     {
       path: '/stats',
+      name: 'statsOverview',
+      component: () => import('../views/StatsOverviewView.vue')
+    },
+    {
+      path: '/stats/player',
       name: 'stats',
       component: () => import('../views/StatsView.vue')
+    },
+    {
+      path: '/stats/champion',
+      name: 'championStats',
+      component: () => import('../views/ChampionStatsView.vue')
     },
     {
       path: '/players/:puuid',
@@ -70,6 +80,31 @@ const router = createRouter({
       path: '/patchnotes',
       name: 'patchnotes',
       component: () => import('../views/PatchNotesView.vue')
+    },
+    {
+      path: '/practice',
+      name: 'practice',
+      component: () => import('../views/PracticeView.vue')
+    },
+    {
+      path: '/tournament',
+      name: 'tournament',
+      component: () => import('../views/TournamentView.vue')
+    },
+    {
+      path: '/art',
+      name: 'art',
+      component: () => import('../views/ArtGalleryView.vue')
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../views/DashboardView.vue')
+    },
+    {
+      path: '/claim-profile',
+      name: 'claimProfile',
+      component: () => import('../views/ClaimProfileView.vue')
     },
   ],
   scrollBehavior(to, from, savedPosition) {

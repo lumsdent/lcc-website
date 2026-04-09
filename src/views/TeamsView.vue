@@ -47,21 +47,20 @@
         <div class="p-5 flex flex-col items-center text-center">
           <!-- Team Logo -->
           <div class="w-24 h-24 mb-4 flex items-center justify-center">
-            <img
-              v-if="team.images && team.images.length"
-              :src="getTeamImage(team.images[0].name)"
-              :alt="team.name"
+            <TeamLogo
+              :teamName="team.displayName"
+              :season="seasonFilter"
               class="w-full h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-200"
             />
           </div>
 
           <!-- Team Name -->
           <h2 class="text-white font-bold text-base leading-tight mb-1 group-hover:text-blue-300 transition-colors">
-            {{ team.name }}
+            {{ team.displayName }}
           </h2>
 
-          <!-- Former Name -->
-          <p v-if="team.formerName" class="text-gray-500 text-xs mb-2">
+          <!-- Former Name — only shown when the card is using the current name -->
+          <p v-if="team.formerName && team.displayName === team.name" class="text-gray-500 text-xs mb-2">
             fmr. {{ team.formerName }}
           </p>
 
@@ -99,7 +98,7 @@
     </div>
 
     <!-- Admin Actions -->
-    <div class="flex justify-end mt-8 gap-3">
+    <div v-if="authStore.isAdmin" class="flex justify-end mt-8 gap-3">
       <button
         @click="openAssignPlayerModal(null, '')"
         class="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
@@ -135,7 +134,7 @@
         <label class="block text-sm font-medium text-gray-400 mb-1">Team</label>
         <select v-model="selectedTeam" class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white">
           <option value="">Select a team</option>
-          <option v-for="team in allTeams" :key="team.id" :value="{ team_name: team.name }">{{ team.name }}</option>
+          <option v-for="team in teamsForSelectedSeason" :key="team.team_name" :value="{ team_name: team.team_name }">{{ team.team_name }}</option>
         </select>
 
         <!-- Role selector -->
@@ -153,9 +152,6 @@
             {{ player.profile.name }}
           </option>
         </select>
-
-        <label class="block text-sm font-medium text-gray-400 mb-1">Password</label>
-        <input class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white" type="password" v-model="password" placeholder="Enter password" />
 
         <div class="flex justify-end gap-2">
           <button @click="closeAssignModal" class="px-4 py-2 border border-gray-600 rounded-lg text-gray-300 hover:bg-gray-700">Cancel</button>
@@ -191,9 +187,6 @@
           </div>
         </div>
 
-        <label class="block text-sm font-medium text-gray-400 mb-1">Password</label>
-        <input class="w-full p-2 bg-gray-700 border border-gray-600 rounded-md mb-4 text-white" type="password" v-model="password" placeholder="Enter password" />
-
         <div class="flex justify-end gap-2">
           <button @click="closeAddTeamModal" class="px-4 py-2 border border-gray-600 rounded-lg text-gray-300 hover:bg-gray-700">Cancel</button>
           <button @click="addTeam" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg">Add Team</button>
@@ -205,29 +198,70 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import axios from 'axios'
 import { SEASONS } from '@/config.js'
+import { useAuthStore } from '@/stores/auth.js'
 import teamsDataJson from '@/data/teamsData.json'
+import TeamLogo from '@/components/TeamLogo.vue'
 
 export default {
   name: 'TeamsView',
+  components: { TeamLogo },
   setup() {
+    const authStore = useAuthStore()
     const roles = ['TOP', 'JUNGLE', 'MID', 'BOT', 'SUPPORT']
-    const allTeams = teamsDataJson.teams
+    const staticTeams = teamsDataJson.teams
+
+    // API-fetched roster data: maps team_name -> sorted array of season numbers
+    const apiTeamRosters = ref({})
+
+    // Merge API roster seasons into static team data so season badges and
+    // filtering reflect the actual rosters in the database, not only what
+    // is stored in the local JSON.  Season values are normalised to strings
+    // here so comparisons downstream never need String() wrappers.
+    // Each season entry is tagged with the name the team used that season
+    // (former name or current name) since the API stores them separately.
+    const allTeams = computed(() => {
+      return staticTeams.map(team => {
+        const currentApiSeasons = apiTeamRosters.value[team.name]
+        const formerApiSeasons = team.formerName ? apiTeamRosters.value[team.formerName] : undefined
+
+        let seasons
+        if (currentApiSeasons !== undefined || formerApiSeasons !== undefined) {
+          const current = (currentApiSeasons || []).map(s => ({ season: String(s), nameUsed: team.name }))
+          const former = (formerApiSeasons || []).map(s => ({ season: String(s), nameUsed: team.formerName }))
+          seasons = [...former, ...current].sort((a, b) =>
+            a.season.localeCompare(b.season, undefined, { numeric: true })
+          )
+        } else {
+          seasons = team.seasons.map(s => ({ ...s, season: String(s.season), nameUsed: team.name }))
+        }
+
+        return { ...team, seasons }
+      })
+    })
 
     // Season filter for the view (null = all)
     const seasonFilter = ref(null)
 
-    // Static list of unique season numbers from teamsData (plain array, not computed)
-    const availableSeasonNumbers = [
-      ...new Set(allTeams.flatMap(t => t.seasons.map(s => Number(s.season))))
-    ].sort((a, b) => a - b)
+    // Derived from the merged (API-aware) team list
+    const availableSeasonNumbers = computed(() => [
+      ...new Set(allTeams.value.flatMap(t => t.seasons.map(s => s.season)))
+    ].sort((a, b) => a.localeCompare(b, undefined, { numeric: true })))
 
-    // Filtered team list
+    // Filtered team list — also sets displayName to the name used that season
     const filteredTeams = computed(() => {
-      if (seasonFilter.value === null) return allTeams
-      return allTeams.filter(t => t.seasons.some(s => Number(s.season) === seasonFilter.value))
+      const teams = seasonFilter.value === null
+        ? allTeams.value
+        : allTeams.value.filter(t => t.seasons.some(s => s.season === seasonFilter.value))
+
+      return teams.map(t => {
+        const seasonEntry = seasonFilter.value !== null
+          ? t.seasons.find(s => s.season === seasonFilter.value)
+          : null
+        return { ...t, displayName: seasonEntry?.nameUsed ?? t.name }
+      })
     })
 
     // Admin state
@@ -238,9 +272,7 @@ export default {
     const selectedPlayer = ref('')
     const availablePlayers = ref([])
     const selectedSeason = ref('4')
-    const isError = ref(false)
-    const responseMessage = ref('')
-    const password = ref('')
+    const teamsForSelectedSeason = ref([])
     const newTeamName = ref('')
     const teamImages = ref([])
     const selectedImage = ref('')
@@ -249,9 +281,22 @@ export default {
       return new URL(`../assets/teams/${imageName}`, import.meta.url).href
     }
 
-    onMounted(() => {
+    onMounted(async () => {
       const images = import.meta.glob('../assets/teams/*')
       teamImages.value = Object.keys(images).map(path => path.split('/').pop())
+
+      // Fetch authoritative roster data from the API so season badges and
+      // filters reflect what is actually stored in the database.
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/teams/all`)
+        const rosterMap = {}
+        for (const apiTeam of response.data) {
+          rosterMap[apiTeam.team_name] = Object.keys(apiTeam.rosters || {}).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+        }
+        apiTeamRosters.value = rosterMap
+      } catch (error) {
+        console.error('Error fetching team rosters from API:', error)
+      }
     })
 
     const openAssignPlayerModal = (team, role) => {
@@ -259,6 +304,7 @@ export default {
       selectedRole.value = role
       isAssignModalOpen.value = true
       fetchAvailablePlayers()
+      fetchTeamsForSeason(selectedSeason.value)
     }
 
     const closeAssignModal = () => {
@@ -266,7 +312,6 @@ export default {
       selectedTeam.value = null
       selectedRole.value = ''
       selectedPlayer.value = ''
-      password.value = ''
     }
 
     const assignPlayer = async () => {
@@ -277,8 +322,7 @@ export default {
           role: selectedRole.value,
           player: { puuid: selectedPlayer.value.profile.puuid, name: selectedPlayer.value.profile.name },
           season: selectedSeason.value,
-          password: password.value
-        })
+        }, { withCredentials: true })
         closeAssignModal()
       } catch (error) {
         console.error('Error assigning player:', error)
@@ -293,22 +337,16 @@ export default {
       isAddTeamModalOpen.value = false
       newTeamName.value = ''
       selectedImage.value = ''
-      password.value = ''
     }
 
     const addTeam = async () => {
       try {
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/teams/${selectedSeason.value}/add`, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/teams/${selectedSeason.value}/add`, {
           teamName: newTeamName.value,
           image: selectedImage.value,
-          password: password.value
-        })
-        isError.value = false
-        responseMessage.value = response.data.message
+        }, { withCredentials: true })
       } catch (error) {
         console.error(error)
-        isError.value = true
-        responseMessage.value = 'An error occurred. Please try again.'
       }
       closeAddTeamModal()
     }
@@ -316,11 +354,29 @@ export default {
     const fetchAvailablePlayers = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/players`)
-        availablePlayers.value = response.data.filter(p => p.profile.is_active)
+        availablePlayers.value = response.data
+          .sort((a, b) => a.profile.name.localeCompare(b.profile.name))
       } catch (error) {
         console.error('Error fetching available players:', error)
       }
     }
+
+    const fetchTeamsForSeason = async (season) => {
+      if (!season) return
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/teams/${season}`)
+        teamsForSelectedSeason.value = response.data
+      } catch (error) {
+        console.error('Error fetching teams for season:', error)
+        teamsForSelectedSeason.value = []
+      }
+    }
+
+    watch(selectedSeason, (newSeason) => {
+      // Reset selected team whenever the season changes so a stale value isn't submitted
+      selectedTeam.value = null
+      fetchTeamsForSeason(newSeason)
+    })
 
     return {
       roles,
@@ -334,11 +390,11 @@ export default {
       selectedSeason,
       selectedPlayer,
       availablePlayers,
+      teamsForSelectedSeason,
       openAssignPlayerModal,
       closeAssignModal,
       assignPlayer,
       getTeamImage,
-      password,
       openAddTeamModal,
       closeAddTeamModal,
       isAddTeamModalOpen,
@@ -347,6 +403,7 @@ export default {
       teamImages,
       selectedImage,
       seasons: SEASONS,
+      authStore,
     }
   }
 }

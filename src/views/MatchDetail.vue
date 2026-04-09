@@ -28,7 +28,12 @@
             <div v-for="(team, i) in match.info.teams" :key="'banner-'+i"
                 class="flex flex-col items-center flex-1 min-w-0"
                 :class="i === 1 ? 'order-last' : ''">
-                <img :src="getTeamLogo(team.name)" class="w-20 h-20 object-contain mb-2 rounded-xl" :alt="team.name" />
+                <TeamLogo
+                  :teamName="team.name"
+                  :gameDate="match.info.gameCreation"
+                  rounded="rounded-xl"
+                  class="w-20 h-20 object-contain mb-2"
+                />
                 <span class="hidden sm:block text-base font-bold text-white text-center truncate w-full px-1">{{ team.name }}</span>
                 <span class="sm:hidden text-base font-bold text-white text-center">{{ getTeamTricode(team.name) }}</span>
                 <span class="text-sm font-bold mt-0.5" :class="team.gameOutcome ? 'text-green-400' : 'text-red-400'">{{ team.gameOutcome ? 'VICTORY' : 'DEFEAT' }}</span>
@@ -250,26 +255,19 @@
             </iframe>
             <div v-else class="w-full max-w-md rounded-lg bg-gray-800 border border-gray-700 p-6">
                 <p class="text-gray-400 text-sm text-center mb-4">No VOD available for this match.</p>
-                <div v-if="!showVodForm" class="flex justify-center">
+                <div v-if="authStore.isAdmin && !showVodForm" class="flex justify-center">
                     <button @click="showVodForm = true" class="flex items-center gap-2 px-3 py-1.5 text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-md transition-colors border border-gray-600">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
-                        Admin: Add VOD
+                        Add VOD
                     </button>
                 </div>
-                <form v-else @submit.prevent="submitVod" class="flex flex-col gap-3">
+                <form v-if="authStore.isAdmin && showVodForm" @submit.prevent="submitVod" class="flex flex-col gap-3">
                     <input
                         v-model="vodUrl"
                         type="url"
                         placeholder="https://www.youtube.com/embed/..."
-                        class="w-full px-3 py-2 text-sm bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:border-logo-blue"
-                        required
-                    />
-                    <input
-                        v-model="vodPassword"
-                        type="password"
-                        placeholder="Admin password"
                         class="w-full px-3 py-2 text-sm bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:border-logo-blue"
                         required
                     />
@@ -293,17 +291,21 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ChampionIcon from '@/components/ChampionIcon.vue';
+import TeamLogo from '@/components/TeamLogo.vue';
 import axios from 'axios'
 import { DDRAGON_URL } from '@/config.js';
 import teamsData from '@/data/teamsData.json';
+import { useAuthStore } from '@/stores/auth.js';
 
 export default {
     name: 'MatchDetail',
     components: {
-        ChampionIcon
+        ChampionIcon,
+        TeamLogo
     },
     setup() {
         const route = useRoute()
+        const authStore = useAuthStore()
         const matchId = ref(route.params.matchId.replace(/^NA1_/, ''))
         const match = ref(null)
         const fromPlayer = route.query.from === 'player'
@@ -333,7 +335,6 @@ export default {
 
         const showVodForm = ref(false)
         const vodUrl = ref('')
-        const vodPassword = ref('')
         const vodSubmitting = ref(false)
         const vodMessage = ref('')
         const vodError = ref(false)
@@ -345,7 +346,8 @@ export default {
             try {
                 await axios.patch(
                     `${import.meta.env.VITE_API_URL}/matches/${matchId.value}/vod`,
-                    { vod: vodUrl.value, password: vodPassword.value }
+                    { vod: vodUrl.value },
+                    { withCredentials: true }
                 )
                 match.value.info.vod = vodUrl.value
                 vodMessage.value = 'VOD saved!'
@@ -355,7 +357,6 @@ export default {
                 vodMessage.value = e.response?.data?.message ?? 'Failed to save VOD.'
             } finally {
                 vodSubmitting.value = false
-                vodPassword.value = ''
             }
         }
 
@@ -368,37 +369,11 @@ export default {
             return team?.tricode ?? teamName
         }
 
-        const getTeamLogo = (teamName) => {            const teamLogos = {
-                'Bandle City Buckaroos': 'Bandle_City_Buckaroos.png',
-                'Bilgewater Bullets': '/Bilgewater_Bullets_Logo.png',
-                'Demacian Justice': 'Demacian_Justice_Logo.png',
-                'Freljord Frost': 'Frejlord_Frost_Logo.png',
-                'Noxian Gladiators': 'Noxian_Gladiators_Logo.png',
-                'Piltover Progress': 'Piltover_Progress_Logo.png',
-                'Shurima Scorch': 'Shuriman_Scorch_Logo.png',
-                'Targon Titans': 'Targon_Titans_Logo.png',
-                'Zaun Plague': 'Zaun_Plague.png',
-                'Discord Kittens': 'Discord Kittens Logo.svg',
-                'Gets On Base': 'Gets On Base Logo.svg',
-                'League of Liquor': 'League of Liquor Logo.svg',
-                "Matt's Alt Accounts": 'M.A.A. Logo.svg',
-                'S.G.I.': 'S.G.I. Logo.svg',
-                'Team Bell': 'Team Bell Logo.svg',
-                'Team Hospitalized': 'Team Hospitalized Logo.svg',
-            }
-            try {
-                return new URL(`../assets/teams/${teamLogos[teamName]}`, import.meta.url).href
-            } catch {
-                return ''
-            }
-        }
-
         return {
             matchId,
             match,
             DDRAGON_URL,
             getItemImageUrl,
-            getTeamLogo,
             getTeamTricode,
             fromPlayer,
             fromPuuid,
@@ -406,9 +381,9 @@ export default {
             fromTeam,
             fromTeamId,
             fromTeamName,
+            authStore,
             showVodForm,
             vodUrl,
-            vodPassword,
             vodSubmitting,
             vodMessage,
             vodError,

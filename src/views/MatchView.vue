@@ -117,10 +117,11 @@
         <div class="flex items-center justify-between px-3 py-2 gap-2">
           <!-- Team 1 -->
           <div class="flex flex-col items-center flex-1 min-w-0">
-            <img
-              :src="getTeamLogo(match.info.teams[0].name)"
-              class="w-14 h-14 object-contain rounded-xl mb-1"
-              :alt="match.info.teams[0].name"
+            <TeamLogo
+              :teamName="match.info.teams[0].name"
+              :gameDate="match.info.gameCreation"
+              rounded="rounded-xl"
+              class="w-14 h-14 object-contain mb-1"
             />
             <span class="hidden sm:block text-xs font-semibold text-white text-center truncate w-full">{{ match.info.teams[0].name }}</span>
             <span class="sm:hidden text-xs font-bold text-white">{{ getTeamTricode(match.info.teams[0].name) }}</span>
@@ -137,10 +138,11 @@
 
           <!-- Team 2 -->
           <div class="flex flex-col items-center flex-1 min-w-0">
-            <img
-              :src="getTeamLogo(match.info.teams[1].name)"
-              class="w-14 h-14 object-contain rounded-xl mb-1"
-              :alt="match.info.teams[1].name"
+            <TeamLogo
+              :teamName="match.info.teams[1].name"
+              :gameDate="match.info.gameCreation"
+              rounded="rounded-xl"
+              class="w-14 h-14 object-contain mb-1"
             />
             <span class="hidden sm:block text-xs font-semibold text-white text-center truncate w-full">{{ match.info.teams[1].name }}</span>
             <span class="sm:hidden text-xs font-bold text-white">{{ getTeamTricode(match.info.teams[1].name) }}</span>
@@ -181,9 +183,11 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import teamsData from '@/data/teamsData.json'
+import TeamLogo from '@/components/TeamLogo.vue'
 
 export default {
   name: 'MatchView',
+  components: { TeamLogo },
   setup() {
     const router = useRouter()
     const matches = ref([])
@@ -217,32 +221,6 @@ export default {
       const minutes = Math.floor(seconds / 60)
       const secs = seconds % 60
       return `${minutes}:${secs.toString().padStart(2, '0')}`
-    }
-
-    const getTeamLogo = (teamName) => {
-      const teamLogos = {
-        'Bandle City Buckaroos': 'Bandle_City_Buckaroos.png',
-        'Bilgewater Bullets': '/Bilgewater_Bullets_Logo.png',
-        'Demacian Justice': 'Demacian_Justice_Logo.png',
-        'Freljord Frost': 'Frejlord_Frost_Logo.png',
-        'Noxian Gladiators': 'Noxian_Gladiators_Logo.png',
-        'Piltover Progress': 'Piltover_Progress_Logo.png',
-        'Shurima Scorch': 'Shuriman_Scorch_Logo.png',
-        'Targon Titans': 'Targon_Titans_Logo.png',
-        'Zaun Plague': 'Zaun_Plague.png',
-        'Discord Kittens': 'Discord Kittens Logo.svg',
-        'Gets On Base': 'Gets On Base Logo.svg',
-        'League of Liquor': 'League of Liquor Logo.svg',
-        "Matt's Alt Accounts": 'M.A.A. Logo.svg',
-        'S.G.I.': 'S.G.I. Logo.svg',
-        'Team Bell': 'Team Bell Logo.svg',
-        'Team Hospitalized': 'Team Hospitalized Logo.svg',
-      }
-      try {
-        return new URL(`../assets/teams/${teamLogos[teamName]}`, import.meta.url).href
-      } catch {
-        return ''
-      }
     }
 
     const getTeamTricode = (teamName) => {
@@ -330,7 +308,6 @@ export default {
       clearFilters,
       formatDate,
       formatDuration,
-      getTeamLogo,
       getTeamTricode,
       navigateToMatch
     }
