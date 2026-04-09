@@ -255,7 +255,7 @@
             </iframe>
             <div v-else class="w-full max-w-md rounded-lg bg-gray-800 border border-gray-700 p-6">
                 <p class="text-gray-400 text-sm text-center mb-4">No VOD available for this match.</p>
-                <div v-if="authStore.isAdmin && !showVodForm" class="flex justify-center">
+                <div v-if="!showVodForm" class="flex justify-center">
                     <button @click="showVodForm = true" class="flex items-center gap-2 px-3 py-1.5 text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-md transition-colors border border-gray-600">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -263,7 +263,7 @@
                         Add VOD
                     </button>
                 </div>
-                <form v-if="authStore.isAdmin && showVodForm" @submit.prevent="submitVod" class="flex flex-col gap-3">
+                <form v-if="showVodForm" @submit.prevent="submitVod" class="flex flex-col gap-3">
                     <input
                         v-model="vodUrl"
                         type="url"
@@ -295,7 +295,7 @@ import TeamLogo from '@/components/TeamLogo.vue';
 import axios from 'axios'
 import { DDRAGON_URL } from '@/config.js';
 import teamsData from '@/data/teamsData.json';
-import { useAuthStore } from '@/stores/auth.js';
+
 
 export default {
     name: 'MatchDetail',
@@ -305,7 +305,7 @@ export default {
     },
     setup() {
         const route = useRoute()
-        const authStore = useAuthStore()
+
         const matchId = ref(route.params.matchId.replace(/^NA1_/, ''))
         const match = ref(null)
         const fromPlayer = route.query.from === 'player'
@@ -381,7 +381,6 @@ export default {
             fromTeam,
             fromTeamId,
             fromTeamName,
-            authStore,
             showVodForm,
             vodUrl,
             vodSubmitting,

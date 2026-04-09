@@ -1,6 +1,5 @@
 <template>
   <button
-    @click="authStore.login()"
     class="flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition-colors border border-indigo-500"
   >
     <!-- Discord mark -->
@@ -12,11 +11,7 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/auth'
 export default {
   name: 'LoginButton',
-  setup() {
-    return { authStore: useAuthStore() }
-  }
 }
 </script>

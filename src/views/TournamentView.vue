@@ -9,19 +9,10 @@
 
     <!-- Admin auth banner -->
     <div class="bg-gray-800 border border-gray-700 rounded-xl p-4 mb-6 flex items-center gap-3">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 flex-shrink-0" :class="authStore.isAdmin ? 'text-green-400' : 'text-yellow-400'" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
       </svg>
-      <template v-if="authStore.isAdmin">
-        <span class="text-sm text-green-300 font-semibold flex-shrink-0">✓ Signed in as Admin</span>
-        <span class="text-xs text-gray-500">No password required</span>
-      </template>
-      <template v-else>
-        <label class="text-sm text-gray-300 flex-shrink-0">Admin Password</label>
-        <input type="password" v-model="adminPassword" placeholder="Required for all write actions"
-          class="flex-1 bg-gray-900 border border-gray-600 rounded-lg px-3 py-1.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500" />
-        <span v-if="adminPassword" class="text-xs text-yellow-400 flex-shrink-0">● active</span>
-      </template>
+      <span class="text-sm text-green-300 font-semibold flex-shrink-0">&#10003; Admin access enabled</span>
     </div>
 
     <ResponseBox v-if="responseMessage" :message="responseMessage" :isSuccess="isSuccess" class="mb-6" />
@@ -246,7 +237,6 @@
 import axios from 'axios'
 import { ref, reactive, computed } from 'vue'
 import ResponseBox from '@/components/ResponseBox.vue'
-import { useAuthStore } from '@/stores/auth'
 
 const API = () => import.meta.env.VITE_API_URL
 
@@ -258,9 +248,7 @@ export default {
   name: 'TournamentView',
   components: { ResponseBox },
   setup() {
-    const authStore         = useAuthStore()
-    const adminPassword     = ref('')
-    const isAuthorized      = computed(() => authStore.isAdmin || !!adminPassword.value)
+    const isAuthorized      = true
     const responseMessage   = ref('')
     const isSuccess         = ref(false)
 
@@ -322,10 +310,9 @@ export default {
       registering.value = true
       try {
         const { data } = await axios.post(API() + '/tournament/provider/register', {
-          password: adminPassword.value,
           callbackUrl: registerForm.callbackUrl,
           region: registerForm.region,
-        }, { withCredentials: true })
+        })
         flash(data.message)
         await loadProvider()
       } catch (e) {
@@ -337,9 +324,8 @@ export default {
       creating.value = true
       try {
         const { data } = await axios.post(API() + '/tournament/create', {
-          password: adminPassword.value,
           name: newTournamentName.value.trim(),
-        }, { withCredentials: true })
+        })
         flash(data.message)
         newTournamentName.value = ''
         await loadTournaments()
@@ -360,8 +346,7 @@ export default {
       try {
         const { data } = await axios.post(
           API() + `/tournament/${selectedTournament.value.tournamentId}/codes`,
-          { password: adminPassword.value, ...codeForm },
-          { withCredentials: true }
+          { ...codeForm }
         )
         flash(data.message)
         Object.assign(codeForm, defaultCodeForm())
@@ -372,11 +357,9 @@ export default {
     }
 
     const deleteCode = async (c) => {
-      if (!isAuthorized.value) return flash('Sign in as admin or enter admin password first.', false)
+      if (!isAuthorized) return flash('Not authorized.', false)
       try {
-        await axios.delete(API() + `/tournament/codes/${encodeURIComponent(c.code)}`, {
-          data: { password: adminPassword.value }, withCredentials: true,
-        })
+        await axios.delete(API() + `/tournament/codes/${encodeURIComponent(c.code)}`)
         tournamentCodes.value = tournamentCodes.value.filter(x => x._id !== c._id)
         flash('Code removed.')
       } catch (e) {
@@ -395,7 +378,7 @@ export default {
     loadTournaments()
 
     return {
-      authStore, adminPassword, isAuthorized, responseMessage, isSuccess,
+      isAuthorized, responseMessage, isSuccess,
       provider, loadingProvider, registering, registerForm,
       tournaments, newTournamentName, creating,
       selectedTournament, tournamentCodes, loadingCodes,

@@ -34,7 +34,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function fetchMe() {
     loading.value = true
     try {
-      const { data } = await axios.get(API() + '/me/', { withCredentials: true })
+      const { data } = await axios.get(API() + '/me/')
       player.value = data
     } catch {
       player.value = null

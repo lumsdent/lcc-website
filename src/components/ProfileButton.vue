@@ -59,12 +59,10 @@
 
 <script>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useAuthStore } from '@/stores/auth'
 
 export default {
   name: 'ProfileButton',
   setup() {
-    const authStore = useAuthStore()
     const open = ref(false)
     const root = ref(null)
 
@@ -74,7 +72,7 @@ export default {
     onMounted(()   => document.addEventListener('mousedown', onClickOutside))
     onUnmounted(() => document.removeEventListener('mousedown', onClickOutside))
 
-    return { authStore, open, root }
+    return { open, root }
   }
 }
 </script>
