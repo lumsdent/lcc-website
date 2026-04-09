@@ -238,7 +238,7 @@
 import axios from 'axios'
 import { ref, watch, defineComponent, h, onMounted } from 'vue'
 import { SEASONS } from '@/config.js'
-import { useAuthStore } from '@/stores/auth'
+
 
 // ── Inline sub-components ─────────────────────────────────────────────────
 
@@ -351,7 +351,6 @@ export default {
 
   setup() {
     const API = import.meta.env.VITE_API_URL
-    const authStore = useAuthStore()
     const tabs = [
       { id: 'add',     label: 'Add Match'   },
       { id: 'refresh', label: 'Refresh'      },
@@ -385,7 +384,7 @@ export default {
           season:   add.value.season,
           blueTeam: add.value.blueTeam,
           redTeam:  add.value.redTeam,
-        }, { withCredentials: true })
+        })
         statusMsg.value = res.data.message; isError.value = false
         add.value = { matchId: '', season: '', blueTeam: '', redTeam: '' }
       } catch (e) {
@@ -400,7 +399,7 @@ export default {
     const submitRefresh = async () => {
       loading.value = true; statusMsg.value = ''; refreshErrors.value = []
       try {
-        const res = await axios.post(`${API}/matches/refresh`, {}, { withCredentials: true })
+        const res = await axios.post(`${API}/matches/refresh`, {})
         statusMsg.value = res.data.message; isError.value = false
         if (res.data.errors?.length) refreshErrors.value = res.data.errors
       } catch (e) {
@@ -470,7 +469,7 @@ export default {
           redTeamName:  manual.value.red.name,
           bluePlayers:  manual.value.blue.players,
           redPlayers:   manual.value.red.players,
-        }, { withCredentials: true })
+        })
         statusMsg.value = res.data.message; isError.value = false
       } catch (e) {
         statusMsg.value = e.response?.data?.message ?? 'Error creating match.'
@@ -522,7 +521,7 @@ export default {
         const res = await axios.patch(`${API}/matches/lcc/${mvp.value.matchIdLCC}/mvp`, {
           puuid:      selected.puuid,
           playerName: selected.name,
-        }, { withCredentials: true })
+        })
         statusMsg.value = res.data.message; isError.value = false
         mvp.value.currentMvp = selected.name
       } catch (e) {

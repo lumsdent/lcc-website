@@ -1,52 +1,12 @@
 <template>
   <div class="container mx-auto px-4 py-8 max-w-5xl">
 
-    <!-- Not logged in -->
-    <div v-if="!authStore.loading && !authStore.isLoggedIn"
-      class="flex flex-col items-center justify-center py-24 text-center">
-      <h2 class="text-2xl font-bold text-white mb-2">Sign in to view your dashboard</h2>
-      <p class="text-gray-400 text-sm mb-6">Connect your Discord account to access your personal stats.</p>
-      <LoginButton />
-    </div>
-
-    <!-- Loading -->
-    <div v-else-if="authStore.loading" class="flex justify-center py-24">
-      <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-    </div>
-
     <!-- Dashboard -->
-    <template v-else>
+    <template>
 
       <!-- Profile header -->
-      <div class="bg-gray-800 border border-gray-700 rounded-xl p-6 mb-6 flex items-center gap-5 flex-wrap">
-        <div class="relative">
-          <img v-if="authStore.avatarUrl" :src="authStore.avatarUrl" :alt="authStore.displayName"
-            class="w-20 h-20 rounded-full ring-2 ring-gray-600 object-cover" />
-          <div v-else class="w-20 h-20 rounded-full bg-indigo-700 flex items-center justify-center text-2xl font-bold text-white ring-2 ring-gray-600">
-            {{ authStore.displayName.charAt(0).toUpperCase() }}
-          </div>
-          <span v-if="authStore.isAdmin"
-            class="absolute -bottom-1 -right-1 text-xs font-bold px-1.5 py-0.5 rounded bg-yellow-600 text-yellow-100">
-            Admin
-          </span>
-        </div>
-        <div class="flex-1 min-w-0">
-          <h1 class="text-2xl font-bold text-white truncate">{{ authStore.displayName }}</h1>
-          <p v-if="player.profile?.primaryRole || player.profile?.primary_role" class="text-sm text-gray-400">
-            {{ player.profile.primaryRole || player.profile.primary_role }}
-            <template v-if="player.profile?.secondaryRole || player.profile?.secondary_role">
-              · {{ player.profile.secondaryRole || player.profile.secondary_role }}
-            </template>
-          </p>
-          <p v-if="player.profile?.bio" class="text-sm text-gray-500 mt-1 line-clamp-2">{{ player.profile.bio }}</p>
-          <div v-if="player.profile?.tag" class="mt-1">
-            <span class="text-xs text-gray-500 font-mono">{{ authStore.displayName }}#{{ player.profile.tag }}</span>
-          </div>
-        </div>
-        <RouterLink v-if="authStore.puuid" :to="`/players/${authStore.puuid}`"
-          class="px-4 py-2 text-sm bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors flex-shrink-0">
-          Full Profile →
-        </RouterLink>
+      <div class="bg-gray-800 border border-gray-700 rounded-xl p-6 mb-6">
+        <h1 class="text-2xl font-bold text-white">Admin Dashboard</h1>
       </div>
 
       <!-- Main grid -->
@@ -59,8 +19,7 @@
           <div class="bg-gray-800 border border-gray-700 rounded-xl p-4">
             <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Top Champions</h2>
             <div v-if="loadingStats" class="text-sm text-gray-500">Loading...</div>
-            <div v-else-if="!authStore.puuid" class="text-sm text-gray-500">No Riot account linked.</div>
-            <div v-else-if="!championStats.length" class="text-sm text-gray-500">No games played yet.</div>
+            <div v-else-if="!championStats.length" class="text-sm text-gray-500">No data available.</div>
             <ul v-else class="space-y-2">
               <li v-for="c in championStats.slice(0, 5)" :key="c.champion.name"
                 class="flex items-center gap-3">
@@ -109,7 +68,6 @@
             <div v-if="loadingMatches" class="p-8 flex justify-center">
               <div class="w-7 h-7 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
-            <div v-else-if="!authStore.puuid" class="p-6 text-sm text-gray-500">No Riot account linked.</div>
             <div v-else-if="!recentMatches.length" class="p-6 text-sm text-gray-500">No match history found.</div>
             <div v-else class="overflow-x-auto">
               <table class="w-full text-sm text-gray-300">
@@ -157,17 +115,13 @@
       </div>
 
       <!-- Admin panel -->
-      <div v-if="authStore.isAdmin" class="mt-6 bg-gray-800 border border-yellow-700/50 rounded-xl p-6">
+      <div class="mt-6 bg-gray-800 border border-yellow-700/50 rounded-xl p-6">
         <div class="flex items-center gap-3 mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
           <h2 class="text-lg font-bold text-yellow-300">Admin Panel</h2>
         </div>
-
-        <!-- Your Discord ID -->
-        <p class="text-xs text-gray-400 mb-1">Your Discord ID</p>
-        <p class="font-mono text-sm text-gray-300 mb-4">{{ player.discord?.id || '—' }}</p>
 
         <!-- Quick links -->
         <div class="flex flex-wrap gap-2 mb-5">
@@ -215,11 +169,9 @@
 
 <script>
 import axios from 'axios'
-import { ref, computed, watch, onMounted } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { DDRAGON_URL } from '@/config.js'
-import LoginButton from '@/components/LoginButton.vue'
+import { ref, onMounted } from 'vue'
 import ResponseBox from '@/components/ResponseBox.vue'
+import { DDRAGON_URL } from '@/config.js'
 
 const API = () => import.meta.env.VITE_API_URL
 
@@ -230,18 +182,14 @@ function resolveImg(url) {
 
 export default {
   name: 'DashboardView',
-  components: { LoginButton, ResponseBox },
+  components: { ResponseBox },
   setup() {
-    const authStore = useAuthStore()
-
-    const player         = computed(() => authStore.player || {})
-    const championStats  = ref([])
-    const recentMatches  = ref([])
-    const practiceEntries= ref([])
-    const loadingStats   = ref(false)
-    const loadingMatches = ref(false)
-    const loadingPractice= ref(false)
-
+    const championStats   = ref([])
+    const recentMatches   = ref([])
+    const practiceEntries = ref([])
+    const loadingStats    = ref(false)
+    const loadingMatches  = ref(false)
+    const loadingPractice = ref(false)
     const adminForm    = ref({ discordId: '' })
     const adminMessage = ref('')
     const adminSuccess = ref(false)
@@ -257,47 +205,12 @@ export default {
     }
 
     const loadPlayerData = async () => {
-      const puuid = authStore.puuid
-      const name  = authStore.displayName
-      if (!puuid && !name) return
-
-      if (authStore.isAdmin) {
-        try {
-          const { data } = await axios.get(API() + '/admin/players', { withCredentials: true })
-          adminPlayers.value = data.sort((a, b) =>
-            (a.profile?.name || '').localeCompare(b.profile?.name || '')
-          )
-        } catch { /* silent */ }
-      }
-
-      if (puuid) {
-        loadingStats.value   = true
-        loadingMatches.value = true
-        try {
-          const [statsRes, matchRes] = await Promise.all([
-            axios.get(API() + `/players/${puuid}/champion-stats`, { withCredentials: false }),
-            axios.get(API() + `/players/${puuid}/matches?per_page=8`, { withCredentials: false }),
-          ])
-          championStats.value = statsRes.data
-          recentMatches.value = matchRes.data.matches || []
-        } catch { /* silent */ }
-        finally {
-          loadingStats.value   = false
-          loadingMatches.value = false
-        }
-      }
-
-      if (name) {
-        loadingPractice.value = true
-        try {
-          const { data } = await axios.get(
-            API() + `/practice/?player=${encodeURIComponent(name)}&limit=10`,
-            { withCredentials: false }
-          )
-          practiceEntries.value = data
-        } catch { /* silent */ }
-        finally { loadingPractice.value = false }
-      }
+      try {
+        const { data } = await axios.get(API() + '/admin/players')
+        adminPlayers.value = data.sort((a, b) =>
+          (a.profile?.name || '').localeCompare(b.profile?.name || '')
+        )
+      } catch { /* silent */ }
     }
 
     const setAdmin = async (grant) => {
@@ -305,8 +218,7 @@ export default {
       try {
         const { data } = await axios.post(
           API() + (grant ? '/admin/set-admin' : '/admin/revoke-admin'),
-          { discordId: adminForm.value.discordId },
-          { withCredentials: true }
+          { discordId: adminForm.value.discordId }
         )
         adminMessage.value = data.message
         adminSuccess.value = true
@@ -317,17 +229,11 @@ export default {
       }
     }
 
-    // Load data once auth is resolved
-    watch(() => authStore.loading, (loading) => {
-      if (!loading && authStore.isLoggedIn) loadPlayerData()
-    })
-
-    onMounted(() => {
-      if (!authStore.loading && authStore.isLoggedIn) loadPlayerData()
-    })
+    // Load admin players on mount
+    onMounted(() => loadPlayerData())
 
     return {
-      authStore, player, championStats, recentMatches, practiceEntries,
+      championStats, recentMatches, practiceEntries,
       loadingStats, loadingMatches, loadingPractice,
       adminForm, adminMessage, adminSuccess, adminPlayers,
       winRate, kda, formatDate, setAdmin, resolveImg,

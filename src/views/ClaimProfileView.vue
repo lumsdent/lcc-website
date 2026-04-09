@@ -149,7 +149,6 @@
 <script>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
 import { DDRAGON_URL } from '@/config.js'
 import axios from 'axios'
 
@@ -174,7 +173,6 @@ export default {
   name: 'ClaimProfileView',
   setup() {
     const router    = useRouter()
-    const authStore = useAuthStore()
 
     const state    = ref('loading')   // loading | no-pending | select | confirm
     const pending  = ref(null)        // discord info from /claim-pending/
@@ -196,8 +194,8 @@ export default {
       const API = import.meta.env.VITE_API_URL
       try {
         const [pendingRes, unclaimedRes] = await Promise.all([
-          axios.get(API + '/claim-pending/', { withCredentials: true }),
-          axios.get(API + '/players/unclaimed', { withCredentials: true }),
+          axios.get(API + '/claim-pending/'),
+          axios.get(API + '/players/unclaimed'),
         ])
         pending.value = pendingRes.data
         players.value = unclaimedRes.data
@@ -224,10 +222,8 @@ export default {
       try {
         await axios.post(
           API + `/claim-profile/${selected.value.profile.puuid}/`,
-          {},
-          { withCredentials: true }
+          {}
         )
-        await authStore.fetchMe()
         router.push('/dashboard')
       } catch (err) {
         errorMsg.value = err.response?.data?.message || 'Something went wrong. Please try again.'

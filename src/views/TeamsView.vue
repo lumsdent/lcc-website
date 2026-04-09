@@ -98,7 +98,7 @@
     </div>
 
     <!-- Admin Actions -->
-    <div v-if="authStore.isAdmin" class="flex justify-end mt-8 gap-3">
+    <div class="flex justify-end mt-8 gap-3">
       <button
         @click="openAssignPlayerModal(null, '')"
         class="flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
@@ -201,7 +201,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import axios from 'axios'
 import { SEASONS } from '@/config.js'
-import { useAuthStore } from '@/stores/auth.js'
+
 import teamsDataJson from '@/data/teamsData.json'
 import TeamLogo from '@/components/TeamLogo.vue'
 
@@ -209,7 +209,6 @@ export default {
   name: 'TeamsView',
   components: { TeamLogo },
   setup() {
-    const authStore = useAuthStore()
     const roles = ['TOP', 'JUNGLE', 'MID', 'BOT', 'SUPPORT']
     const staticTeams = teamsDataJson.teams
 
@@ -403,7 +402,6 @@ export default {
       teamImages,
       selectedImage,
       seasons: SEASONS,
-      authStore,
     }
   }
 }

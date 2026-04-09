@@ -3,17 +3,8 @@ import announcement from '@/data/announcement.json'
 import flag1 from '@/assets/flags/Season_1_Champions_Banner.png'
 import flag2 from '@/assets/flags/Season_2_Champions_Banner.png'
 import flag3 from '@/assets/flags/Season_3_Champions_Banner.png'
-import { useAuthStore } from '@/stores/auth'
-import LoginButton from '@/components/LoginButton.vue'
-import ProfileButton from '@/components/ProfileButton.vue'
-
 export default {
   name: 'AppHeader',
-  components: { LoginButton, ProfileButton },
-  setup() {
-    const authStore = useAuthStore()
-    return { authStore }
-  },
   data() {
     return {
       announcement,
@@ -65,8 +56,10 @@ export default {
           <span class="w-2 h-2 rounded-full bg-logo-blue animate-pulse"></span>
           <span>Season 4 <span class="text-logo-blue font-semibold">Live</span></span>
         </a>
+        <!-- Auth temporarily disabled
         <LoginButton v-if="!authStore.loading && !authStore.isLoggedIn" />
         <ProfileButton v-else-if="authStore.isLoggedIn" />
+        -->
       </div>
     </div>
 
