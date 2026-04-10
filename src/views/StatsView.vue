@@ -335,8 +335,10 @@ export default {
 
     const sortedPlayers = computed(() =>
       [...players.value].sort((a, b) => {
-        const vA = a[sortBy.value]
-        const vB = b[sortBy.value]
+        const fieldMap = { killParticipation: 'killParticipationPercentage' }
+        const field = fieldMap[sortBy.value] ?? sortBy.value
+        const vA = a[field]
+        const vB = b[field]
         if (typeof vA === 'string') {
           return sortDirection.value === 'asc' ? vA.localeCompare(vB) : vB.localeCompare(vA)
         }
