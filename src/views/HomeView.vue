@@ -80,6 +80,59 @@
       </div>
     </div>
 
+    <!-- Season 4 Standings -->
+    <div class="mb-16">
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-xl font-bold text-white">Season 4 Standings</h2>
+      </div>
+
+      <!-- Loading -->
+      <div v-if="standingsLoading" class="flex justify-center py-10">
+        <div class="w-7 h-7 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+
+      <div v-else-if="standings.length" class="rounded-xl overflow-hidden border border-gray-700">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-gray-800 border-b border-gray-700 text-gray-400 uppercase tracking-widest text-xs">
+              <th class="py-2.5 px-4 text-center w-10">#</th>
+              <th class="py-2.5 px-4 text-left">Team</th>
+              <th class="py-2.5 px-4 text-center">W</th>
+              <th class="py-2.5 px-4 text-center">L</th>
+              <th class="py-2.5 px-4 text-center hidden sm:table-cell">W%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(team, index) in standings"
+              :key="team.teamName"
+              class="border-b border-gray-700 last:border-b-0 hover:bg-gray-700 cursor-pointer transition-colors"
+              :class="index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-800/60'"
+              @click="$router.push(`/teams/${resolveTeamId(team.teamName)}`)"
+            >
+              <td class="py-2.5 px-4 text-center">
+                <span
+                  class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold"
+                  :class="index === 0 ? 'bg-yellow-500/20 text-yellow-400' : index === 1 ? 'bg-gray-500/20 text-gray-300' : index === 2 ? 'bg-orange-700/20 text-orange-400' : 'bg-gray-700/40 text-gray-500'"
+                >{{ index + 1 }}</span>
+              </td>
+              <td class="py-2.5 px-4">
+                <div class="flex items-center gap-2.5">
+                  <TeamLogo :teamName="team.teamName" season="4" class="w-7 h-7 object-contain flex-shrink-0" />
+                  <span class="text-white font-semibold">{{ team.teamName }}</span>
+                </div>
+              </td>
+              <td class="py-2.5 px-4 text-center font-bold text-green-400">{{ team.wins }}</td>
+              <td class="py-2.5 px-4 text-center font-bold text-red-400">{{ team.losses }}</td>
+              <td class="py-2.5 px-4 text-center hidden sm:table-cell"
+                  :class="team.winRate >= 0.6 ? 'text-green-400 font-semibold' : team.winRate <= 0.4 ? 'text-red-400' : 'text-gray-300'"
+              >{{ (team.winRate * 100).toFixed(1) }}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- Explore -->
     <div class="mb-16">
       <h2 class="text-xl font-bold text-white mb-6">Explore</h2>
@@ -186,3 +239,41 @@
 
   </div>
 </template>
+
+<script>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+import teamsDataJson from '@/data/teamsData.json'
+import TeamLogo from '@/components/TeamLogo.vue'
+
+export default {
+  name: 'HomeView',
+  components: { TeamLogo },
+  setup() {
+    const router = useRouter()
+    const standings = ref([])
+    const standingsLoading = ref(true)
+
+    const nameMap = {}
+    for (const team of teamsDataJson.teams) {
+      nameMap[team.name] = team.id
+      if (team.formerName) nameMap[team.formerName] = team.id
+    }
+    const resolveTeamId = (name) => nameMap[name] ?? null
+
+    onMounted(async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/standings/4`)
+        standings.value = res.data
+      } catch (e) {
+        console.error('Failed to load standings:', e)
+      } finally {
+        standingsLoading.value = false
+      }
+    })
+
+    return { standings, standingsLoading, resolveTeamId }
+  }
+}
+</script>

@@ -157,6 +157,45 @@
       <StatusMsg :msg="statusMsg" :error="isError" />
     </div>
 
+    <!-- ── Forfeit ── -->
+    <div v-if="activeTab === 'forfeit'" class="space-y-5">
+      <p class="text-gray-400 text-sm">Record a forfeit win/loss. No player stats are created — only standings are affected.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div>
+          <label class="field-label">Season</label>
+          <select v-model="forfeit.season" class="field-input" @change="fetchForfeitTeams">
+            <option value="">Select season...</option>
+            <option v-for="s in seasons" :key="s.id" :value="s.id">{{ s.name }}</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">LCC Match ID <span class="text-gray-500">(optional)</span></label>
+          <input v-model="forfeit.matchIdLCC" type="text" placeholder="e.g. 15F" class="field-input" />
+        </div>
+        <div>
+          <label class="field-label">Winning Team</label>
+          <select v-model="forfeit.winningTeam" class="field-input">
+            <option value="">Select team...</option>
+            <option v-for="t in forfeitTeams" :key="t" :value="t">{{ t }}</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Losing Team (forfeited)</label>
+          <select v-model="forfeit.losingTeam" class="field-input">
+            <option value="">Select team...</option>
+            <option v-for="t in forfeitTeams" :key="t" :value="t">{{ t }}</option>
+          </select>
+        </div>
+      </div>
+
+      <button @click="submitForfeit" :disabled="loading"
+        class="rounded-lg bg-orange-600 hover:bg-orange-500 disabled:opacity-50 px-5 py-2 text-sm font-semibold text-white transition-colors">
+        {{ loading ? 'Saving...' : 'Record Forfeit' }}
+      </button>
+      <StatusMsg :msg="statusMsg" :error="isError" />
+    </div>
+
     <!-- ── Assign MVP ── -->
     <div v-if="activeTab === 'mvp'" class="space-y-5">
       <p class="text-gray-400 text-sm">Assign an MVP to an existing match.</p>
@@ -355,6 +394,7 @@ export default {
       { id: 'add',     label: 'Add Match'   },
       { id: 'refresh', label: 'Refresh'      },
       { id: 'manual',  label: 'Manual Entry' },
+      { id: 'forfeit', label: 'Forfeit'       },
       { id: 'mvp',     label: 'Assign MVP'   },
     ]
     const activeTab = ref('add')
@@ -477,6 +517,36 @@ export default {
       } finally { loading.value = false }
     }
 
+    // ── Forfeit tab ───────────────────────────────────────────
+    const forfeitTeams = ref([])
+    const forfeit = ref({ season: '', matchIdLCC: '', winningTeam: '', losingTeam: '' })
+
+    const fetchForfeitTeams = async () => {
+      if (!forfeit.value.season) return
+      try {
+        const res = await axios.get(`${API}/teams/${forfeit.value.season}`)
+        forfeitTeams.value = res.data.map(t => t.team_name)
+      } catch { forfeitTeams.value = [] }
+    }
+    watch(() => forfeit.value.season, fetchForfeitTeams)
+
+    const submitForfeit = async () => {
+      loading.value = true; statusMsg.value = ''
+      try {
+        const res = await axios.post(`${API}/matches/forfeit`, {
+          season:      forfeit.value.season,
+          winningTeam: forfeit.value.winningTeam,
+          losingTeam:  forfeit.value.losingTeam,
+          matchIdLCC:  forfeit.value.matchIdLCC || undefined,
+        })
+        statusMsg.value = res.data.message; isError.value = false
+        forfeit.value = { season: forfeit.value.season, matchIdLCC: '', winningTeam: '', losingTeam: '' }
+      } catch (e) {
+        statusMsg.value = e.response?.data?.message ?? 'Error recording forfeit.'
+        isError.value = true
+      } finally { loading.value = false }
+    }
+
     // ── MVP tab ───────────────────────────────────────────────
     const mvp = ref({
       matchIdLCC: '', loadingPlayers: false, loadError: '',
@@ -537,6 +607,7 @@ export default {
       add, addTeams, submitAdd,
       refreshErrors, submitRefresh,
       manual, manualTeams, manualPlayers, manualChampions, submitManual,
+      forfeit, forfeitTeams, submitForfeit,
       mvp, loadMvpMatch, submitMvp,
     }
   }
