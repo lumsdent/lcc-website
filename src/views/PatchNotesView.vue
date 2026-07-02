@@ -53,6 +53,39 @@ export default {
   setup() {
     const patchNotes = ref([
       {
+        version: 'Beta v1.5.0 - Season 4 Wrap-Up & Season 5 Kickoff',
+        date: '2026-07-02',
+        description: 'Season 4 is officially in the books! This update celebrates the Season 4 champions, opens registration for Season 5, and includes a handful of improvements across the site.',
+        sections: [
+          {
+            title: 'Season 4 Champions',
+            features: [
+              { title: 'Champions Banner', description: 'The Season 4 Champions Banner now hangs in the header alongside the banners of previous seasons.' },
+              { title: 'Season 4 Highlight Reel', description: 'The home page now features the Season 4 highlight video.' },
+              { title: 'Art Gallery', description: 'New community art pieces have been added to the gallery, including the LCC Trophy and player artwork.' }
+            ]
+          },
+          {
+            title: 'Season 5',
+            features: [
+              { title: 'Season 5 Is Here', description: 'The site header now reflects Season 5. Season 5 Regular Season, Tiebreakers, and Playoffs are available in all season filters across the site.' },
+              { title: 'Registration Open', description: 'Registration for Season 5 is now open. Sign up before it closes!' },
+              { title: 'Updated Commitment Text', description: 'The registration commitment wording has been updated to be clearer about expectations for attending matches.' }
+            ]
+          },
+          {
+            title: 'General Improvements',
+            features: [
+              { description: 'Updated to the latest patch data (16.13.1) for champion and item assets.' }
+            ]
+          }
+        ],
+        comingSoon: [
+          'Season 5 stats and standings',
+          'Let me know what else you\'d like to see!'
+        ]
+      },
+      {
         version: 'Beta v1.4.0 - Art Gallery, Stats Fixes & Profile Improvements',
         date: '2026-03-10',
         description: 'An update focused on exploring stats in more depth, fixing some bugs, and improving community engagement with a new Art Gallery page.',

@@ -49,7 +49,7 @@ export default {
           <RouterLink to="/patchnotes" class="mt-4 text-blue-500 hover:text-blue-700">Patch Notes</RouterLink>
         </div>
 
-        <div>(beta 1.3.0)</div>
+        <div>(beta 1.5.0)</div>
       </footer>
     </div>
   </div>

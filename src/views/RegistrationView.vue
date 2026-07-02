@@ -124,8 +124,9 @@
         <input type="checkbox" id="thursdayAvailability" required
           class="h-4 w-4 text-blue-600  rounded  focus:ring-blue-600 ring-offset-gray-800 bg-gray-700 border-gray-600">
         <label for="thursdayAvailability" class="ml-2 block text-sm  text-logo-blue">
-          Committing to the LCC is a 4.5 Month, 19 Week Commitment. I acknowledge that I will be available Thursday
-          nights from 7PM-11PM EST from March 5th to June 25th.
+            I acknowledge that I will be available Thursday nights from 7PM-11PM EST for the duration of the season. The LCC is a serious commitment. Your teammates rely
+            on your ability to attend all matches and can be penalized if you fail to do so.
+
         </label>
       </div>
       <input type="submit" value="Register"
@@ -177,8 +178,13 @@ export default {
     const discord_avatar = ref('')
     const days = ["Monday", "Tuesday", "Wednesday", "Friday", "Saturday", "Sunday"]
 
-    const REGISTRATION_CLOSE_DATE = new Date('2026-02-05')
-    const isRegistrationOpen = new Date() <= REGISTRATION_CLOSE_DATE
+    const registrationCloseDateValue = import.meta.env.VITE_REGISTRATION_CLOSE_DATE
+    const REGISTRATION_CLOSE_DATE = registrationCloseDateValue
+      ? new Date(registrationCloseDateValue)
+      : new Date('2026-07-05')
+    const isRegistrationOpen = Number.isNaN(REGISTRATION_CLOSE_DATE.getTime())
+      ? true
+      : new Date() <= REGISTRATION_CLOSE_DATE
 
     const checkAuthentication = async () => {
       try {

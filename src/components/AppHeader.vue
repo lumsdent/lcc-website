@@ -3,6 +3,7 @@ import announcement from '@/data/announcement.json'
 import flag1 from '@/assets/flags/Season_1_Champions_Banner.png'
 import flag2 from '@/assets/flags/Season_2_Champions_Banner.png'
 import flag3 from '@/assets/flags/Season_3_Champions_Banner.png'
+import flag4 from '@/assets/flags/Season_4_Champions_Banner.png'
 export default {
   name: 'AppHeader',
   data() {
@@ -12,6 +13,7 @@ export default {
         { src: flag1, alt: 'Season 1 Champions Banner' },
         { src: flag2, alt: 'Season 2 Champions Banner' },
         { src: flag3, alt: 'Season 3 Champions Banner' },
+        { src: flag4, alt: 'Season 4 Champions Banner' }
       ],
       navLinks: [
         { title: 'Home', path: '/' },
@@ -40,7 +42,7 @@ export default {
           <h1 class="text-3xl font-bold text-white tracking-wide leading-tight">
             League <span class="text-logo-blue">Community</span> Cup
           </h1>
-          <p class="text-xs text-gray-500 uppercase tracking-widest mt-0.5">Amateur League of Legends &middot; Est. 2022 &middot; Season 4</p>
+          <p class="text-xs text-gray-500 uppercase tracking-widest mt-0.5">Amateur League of Legends &middot; Est. 2022 &middot; Season 5</p>
         </div>
       </RouterLink>
 

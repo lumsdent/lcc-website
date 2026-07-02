@@ -48,7 +48,7 @@
           <div class="relative w-full" style="padding-top: 56.25%;">
             <iframe
               class="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/LA5v7hVka-s?si=dxHVYprdfJK0htrJ"
+              src="https://www.youtube.com/embed/1MZuR4NmcKY?si=NT96uRu3TX00i4mk"
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
